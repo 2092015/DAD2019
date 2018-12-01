@@ -5,7 +5,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Type</th>
-            <!--<th>Department</th>-->
+            <!--<th>Sifht Active</th>-->
             <th>Actions</th>
         </tr>
         </thead>

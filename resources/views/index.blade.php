@@ -4,7 +4,7 @@
 
 @section('content')
 
-    {{--<router-link to="/users">Users</router-link>--}}
+{{--    <router-link to="/users">Users</router-link>--}}
     <router-view></router-view>
 
 @endsection

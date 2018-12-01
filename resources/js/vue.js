@@ -23,10 +23,12 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 const user = Vue.component('user', require('./components/user.vue'));
+const item = Vue.component('item', require('./components/item.vue'));
 
 const routes = [
     {path: '/', redirect: '/users'},
     {path: '/users', component: user},
+    {path: '/items', component: item},
 ];
 
 const router = new VueRouter({
