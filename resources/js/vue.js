@@ -24,11 +24,13 @@ Vue.use(VueRouter);
 
 const user = Vue.component('user', require('./components/user.vue'));
 const item = Vue.component('item', require('./components/item.vue'));
+const order = Vue.component('order', require('./components/order.vue'));
 
 const routes = [
     {path: '/', redirect: '/users'},
     {path: '/users', component: user},
     {path: '/items', component: item},
+    {path: '/orders', component: order},
 ];
 
 const router = new VueRouter({

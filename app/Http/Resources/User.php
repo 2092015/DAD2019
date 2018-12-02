@@ -27,4 +27,5 @@ class User extends Resource
             'shift_active' => $this->shift_active,
         ];
     }
+
 }

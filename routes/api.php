@@ -29,6 +29,13 @@ Route::get('items/{id}', 'ItemControllerAPI@show');
 Route::post('items', 'ItemControllerAPI@store');
 Route::put('items/{id}', 'ItemControllerAPI@update');
 Route::delete('items/{id}', 'ItemControllerAPI@destroy');
+
+Route::get('orders', 'OrderControllerAPI@index');
+Route::get('orders/{id}', 'OrderControllerAPI@show');
+Route::post('orders', 'OrderControllerAPI@store');
+Route::put('orders/{id}', 'OrderControllerAPI@update');
+Route::delete('orders/{id}', 'OrderControllerAPI@destroy');
+
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:
 NOTA: neste caso, o parâmetro a receber nos métodos do controlador é user e não id
