@@ -23,13 +23,13 @@ class OrderControllerAPI extends Controller
         }
 
     }
-    /*public function pending(Request $request)
+    public function pending(Request $request)
     {
         return $orders = DB::table('orders')
-            ->whereNotIn('state', 'delivered' /*and 'not delivered')
+            ->whereNotIn('state', ['delivered','not delivered'])
             ->get();
 
-    }*/
+    }
 
     public function show($id)
     {

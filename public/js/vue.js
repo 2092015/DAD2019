@@ -52491,7 +52491,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this4 = this;
 
             axios.get('api/orders').then(function (response) {
-                console.log(response);_this4.orders = response.data.data;
+                console.log(response);_this4.orders = response.data;
             });
         }
     },
@@ -52630,7 +52630,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Order List",
+    name: "orderList",
     props: ['orders'],
     data: function data() {
         return {

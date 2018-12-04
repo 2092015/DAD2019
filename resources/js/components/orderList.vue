@@ -31,7 +31,7 @@
 
 <script>
     export default {
-        name: "Order List",
+        name: "orderList",
         props: ['orders'],
         data: function(){
             return{

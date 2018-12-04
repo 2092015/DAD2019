@@ -107,7 +107,7 @@
             },
             getOrders: function(){
                 axios.get('api/orders')
-                    .then(response=>{console.log(response);this.orders = response.data.data;});
+                    .then(response=>{console.log(response);this.orders = response.data;});
 
             }
         },
