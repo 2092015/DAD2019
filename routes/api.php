@@ -31,10 +31,12 @@ Route::put('items/{id}', 'ItemControllerAPI@update');
 Route::delete('items/{id}', 'ItemControllerAPI@destroy');
 
 Route::get('orders', 'OrderControllerAPI@index');
+Route::get('pendingorders', 'OrderControllerAPI@pending');
 Route::get('orders/{id}', 'OrderControllerAPI@show');
 Route::post('orders', 'OrderControllerAPI@store');
 Route::put('orders/{id}', 'OrderControllerAPI@update');
 Route::delete('orders/{id}', 'OrderControllerAPI@destroy');
+
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:

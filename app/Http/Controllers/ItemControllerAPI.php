@@ -23,15 +23,7 @@ class ItemControllerAPI extends Controller
         }
 
     }
-    /*public function pending(Request $request)
-    {
-        if ($request->has('page')) {
-            return ItemResource::collection(item::paginate(5));
-        } else {
-            return ItemResource::collection(item::all());
-        }
 
-    }*/
     public function show($id)
     {
         return new ItemResource(item::find($id));
