@@ -21,7 +21,7 @@ class Order extends Authenticatable
     ];
 
 
-    public function user()
+    public function responsible_cook()
     {
         return $this->belongsTo(User::class);
     }
@@ -29,6 +29,7 @@ class Order extends Authenticatable
     {
         return $this->belongsTo(Item::class);
     }
+
 
 
 }

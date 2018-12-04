@@ -5,7 +5,7 @@
             <th>State</th>
             <th>Item</th>
             <th>Meal</th>
-            <th>Responsable Cook</th>
+            <th>Responsible Cook</th>
             <th>Start</th>
             <th>End</th>
             <th>Actions</th>
@@ -16,7 +16,7 @@
             <td>{{ order.state }}</td>
             <td>{{ order.item }}</td>
             <td>{{ order.meal_id }}</td>
-            <td>{{ order.responsible_cook_id }}</td>
+            <td>{{ order.responsible_cook }}</td>
 
             <td>{{ order.start }}</td>
             <td>{{ order.end }}</td>

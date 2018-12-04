@@ -8,6 +8,8 @@ class Order extends Resource
 {
     public function toArray($request)
     {
+
+
         return [
             'id' => $this->id,
             'state' => $this->state,
@@ -15,7 +17,7 @@ class Order extends Resource
             'item_id' => $this->item_id,
             'item' => $this->item->name,
             'responsible_cook_id' => $this->responsible_cook_id,
-            //'responsible_cook' => $this->responsible_cook->name,
+            'responsible_cook' => $this->responsible_cook->name,
             'start' => $this->start,
             'end' => $this->end,
             'created_at' => $this->created_at,

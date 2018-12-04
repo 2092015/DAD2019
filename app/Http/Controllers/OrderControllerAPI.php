@@ -25,9 +25,16 @@ class OrderControllerAPI extends Controller
     }
     public function pending(Request $request)
     {
-        return $orders = DB::table('orders')
+        if ($request->has('page')) {
+
+            return OrderResource::collection(order::whereNotIn('state', ['delivered','not delivered'])->paginate(5));
+        } else {
+            return OrderResource::collection(order::whereNotIn('state', ['delivered','not delivered'])->get());
+        }
+
+        /*return OrderResource::collection(order::table('orders')
             ->whereNotIn('state', ['delivered','not delivered'])
-            ->get();
+            ->get();*/
 
     }
 

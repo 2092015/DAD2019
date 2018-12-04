@@ -1,32 +1,5 @@
 <template>
     <div>
-        <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">{{ title }}</a>
-            <div class="dropdown">
-                <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <form class="dropdown-menu p-4 dropdown-menu-right">
-                    <div class="form-group">
-                        <label for="exampleDropdownFormEmail2">Email address</label>
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleDropdownFormPassword2">Password</label>
-                        <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                        <label class="form-check-label" for="dropdownCheck2">
-                            Remember me
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-            </div>
-
-        </nav>
-
         <div class="jumbotron">
             <h1>{{ title }}</h1>
         </div>
@@ -37,7 +10,7 @@
         </div>
 
         <order-list v-bind:orders = 'orders' @edit-click="editOrder" @delete-click="deleteOrder"></order-list>
-        <order-edit v-bind:current-order = 'currentOrder' v-if="currentOrder" @order-saved="saveorder" @order-canceled="cancelEdit"></order-edit>
+        <order-edit v-bind:current-order = 'currentOrder' :items='items' v-if="currentOrder" @order-saved="saveorder" @order-canceled="cancelEdit"></order-edit>
     </div>
 </template>
 
@@ -107,7 +80,7 @@
             },
             getOrders: function(){
                 axios.get('api/orders')
-                    .then(response=>{console.log(response);this.orders = response.data;});
+                    .then(response=>{console.log(response);this.orders = response.data.data;});
 
             }
         },

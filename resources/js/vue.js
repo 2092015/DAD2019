@@ -27,7 +27,7 @@ const item = Vue.component('item', require('./components/item.vue'));
 const order = Vue.component('order', require('./components/order.vue'));
 
 const routes = [
-    {path: '/', redirect: '/users'},
+    {path: '/', redirect: '/items'},
     {path: '/users', component: user},
     {path: '/items', component: item},
     {path: '/orders', component: order},

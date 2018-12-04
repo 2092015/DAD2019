@@ -14,13 +14,6 @@
                 <option v-for="item in items" v-bind:value="item.id"> {{ item.name }} </option>
             </select>
         </div>
-        <!--<div class="form-group">
-            <label for="inputResponsibleCook">Responsable Cook</label>
-            <input
-                    type="text" class="form-control" v-model="currentOrder.responsible_cook_id"
-                    id="inputResponsibleCook"
-                     value=""/>
-        </div>-->
 
         <div class="form-group">
             <label for="item_id">Responsable Cook</label>
