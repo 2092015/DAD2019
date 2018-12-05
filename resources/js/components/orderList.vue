@@ -17,7 +17,6 @@
             <td>{{ order.item }}</td>
             <td>{{ order.meal_id }}</td>
             <td>{{ order.responsible_cook }}</td>
-
             <td>{{ order.start }}</td>
             <td>{{ order.end }}</td>
             <td>

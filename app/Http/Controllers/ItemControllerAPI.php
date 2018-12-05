@@ -19,7 +19,7 @@ class ItemControllerAPI extends Controller
         if ($request->has('page')) {
             return ItemResource::collection(item::paginate(5));
         } else {
-            return ItemResource::collection(item::all());
+            return ItemResource::collection(item::orderByRaw('type')->get());
         }
 
     }

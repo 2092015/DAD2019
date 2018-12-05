@@ -5,7 +5,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Type</th>
-            <!--<th>Sifht Active</th>-->
+            <th>Photo</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -14,7 +14,9 @@
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.type }}</td>
-            <!--<td>{{ user.department }}</td>-->
+            <td>
+                <img :src='user.photo_url'/>
+            </td>
             <td>
                 <a class="btn btn-sm btn-primary" v-on:click.prevent="editUser(user)">Edit</a>
                 <a class="btn btn-sm btn-danger" v-on:click.prevent="deleteUser(user)">Delete</a>
@@ -46,5 +48,7 @@
 </script>
 
 <style scoped>
-
+    img {
+        width: 75px;
+    }
 </style>

@@ -19,7 +19,7 @@ class User extends Resource
             'name' => $this->name,
             'email' => $this->email,
             'type' => $this->type,
-            'photo_url' => $this->photo_url,
+            'photo_url' => '/storage/profiles/'.$this->photo_url,
             'username' => $this->username,
             'blocked' => $this->blocked,
             'last_shift_start' => $this->last_shift_start,

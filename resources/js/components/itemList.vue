@@ -51,6 +51,6 @@
 
 <style scoped>
     img {
-        width: 50px;
+        width: 75px;
     }
 </style>
