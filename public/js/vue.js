@@ -52208,7 +52208,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52219,6 +52219,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -52303,7 +52305,7 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "btn btn-sm btn-primary",
+                  staticClass: "btn btn-sm btn-success",
                   on: {
                     click: function($event) {
                       $event.preventDefault()
@@ -52311,22 +52313,12 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Edit")]
+                [_vm._v("Prepared")]
               ),
               _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-sm btn-danger",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.deleteOrder(order)
-                    }
-                  }
-                },
-                [_vm._v("Delete")]
-              )
+              _c("a", { staticClass: "btn btn-sm btn-warning" }, [
+                _vm._v("In Preparation")
+              ])
             ])
           ]
         )

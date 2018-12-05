@@ -1,18 +1,18 @@
 <?php
-
 namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class Order extends Authenticatable
+
+class Meal extends Authenticatable
 {
     use Notifiable;
 
     protected $fillable = [
         'state',
-        'meal_id',
+        'table_number',
         'description',
-        'item_id',
+        'total_price_preview',
         'responsible_cook_id',
         'start',
         'end',
@@ -21,15 +21,8 @@ class Order extends Authenticatable
     ];
 
 
-    public function responsible_cook()
+    public function responsible_waiter()
     {
         return $this->belongsTo(User::class);
     }
-    public function item()
-
-    {
-        return $this->belongsTo(Item::class);
     }
-
-
-}

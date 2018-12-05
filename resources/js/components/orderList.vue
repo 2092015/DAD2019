@@ -20,8 +20,10 @@
             <td>{{ order.start }}</td>
             <td>{{ order.end }}</td>
             <td>
-                <a class="btn btn-sm btn-primary" v-on:click.prevent="editOrder(order)">Edit</a>
-                <a class="btn btn-sm btn-danger" v-on:click.prevent="deleteOrder(order)">Delete</a>
+                <a class="btn btn-sm btn-success" v-on:click.prevent="editOrder(order)">Prepared</a>
+                <a class="btn btn-sm btn-warning" >In Preparation</a>
+                <!--<a class="btn btn-sm btn-danger" >Delete</a>
+                <a class="btn btn-sm btn-danger" >Delete</a>-->
             </td>
         </tr>
         </tbody>
