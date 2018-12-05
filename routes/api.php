@@ -13,9 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 Route::get('users', 'UserControllerAPI@index');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
@@ -37,6 +35,8 @@ Route::post('orders', 'OrderControllerAPI@store');
 Route::put('orders/{id}', 'OrderControllerAPI@update');
 Route::delete('orders/{id}', 'OrderControllerAPI@destroy');
 
+Route::post('login', 'LoginControllerAPI@login');
+Route::middleware('auth:api')->post('logout','LoginControllerAPI@logout');
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:
