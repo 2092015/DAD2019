@@ -38,6 +38,12 @@ Route::delete('orders/{id}', 'OrderControllerAPI@destroy');
 Route::post('login', 'LoginControllerAPI@login');
 Route::middleware('auth:api')->post('logout','LoginControllerAPI@logout');
 
+Route::get('meals', 'ItemControllerAPI@index');
+Route::get('meals/{id}', 'ItemControllerAPI@show');
+Route::post('meals', 'ItemControllerAPI@store');
+Route::put('meals/{id}', 'ItemControllerAPI@update');
+
+
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:
 NOTA: neste caso, o parâmetro a receber nos métodos do controlador é user e não id

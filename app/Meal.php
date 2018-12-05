@@ -12,10 +12,10 @@ class Meal extends Authenticatable
         'state',
         'table_number',
         'description',
-        'total_price_preview',
         'responsible_cook_id',
         'start',
         'end',
+        'total_price_preview',
         'created_at',
         'updated_at',
     ];

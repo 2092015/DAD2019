@@ -23,6 +23,7 @@ class Meal extends Resource
             'responsible_waiter' => $this->responsible_waiter->name,
             'start' => $this->start,
             'end' => $this->end,
+            'total_price_preview' => $this->total_price_preview,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
