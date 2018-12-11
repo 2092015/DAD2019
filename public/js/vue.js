@@ -65,316 +65,6 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var bind = __webpack_require__(8);
-var isBuffer = __webpack_require__(25);
-
-/*global toString:true*/
-
-// utils is a library of generic helper functions non-specific to axios
-
-var toString = Object.prototype.toString;
-
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */
-function isArray(val) {
-    return toString.call(val) === '[object Array]';
-}
-
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */
-function isArrayBuffer(val) {
-    return toString.call(val) === '[object ArrayBuffer]';
-}
-
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-    return (typeof FormData !== 'undefined') && (val instanceof FormData);
-}
-
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */
-function isArrayBufferView(val) {
-    var result;
-    if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-        result = ArrayBuffer.isView(val);
-    } else {
-        result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
-    }
-    return result;
-}
-
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */
-function isString(val) {
-    return typeof val === 'string';
-}
-
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */
-function isNumber(val) {
-    return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-    return typeof val === 'undefined';
-}
-
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */
-function isObject(val) {
-    return val !== null && typeof val === 'object';
-}
-
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */
-function isDate(val) {
-    return toString.call(val) === '[object Date]';
-}
-
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */
-function isFile(val) {
-    return toString.call(val) === '[object File]';
-}
-
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */
-function isBlob(val) {
-    return toString.call(val) === '[object Blob]';
-}
-
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */
-function isFunction(val) {
-    return toString.call(val) === '[object Function]';
-}
-
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */
-function isStream(val) {
-    return isObject(val) && isFunction(val.pipe);
-}
-
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */
-function isURLSearchParams(val) {
-    return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */
-function trim(str) {
-    return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  navigator.product -> 'ReactNative'
- */
-function isStandardBrowserEnv() {
-    if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
-        return false;
-    }
-    return (
-        typeof window !== 'undefined' &&
-        typeof document !== 'undefined'
-    );
-}
-
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */
-function forEach(obj, fn) {
-    // Don't bother if no value provided
-    if (obj === null || typeof obj === 'undefined') {
-        return;
-    }
-
-    // Force an array if not already something iterable
-    if (typeof obj !== 'object') {
-        /*eslint no-param-reassign:0*/
-        obj = [obj];
-    }
-
-    if (isArray(obj)) {
-        // Iterate over array values
-        for (var i = 0, l = obj.length; i < l; i++) {
-            fn.call(null, obj[i], i, obj);
-        }
-    } else {
-        // Iterate over object keys
-        for (var key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                fn.call(null, obj[key], key, obj);
-            }
-        }
-    }
-}
-
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function merge(/* obj1, obj2, obj3, ... */) {
-    var result = {};
-    function assignValue(val, key) {
-        if (typeof result[key] === 'object' && typeof val === 'object') {
-            result[key] = merge(result[key], val);
-        } else {
-            result[key] = val;
-        }
-    }
-
-    for (var i = 0, l = arguments.length; i < l; i++) {
-        forEach(arguments[i], assignValue);
-    }
-    return result;
-}
-
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */
-function extend(a, b, thisArg) {
-    forEach(b, function assignValue(val, key) {
-        if (thisArg && typeof val === 'function') {
-            a[key] = bind(val, thisArg);
-        } else {
-            a[key] = val;
-        }
-    });
-    return a;
-}
-
-module.exports = {
-    isArray: isArray,
-    isArrayBuffer: isArrayBuffer,
-    isBuffer: isBuffer,
-    isFormData: isFormData,
-    isArrayBufferView: isArrayBufferView,
-    isString: isString,
-    isNumber: isNumber,
-    isObject: isObject,
-    isUndefined: isUndefined,
-    isDate: isDate,
-    isFile: isFile,
-    isBlob: isBlob,
-    isFunction: isFunction,
-    isStream: isStream,
-    isURLSearchParams: isURLSearchParams,
-    isStandardBrowserEnv: isStandardBrowserEnv,
-    forEach: forEach,
-    merge: merge,
-    extend: extend,
-    trim: trim
-};
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports) {
 
 /*
@@ -456,7 +146,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1241,7 +931,7 @@ module.exports = defaults;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(global) {/**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.14.4
+ * @version 1.14.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -1338,7 +1028,8 @@ function getStyleComputedProperty(element, property) {
     return [];
   }
   // NOTE: 1 DOM access here
-  var css = getComputedStyle(element, null);
+  var window = element.ownerDocument.defaultView;
+  var css = window.getComputedStyle(element, null);
   return property ? css[property] : css;
 }
 
@@ -1426,7 +1117,7 @@ function getOffsetParent(element) {
   var noOffsetParent = isIE(10) ? document.body : null;
 
   // NOTE: 1 DOM access here
-  var offsetParent = element.offsetParent;
+  var offsetParent = element.offsetParent || null;
   // Skip hidden elements which don't have an offsetParent
   while (offsetParent === noOffsetParent && element.nextElementSibling) {
     offsetParent = (element = element.nextElementSibling).offsetParent;
@@ -1438,9 +1129,9 @@ function getOffsetParent(element) {
     return element ? element.ownerDocument.documentElement : document.documentElement;
   }
 
-  // .offsetParent will return the closest TD or TABLE in case
+  // .offsetParent will return the closest TH, TD or TABLE in case
   // no offsetParent is present, I hate this job...
-  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+  if (['TH', 'TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
     return getOffsetParent(offsetParent);
   }
 
@@ -1988,9 +1679,10 @@ function getReferenceOffsets(state, popper, reference) {
  * @returns {Object} object containing width and height properties
  */
 function getOuterSizes(element) {
-  var styles = getComputedStyle(element);
-  var x = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
-  var y = parseFloat(styles.marginLeft) + parseFloat(styles.marginRight);
+  var window = element.ownerDocument.defaultView;
+  var styles = window.getComputedStyle(element);
+  var x = parseFloat(styles.marginTop || 0) + parseFloat(styles.marginBottom || 0);
+  var y = parseFloat(styles.marginLeft || 0) + parseFloat(styles.marginRight || 0);
   var result = {
     width: element.offsetWidth + y,
     height: element.offsetHeight + x
@@ -2442,6 +2134,52 @@ function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
 
 /**
  * @function
+ * @memberof Popper.Utils
+ * @argument {Object} data - The data object generated by `update` method
+ * @argument {Boolean} shouldRound - If the offsets should be rounded at all
+ * @returns {Object} The popper's position offsets rounded
+ *
+ * The tale of pixel-perfect positioning. It's still not 100% perfect, but as
+ * good as it can be within reason.
+ * Discussion here: https://github.com/FezVrasta/popper.js/pull/715
+ *
+ * Low DPI screens cause a popper to be blurry if not using full pixels (Safari
+ * as well on High DPI screens).
+ *
+ * Firefox prefers no rounding for positioning and does not have blurriness on
+ * high DPI screens.
+ *
+ * Only horizontal placement and left/right values need to be considered.
+ */
+function getRoundedOffsets(data, shouldRound) {
+  var _data$offsets = data.offsets,
+      popper = _data$offsets.popper,
+      reference = _data$offsets.reference;
+
+
+  var isVertical = ['left', 'right'].indexOf(data.placement) !== -1;
+  var isVariation = data.placement.indexOf('-') !== -1;
+  var sameWidthOddness = reference.width % 2 === popper.width % 2;
+  var bothOddWidth = reference.width % 2 === 1 && popper.width % 2 === 1;
+  var noRound = function noRound(v) {
+    return v;
+  };
+
+  var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthOddness ? Math.round : Math.floor;
+  var verticalToInteger = !shouldRound ? noRound : Math.round;
+
+  return {
+    left: horizontalToInteger(bothOddWidth && !isVariation && shouldRound ? popper.left - 1 : popper.left),
+    top: verticalToInteger(popper.top),
+    bottom: verticalToInteger(popper.bottom),
+    right: horizontalToInteger(popper.right)
+  };
+}
+
+var isFirefox = isBrowser && /Firefox/i.test(navigator.userAgent);
+
+/**
+ * @function
  * @memberof Modifiers
  * @argument {Object} data - The data object generated by `update` method
  * @argument {Object} options - Modifiers configuration and options
@@ -2470,15 +2208,7 @@ function computeStyle(data, options) {
     position: popper.position
   };
 
-  // Avoid blurry text by using full pixel integers.
-  // For pixel-perfect positioning, top/bottom prefers rounded
-  // values, while left/right prefers floored values.
-  var offsets = {
-    left: Math.floor(popper.left),
-    top: Math.round(popper.top),
-    bottom: Math.round(popper.bottom),
-    right: Math.floor(popper.right)
-  };
+  var offsets = getRoundedOffsets(data, window.devicePixelRatio < 2 || !isFirefox);
 
   var sideA = x === 'bottom' ? 'top' : 'bottom';
   var sideB = y === 'right' ? 'left' : 'right';
@@ -14761,7 +14491,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(18);
-module.exports = __webpack_require__(109);
+module.exports = __webpack_require__(114);
 
 
 /***/ }),
@@ -14790,8 +14520,8 @@ var user = Vue.component('user', __webpack_require__(14));
 var item = Vue.component('item', __webpack_require__(15));
 var order = Vue.component('order', __webpack_require__(16));
 var meal = Vue.component('meal', __webpack_require__(89));
-var table = Vue.component('meal', __webpack_require__(113));
-var mainComponent = Vue.component('main_component', __webpack_require__(104));
+var table = Vue.component('meal', __webpack_require__(104));
+var mainComponent = Vue.component('main_component', __webpack_require__(109));
 
 var routes = [{ path: '/', redirect: '/mainComponent' }, { path: '/mainComponent', component: mainComponent }, { path: '/users', component: user }, { path: '/items', component: item }, { path: '/orders', component: order }, { path: '/meals', component: meal }, { path: '/tables', component: table }];
 
@@ -53529,6 +53259,174 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
+var __vue_scopeId__ = "data-v-374404da"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/table.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-374404da", Component.options)
+  } else {
+    hotAPI.reload("data-v-374404da", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(106);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("6c4ed757", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-374404da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./table.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-374404da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./table.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tableList_vue__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tableList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__tableList_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "restaurant_table",
+    data: function data() {
+        return {
+            title: 'List Tables',
+            showSuccess: false,
+            currentTables: null,
+            tables: []
+        };
+    },
+    components: {
+        'table-list': __WEBPACK_IMPORTED_MODULE_0__tableList_vue___default.a
+    },
+    methods: {
+        getTables: function getTables() {
+            var _this = this;
+
+            axios.get('api/restaurant_tables').then(function (response) {
+                console.log(response);_this.tables = response.data.data;
+            });
+        }
+    },
+    mounted: function mounted() {
+        this.getTables();
+    }
+});
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "jumbotron" }, [
+        _c("h1", [_vm._v(_vm._s(_vm.title))])
+      ]),
+      _vm._v(" "),
+      _c("table-list", { attrs: { tables: _vm.tables } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-374404da", module.exports)
+  }
+}
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(110)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(112)
+/* template */
+var __vue_template__ = __webpack_require__(113)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
 var __vue_scopeId__ = "data-v-541f3109"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
@@ -53562,13 +53460,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 105 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(106);
+var content = __webpack_require__(111);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -53588,7 +53486,7 @@ if(false) {
 }
 
 /***/ }),
-/* 106 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -53602,7 +53500,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 107 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53731,7 +53629,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 108 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53886,166 +53784,28 @@ if (false) {
 }
 
 /***/ }),
-/* 109 */
+/* 114 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(114)
+  __webpack_require__(119)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(116)
+var __vue_script__ = __webpack_require__(121)
 /* template */
 var __vue_template__ = __webpack_require__(122)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-374404da"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/table.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-374404da", Component.options)
-  } else {
-    hotAPI.reload("data-v-374404da", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 114 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(115);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("6c4ed757", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-374404da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./table.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-374404da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./table.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 116 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tableList_vue__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tableList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__tableList_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: "restaurant_table",
-    data: function data() {
-        return {
-            title: 'List Tables',
-            showSuccess: false,
-            currentTables: null,
-            tables: []
-        };
-    },
-    components: {
-        'table-list': __WEBPACK_IMPORTED_MODULE_0__tableList_vue___default.a
-    },
-    methods: {
-        getTables: function getTables() {
-            var _this = this;
-
-            axios.get('api/restaurant_tables').then(function (response) {
-                console.log(response);_this.tables = response.data.data;
-            });
-        }
-    },
-    mounted: function mounted() {
-        this.getTables();
-    }
-});
-
-/***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(118)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(120)
-/* template */
-var __vue_template__ = __webpack_require__(121)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -54084,13 +53844,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(119);
+var content = __webpack_require__(120);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -54110,7 +53870,7 @@ if(false) {
 }
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -54124,7 +53884,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""])
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54151,7 +53911,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54185,36 +53945,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-453cc45e", module.exports)
-  }
-}
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "jumbotron" }, [
-        _c("h1", [_vm._v(_vm._s(_vm.title))])
-      ]),
-      _vm._v(" "),
-      _c("table-list", { attrs: { tables: _vm.tables } })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-374404da", module.exports)
   }
 }
 
