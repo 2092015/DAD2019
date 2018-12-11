@@ -43,6 +43,10 @@ Route::get('meals/{id}', 'ItemControllerAPI@show');
 Route::post('meals', 'ItemControllerAPI@store');
 Route::put('meals/{id}', 'ItemControllerAPI@update');
 
+Route::get('restaurant_tables', 'TableControllerAPI@index');
+Route::get('restaurant_tables/{id}', 'TableControllerAPI@show');
+Route::post('restaurant_tables', 'TableControllerAPI@store');
+Route::put('restaurant_tables/{id}', 'TableControllerAPI@update');
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:

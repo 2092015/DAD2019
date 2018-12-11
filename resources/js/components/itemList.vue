@@ -17,11 +17,7 @@
                 <img :src='item.photo_url'/>
             </td>
             <td>{{ item.price }} €</td>
-            <!--<td>{{ item.department }}</td>-->
-            <!--<td>
-                <a class="btn btn-sm btn-primary" v-on:click.prevent="editItem(item)">Edit</a>
-                <a class="btn btn-sm btn-danger" v-on:click.prevent="deleteItem(item)">Delete</a>
-            </td>-->
+
         </tr>
         </tbody>
     </table>

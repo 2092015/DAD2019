@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
-
-use App\Http\Resources\meal as MealResource;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Resources\meal as MealResource;
 use App\Meal;
 use App\StoreMealRequest;
 //use Hash;
