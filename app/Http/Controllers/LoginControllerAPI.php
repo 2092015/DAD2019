@@ -14,8 +14,6 @@ class LoginControllerAPI extends Controller
 {
     public function login(Request $request)
     {
-        //var_dump($response);
-
         $http = new \GuzzleHttp\Client;
         $response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
             'form_params' => [

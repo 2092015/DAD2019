@@ -19,6 +19,7 @@
     import itemEdit from './itemEdit.vue';
 
     export default {
+        name: "item",
         data: function(){
             return {
                 title: 'Menu',
@@ -78,7 +79,7 @@
             },
             getItems: function(){
                 axios.get('api/items')
-                    .then(response=>{console.log(response);this.items = response.data.data;});
+                    .then(response=>{this.items = response.data.data;});
 
             }
         },
