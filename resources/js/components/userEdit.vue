@@ -13,7 +13,7 @@
             <input
                 type="email" class="form-control" v-model="currentUser.email"
                 name="email" id="inputEmail"
-                placeholder="Email address" value=""/>
+                placeholder="Email address" value="" disabled/>
         </div>
         <div class="form-group">
             <label for="inputType">Type</label>
