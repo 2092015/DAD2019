@@ -6,7 +6,7 @@
                 <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <form class="dropdown-menu p-4 dropdown-menu-right">
+                <form v-if="accessToken==null" class="dropdown-menu p-4 dropdown-menu-right">
                     <div class="form-group">
                         <label for="exampleDropdownFormEmail2">Email address</label>
                         <input v-model="email" type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
@@ -29,7 +29,7 @@
 
         <div>
             <item v-bind:items = 'items'></item>
-            <p>{{this.acessToken}}</p>
+            <p>{{this.accessToken}}</p>
             <p>{{this.refreshToken}}</p>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 failMessage: '',
                 password: '',
                 email: '',
-                acessToken: null,
+                accessToken: null,
                 refreshToken:null,
                 items: [],
             }
@@ -71,8 +71,8 @@
                     .then(response=>{
                         this.showSuccess = true;
                         this.successMessage = 'Login Successfull';
-                        this.accessToken = response.data.acessToken;
-                        this.refreshToken = response.data.refreshToken;
+                        this.accessToken = response.data.access_token;
+                        this.refreshToken = response.data.refresh_token;
                         this.currentUser = null;
                         console.log(this.accessToken);
                         console.log(this.refreshToken);

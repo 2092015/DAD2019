@@ -53690,7 +53690,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             failMessage: '',
             password: '',
             email: '',
-            acessToken: null,
+            accessToken: null,
             refreshToken: null,
             items: []
         };
@@ -53711,8 +53711,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 _this.showSuccess = true;
                 _this.successMessage = 'Login Successfull';
-                _this.accessToken = response.data.acessToken;
-                _this.refreshToken = response.data.refreshToken;
+                _this.accessToken = response.data.access_token;
+                _this.refreshToken = response.data.refresh_token;
                 _this.currentUser = null;
                 console.log(_this.accessToken);
                 console.log(_this.refreshToken);
@@ -53742,88 +53742,96 @@ var render = function() {
       _c("div", { staticClass: "dropdown" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("form", { staticClass: "dropdown-menu p-4 dropdown-menu-right" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "exampleDropdownFormEmail2" } }, [
-              _vm._v("Email address")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "email",
-                id: "exampleDropdownFormEmail2",
-                placeholder: "email@example.com"
-              },
-              domProps: { value: _vm.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.email = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "exampleDropdownFormPassword2" } }, [
-              _vm._v("Password")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "password",
-                id: "exampleDropdownFormPassword2",
-                placeholder: "Password"
-              },
-              domProps: { value: _vm.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.password = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { type: "submit" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.login()
-                }
-              }
-            },
-            [_vm._v("Login")]
-          )
-        ])
+        _vm.accessToken == null
+          ? _c(
+              "form",
+              { staticClass: "dropdown-menu p-4 dropdown-menu-right" },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "exampleDropdownFormEmail2" } }, [
+                    _vm._v("Email address")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.email,
+                        expression: "email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "email",
+                      id: "exampleDropdownFormEmail2",
+                      placeholder: "email@example.com"
+                    },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.email = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { attrs: { for: "exampleDropdownFormPassword2" } },
+                    [_vm._v("Password")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password,
+                        expression: "password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "password",
+                      id: "exampleDropdownFormPassword2",
+                      placeholder: "Password"
+                    },
+                    domProps: { value: _vm.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.password = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.login()
+                      }
+                    }
+                  },
+                  [_vm._v("Login")]
+                )
+              ]
+            )
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -53832,7 +53840,7 @@ var render = function() {
       [
         _c("item", { attrs: { items: _vm.items } }),
         _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(this.acessToken))]),
+        _c("p", [_vm._v(_vm._s(this.accessToken))]),
         _vm._v(" "),
         _c("p", [_vm._v(_vm._s(this.refreshToken))])
       ],
