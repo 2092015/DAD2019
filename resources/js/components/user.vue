@@ -19,6 +19,7 @@
     import userEdit from './userEdit.vue';
 
     export default {
+        name: "user",
         data: function(){
             return {
                 title: 'List Users',
@@ -78,7 +79,7 @@
             },
             getUsers: function(){
                 axios.get('api/users')
-                    .then(response=>{console.log(response);this.users = response.data.data;});
+                    .then(response=>{this.users = response.data.data;});
 
             }
         },
@@ -90,7 +91,5 @@
 </script>
 
 <style scoped>
-    .dropdown-menu.p-4.dropdown-menu-right{
-        min-width: 15rem;
-    }
+
 </style>

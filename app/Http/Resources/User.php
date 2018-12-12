@@ -14,6 +14,10 @@ class User extends Resource
      */
     public function toArray($request)
     {
+        /*if(!starts_with($this->photo_url, '/storage/profiles/')){
+            $this->photo_url = '/storage/profiles/'.$this->photo_url;
+        }*/
+
         return [
             'id' => $this->id,
             'name' => $this->name,

@@ -48,9 +48,14 @@ class UserControllerAPI extends Controller
     {
         $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-                'email' => 'required|email|unique:users,email,'.$id,
                 'age' => 'integer|between:18,75'
             ]);
+
+        if(starts_with($this->photo_url, '/storage/profiles/')){
+            $request->photo_url = str_after($request->photo_url, '/storage/profiles/');
+        }
+
+
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
