@@ -25,7 +25,8 @@ class Invoice extends Resource
             'total_price' => $this->total_price,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-
+            'table_number' => $this->meal->table_number,
+            'responsible_waiter' => $this->meal->responsible_waiter->name
         ];
     }
 }

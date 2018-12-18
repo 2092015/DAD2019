@@ -29,6 +29,20 @@ class InvoiceControllerAPI extends Controller
         }
 
     }
+    public function index2(Request $request)
+    {
+        if ($request->has('page')) {
+            return InvoiceResource::collection(Invoice::paginate(5));
+        } else {
+            return DB::table('invoices')
+                ->leftJoin('meals', 'invoices.meal_id', '=', 'meals.id')
+                ->where('invoices.state','=','not paid')
+                ->get();
+            /*return InvoiceResource::collection(Invoice::all());*/
+
+        }
+
+    }
     public function paid(Request $request)
     {
         if ($request->has('page')) {

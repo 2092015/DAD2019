@@ -54123,7 +54123,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54134,6 +54134,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -54191,7 +54193,9 @@ var render = function() {
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(invoice.date))]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.meal_id))]),
+          _c("td", [_vm._v(_vm._s(invoice.responsible_waiter))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(invoice.table_number))]),
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(invoice.nif))]),
           _vm._v(" "),
@@ -54214,7 +54218,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Data")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Meal ID")]),
+        _c("th", [_vm._v("Responsible Waiter")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Table Number")]),
         _vm._v(" "),
         _c("th", [_vm._v("NIF")]),
         _vm._v(" "),

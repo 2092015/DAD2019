@@ -44,6 +44,7 @@ Route::post('meals', 'MealControllerAPI@store');
 Route::put('meals/{id}', 'MealControllerAPI@update');
 
 Route::get('invoices', 'InvoiceControllerAPI@index');
+Route::get('invoices2', 'InvoiceControllerAPI@index2');
 Route::get('invoicespaid', 'InvoiceControllerAPI@paid');
 Route::get('invoicesnotpaid', 'InvoiceControllerAPI@notpaid');
 Route::get('invoices/{id}', 'InvoiceControllerAPI@show');
