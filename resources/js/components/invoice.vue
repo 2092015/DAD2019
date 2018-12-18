@@ -9,14 +9,40 @@
             <strong>{{ successMessage }}</strong>
         </div>
 
-        <item-list v-bind:items = 'items' @edit-click="editItem" @delete-click="deleteItem"></item-list>
-        <item-edit v-bind:current-item = 'currentItem' v-if="currentItem" @item-saved="saveItem" @item-canceled="cancelEdit"></item-edit>
+        <invoice-list v-bind:invoices = 'invoices'></invoice-list>
+        
     </div>
 </template>
 
 <script>
+    import invoiceList from './invoiceList.vue';
     export default {
-        name: "invoice"
+        name: "invoice",
+        data: function(){
+            return {
+                title: 'Invoice List',
+                showSuccess: false,
+                showFailure: false,
+                successMessage: '',
+                failMessage: '',
+                currentInvoice: null,
+                invoices: [],
+            }
+        },
+        components: {
+            'invoice-list': invoiceList,
+        },
+        methods: {
+            getInvoices: function(){
+                axios.get('api/invoices')
+                    .then(response=>{this.invoices = response.data.data;});
+
+            }
+        },
+        mounted() {
+            this.getInvoices();
+
+        }
     }
 </script>
 

@@ -17,7 +17,8 @@ const user = Vue.component('user', require('./components/user.vue'));
 const item = Vue.component('item', require('./components/item.vue'));
 const order = Vue.component('order', require('./components/order.vue'));
 const meal = Vue.component('meal', require('./components/meal.vue'));
-const table = Vue.component('meal', require('./components/table.vue'));
+const table = Vue.component('table', require('./components/table.vue'));
+const invoice = Vue.component('invoice', require('./components/invoice.vue'));
 const mainComponent = Vue.component('main_component', require('./components/mainComponent.vue'));
 
 const routes = [
@@ -28,7 +29,9 @@ const routes = [
     {path: '/orders', component: order},
     {path: '/meals', component: meal},
     {path: '/tables', component: table},
+    {path: '/invoices', component: invoice}
 ];
+
 
 const router = new VueRouter({
     routes:routes
