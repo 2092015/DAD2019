@@ -37,7 +37,6 @@ class UserControllerAPI extends Controller
                 'password' => 'min:3'
             ]);
         $user = new User();
-        User::create($request->all());
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
         $user->save();
