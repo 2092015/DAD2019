@@ -17,10 +17,14 @@
         </div>
         <div class="form-group">
             <label for="inputType">Type</label>
-            <input
+            <!--<select class="form-control" id="inputType" name="user_type" v-model="user.type">
+                <option v-for="userType in usersTypes" v-bind:value="usersTypes.userType"> {{ user.type }} </option>
+            </select>-->
+
+            <!--<input
                 type="text" class="form-control" v-model="currentUser.type"
                 name="type" id="inputType"
-                placeholder="Type" value=""/>
+                placeholder="Type" value=""/>-->
         </div>
         <!--<div class="form-group">
             <label for="department_id">Department:</label>
@@ -41,8 +45,7 @@
     export default {
         name: "userEdit",
         props: [
-            'currentUser',
-            'editingUser'
+            'currentUser','editingUser','usersTypes'
         ],
         methods: {
             saveUser: function () {

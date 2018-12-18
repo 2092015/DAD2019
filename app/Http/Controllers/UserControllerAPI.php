@@ -34,10 +34,10 @@ class UserControllerAPI extends Controller
         $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'email' => 'required|email|unique:users,email',
-                'age' => 'integer|between:18,75',
                 'password' => 'min:3'
             ]);
         $user = new User();
+        User::create($request->all());
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
         $user->save();

@@ -38,10 +38,17 @@ Route::delete('orders/{id}', 'OrderControllerAPI@destroy');
 Route::post('login', 'LoginControllerAPI@login');
 Route::middleware('auth:api')->post('logout','LoginControllerAPI@logout');
 
-Route::get('meals', 'ItemControllerAPI@index');
-Route::get('meals/{id}', 'ItemControllerAPI@show');
-Route::post('meals', 'ItemControllerAPI@store');
-Route::put('meals/{id}', 'ItemControllerAPI@update');
+Route::get('meals', 'MealControllerAPI@index');
+Route::get('meals/{id}', 'MealControllerAPI@show');
+Route::post('meals', 'MealControllerAPI@store');
+Route::put('meals/{id}', 'MealControllerAPI@update');
+
+Route::get('invoices', 'InvoiceControllerAPI@index');
+Route::get('invoicespaid', 'InvoiceControllerAPI@paid');
+Route::get('invoicesnotpaid', 'InvoiceControllerAPI@notpaid');
+Route::get('invoices/{id}', 'InvoiceControllerAPI@show');
+Route::post('invoices', 'InvoiceControllerAPI@store');
+Route::put('invoices/{id}', 'InvoiceControllerAPI@update');
 
 Route::get('restaurant_tables', 'TableControllerAPI@index');
 Route::get('restaurant_tables/{id}', 'TableControllerAPI@show');

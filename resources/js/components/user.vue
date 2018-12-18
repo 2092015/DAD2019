@@ -30,6 +30,7 @@
                 failMessage: '',
                 currentUser: null,
                 users: [],
+                usersTypes: [{ userType: "Cook"},{ userType: "Manager"},{ userType: "Waiter"},{ userType: "Cashier"}]
             }
         },
         components: {

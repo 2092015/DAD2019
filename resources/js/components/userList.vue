@@ -1,4 +1,5 @@
 <template>
+    <!--<div><a class="btn btn-primary" href="{{ route('users.create')}}">Add user</a></div>-->
     <table class="table table-striped">
         <thead>
         <tr>
@@ -29,7 +30,7 @@
 <script>
     export default {
         name: "userList",
-        props: ['users'],
+        props: ['users','usersTypes'],
         data: function(){
             return{
                 editingUser: null,
