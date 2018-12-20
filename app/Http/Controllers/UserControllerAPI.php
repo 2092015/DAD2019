@@ -41,18 +41,19 @@ class UserControllerAPI extends Controller
         $user->password = Hash::make($user->password);
         $user->save();
         return response()->json(new UserResource($user), 201);
+
+
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-                'age' => 'integer|between:18,75'
+            'name' => 'required',
+            'email' => 'required|email'
             ]);
-
-        if(starts_with($this->photo_url, '/storage/profiles/')){
+        /*if(starts_with($this->photo_url, '/storage/profiles/')){
             $request->photo_url = str_after($request->photo_url, '/storage/profiles/');
-        }
+        }*/
 
 
         $user = User::findOrFail($id);
@@ -75,5 +76,9 @@ class UserControllerAPI extends Controller
             $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
         }
         return response()->json($totalEmail == 0);
+    }
+    public function myProfile(Request $request)
+    {
+        return new UserResource($request->user());
     }
 }

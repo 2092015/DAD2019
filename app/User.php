@@ -18,10 +18,6 @@ class User extends Authenticatable
         'type',
         'username',
         'photo_url',
-        'blocked',
-        'last_shift_start',
-        'last_shift_end',
-        'shift_active',
     ];
 
 
@@ -34,6 +30,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
 }
 
 

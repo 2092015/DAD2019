@@ -9,6 +9,13 @@
                 placeholder="Fullname" value="" />
         </div>
         <div class="form-group">
+            <label for="inputName">Username</label>
+            <input
+                    type="text" class="form-control" v-model="currentUser.username"
+                    name="name" id="inputUsername"
+                    placeholder="Username" value="" />
+        </div>
+        <div class="form-group">
             <label for="inputEmail">Email</label>
             <input
                 type="email" class="form-control" v-model="currentUser.email"
@@ -16,21 +23,20 @@
                 placeholder="Email address" value="" disabled/>
         </div>
         <div class="form-group">
-            <label for="inputType">Type</label>
-            <!--<select class="form-control" id="inputType" name="user_type" v-model="user.type">
-                <option v-for="userType in usersTypes" v-bind:value="usersTypes.userType"> {{ user.type }} </option>
-            </select>-->
 
-            <!--<input
-                type="text" class="form-control" v-model="currentUser.type"
-                name="type" id="inputType"
-                placeholder="Type" value=""/>-->
-        </div>
-        <!--<div class="form-group">
-            <label for="department_id">Department:</label>
-            <select class="form-control" id="department_id" name="department_id" v-model="currentUser.department_id" >
-                <option v-for="department in departments" v-bind:value="department.id"> {{ department.name }} </option>
+            <select name="type" id="selectType" v-model="currentUser.type">
+                <option v-for="option in options" v-bind:value="option.value">
+                    {{ option.text }}
+                </option>
             </select>
+
+
+        </div>
+        <!--<div class="large-12 medium-12 small-12 cell">
+            <label>File
+                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+            </label>
+            <button v-on:click="submitFile()">Submit</button>
         </div>-->
 
         <div class="form-group">
@@ -47,7 +53,20 @@
         props: [
             'currentUser','editingUser','usersTypes'
         ],
+        data: function() {
+            return {
+            selected: '',//todo colocar aqui o tipo de user que está na bd
+            options: [
+                { text: 'Manager', value: 'manager' },
+                { text: 'Cook', value: 'cook' },
+                { text: 'Cashier', value: 'cashier' },
+                { text: 'Waiter', value: 'waiter' }
+            ]
+        }},
         methods: {
+            createUser: function () {
+                this.$emit('user-created');
+            },
             saveUser: function () {
                 this.$emit('user-saved');
             },

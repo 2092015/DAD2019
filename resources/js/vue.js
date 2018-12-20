@@ -1,14 +1,12 @@
 /*jshint esversion: 6 */
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+
 
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+import store from './stores/global-store';
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -20,6 +18,9 @@ const meal = Vue.component('meal', require('./components/meal.vue'));
 const table = Vue.component('table', require('./components/table.vue'));
 const invoice = Vue.component('invoice', require('./components/invoice.vue'));
 const mainComponent = Vue.component('main_component', require('./components/mainComponent.vue'));
+const profile = Vue.component('profile', require('./components/profile.vue'));
+const login = Vue.component('login', require('./components/login.vue'));
+const logout = Vue.component('logout', require('./components/logout.vue'));
 
 const routes = [
     {path: '/', redirect: '/mainComponent'},
@@ -29,7 +30,11 @@ const routes = [
     {path: '/orders', component: order},
     {path: '/meals', component: meal},
     {path: '/tables', component: table},
-    {path: '/invoices', component: invoice}
+    {path: '/invoices', component: invoice},
+    { path: '/profile', component: profile, name: 'profile'},
+    { path: '/login', component: login, name: 'login'},
+    { path: '/logout', component: logout, name: 'logout'}
+
 ];
 
 
@@ -37,6 +42,25 @@ const router = new VueRouter({
     routes:routes
 });
 
+router.beforeEach((to, from, next) => {
+    if ((to.name == 'mainComponent') || (to.name == 'logout')) {
+        if (!store.state.user) {
+            next("/login");
+            return;
+        }
+    }
+    next();
+});
+
+
 const app = new Vue({
     router,
+    store,
+    created() {
+        console.log('-----');
+        console.log(this.$store.state.user);
+        /*this.$store.commit('loadDepartments');*/
+        this.$store.commit('loadTokenAndUserFromSession');
+        console.log(this.$store.state.user);
+    }
 }).$mount('#app');

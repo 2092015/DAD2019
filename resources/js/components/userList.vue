@@ -2,6 +2,7 @@
     <!--<div><a class="btn btn-primary" href="{{ route('users.create')}}">Add user</a></div>-->
     <table class="table table-striped">
         <thead>
+        <a class="btn btn-sm btn-primary" v-on:click.prevent="createUser(user)">Create</a>
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -34,9 +35,14 @@
         data: function(){
             return{
                 editingUser: null,
+
             }
         },
         methods: {
+            createUser: function (user) {
+                this.editingUser = null;
+                this.$emit('create-click', user);
+            },
             editUser: function (user) {
                 this.editingUser = user;
                 this.$emit('edit-click', user);

@@ -2,11 +2,12 @@
     <div>
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand" href="#">{{title}}</a>
+
             <div class="dropdown">
                 <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <form v-if="accessToken==null" class="dropdown-menu p-4 dropdown-menu-right">
+                <form v-if="accessToken==null" class="dropdown-menu p-4 dropdown-menu-right" name="verifingUser">
                     <div class="form-group">
                         <label for="exampleDropdownFormEmail2">Email address</label>
                         <input v-model="email" type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
@@ -23,6 +24,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary"  v-on:click.prevent="login()">Login</button>
                 </form>
+                <!--<v-form v-else>
+                    <h1>User Logged &lt;!&ndash;{{user.name}}&ndash;&gt;</h1>
+                </v-form>-->
             </div>
 
         </nav>
@@ -60,15 +64,13 @@
             'user': user,
             'order': order,
             'item': item
-        },
-        methods: {
-
-            login: function(){
-                axios.post('api/login/',{
+        },methods: {
+            login: function () {
+                axios.post('api/login/', {
                     email: this.email,
                     password: this.password,
                 })
-                    .then(response=>{
+                    .then(response => {
                         this.showSuccess = true;
                         this.successMessage = 'Login Successfull';
                         this.accessToken = response.data.access_token;
@@ -76,22 +78,25 @@
                         this.currentUser = null;
                         console.log(this.accessToken);
                         console.log(this.refreshToken);
-
                     }).catch(function (error) {
-                        this.showFailure=true;
-                        this.failMessage='Login Invalid';
-                    });
-            }
+                    this.showFailure = true;
+                    this.failMessage = 'Login Invalid';
+                });
+            },
         },
         mounted() {
 
 
         }
-    }
+
+}
 </script>
 
 <style scoped>
     .dropdown-menu.p-4.dropdown-menu-right{
         min-width: 15rem;
+    }
+    h1 {
+        color: white;
     }
 </style>
