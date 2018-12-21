@@ -25,4 +25,19 @@ class Meal extends Authenticatable
     {
         return $this->belongsTo(User::class);
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function table()
+    {
+        return $this->belongsTo(Table::class);
+    }
+}

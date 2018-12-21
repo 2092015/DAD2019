@@ -26,12 +26,12 @@ class Invoice extends Authenticatable
     ];
 
 
-    public function meal()
+    public function meals()
     {
         return $this->belongsTo(Meal::class);
     }
-    public function item()
 
+    public function items()
     {
         return $this->hasMany(Item::class);
     }

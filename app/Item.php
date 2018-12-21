@@ -24,5 +24,8 @@ class Item extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-
+    public function invoices()
+    {
+        return $this->belongsToMany(Invoice::class, 'invoice_items');
+    }
 }

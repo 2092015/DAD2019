@@ -25,10 +25,16 @@ class Order extends Authenticatable
     {
         return $this->belongsTo(User::class);
     }
+
     public function item()
 
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function meal()
+    {
+        return $this->hasOne(Meal::class);
     }
 
 

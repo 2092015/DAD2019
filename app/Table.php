@@ -27,10 +27,9 @@ class Table extends Authenticatable
         'created_at',
         'updated_at',
     ];
-    public function order()
+
+    public function meals()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Meal::class);
     }
-
-
 }
