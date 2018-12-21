@@ -1,7 +1,7 @@
 <template>
     <form>
         <div class="dropdown-menu">
-            <a class="dropdown-item">{{this.$store.state.user.username}}</a>
+            <a v-if="this.$store.state.user" class="dropdown-item">{{this.$store.state.user.username}}</a>
 
             <router-link class="dropdown-item" to="/profile">Editar Perfil</router-link>
 <!--

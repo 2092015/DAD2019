@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 
-define('YOUR_SERVER_URL', 'http://restaurant.test');
+define('YOUR_SERVER_URL', 'http://209.97.184.199');
+//define('YOUR_SERVER_URL', 'http://restaurant.test');
 // Check "oauth_clients" table for next 2 values:
 define('CLIENT_ID', '2');
 define('CLIENT_SECRET', 'fAZzh77ldU2h06vdRw0DYxciU64OQR915j24a5Te');
