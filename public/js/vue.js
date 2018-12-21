@@ -25665,14 +25665,14 @@ var user = Vue.component('user', __webpack_require__(15));
 var item = Vue.component('item', __webpack_require__(17));
 var order = Vue.component('order', __webpack_require__(18));
 var meal = Vue.component('meal', __webpack_require__(91));
-var table = Vue.component('table', __webpack_require__(106));
+var restaurantTable = Vue.component('restaurant_table', __webpack_require__(106));
 var invoice = Vue.component('invoice', __webpack_require__(116));
 var mainComponent = Vue.component('main_component', __webpack_require__(126));
 var profile = Vue.component('profile', __webpack_require__(131));
 var login = Vue.component('login', __webpack_require__(134));
 var logout = Vue.component('logout', __webpack_require__(137));
 
-var routes = [{ path: '/', redirect: '/mainComponent' }, { path: '/mainComponent', component: mainComponent }, { path: '/users', component: user }, { path: '/items', component: item }, { path: '/orders', component: order }, { path: '/meals', component: meal }, { path: '/tables', component: table }, { path: '/invoices', component: invoice }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' }, { path: '/logout', component: logout, name: 'logout' }];
+var routes = [{ path: '/', redirect: '/mainComponent' }, { path: '/mainComponent', component: mainComponent }, { path: '/users', component: user }, { path: '/items', component: item }, { path: '/orders', component: order }, { path: '/meals', component: meal }, { path: '/tables', component: restaurantTable }, { path: '/invoices', component: invoice }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' }, { path: '/logout', component: logout, name: 'logout' }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes

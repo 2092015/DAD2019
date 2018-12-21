@@ -1,7 +1,7 @@
 /node_modules
-/public/css
+/public/css/*.css
 /public/img
-/public/js
+/public/js/*.js
 /public/svg
 /public/.htaccess
 /public/*.ico
