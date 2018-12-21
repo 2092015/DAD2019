@@ -7,23 +7,7 @@
                 <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <form v-if="accessToken==null" class="dropdown-menu p-4 dropdown-menu-right" name="verifingUser">
-                    <div class="form-group">
-                        <label for="exampleDropdownFormEmail2">Email address</label>
-                        <input v-model="email" type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleDropdownFormPassword2">Password</label>
-                        <input v-model="password" type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                        <label class="form-check-label" for="dropdownCheck2">
-                            Remember me
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary"  v-on:click.prevent="login()">Login</button>
-                </form>
+                <login></login>
                 <!--<v-form v-else>
                     <h1>User Logged &lt;!&ndash;{{user.name}}&ndash;&gt;</h1>
                 </v-form>-->
