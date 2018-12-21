@@ -28,7 +28,7 @@ class LoginControllerAPI extends Controller
             'exceptions' => false,
         ]);
         $errorCode= $response->getStatusCode();
-        //var_dump($response);
+
         if ($errorCode=='200') {
             return json_decode((string) $response->getBody(), true);
         } else {
