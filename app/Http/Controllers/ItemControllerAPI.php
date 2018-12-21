@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
 
-use App\Http\Resources\item as ItemResource;
+use App\Http\Resources\Item as ItemResource;
 use Illuminate\Support\Facades\DB;
 
 use App\Item;
