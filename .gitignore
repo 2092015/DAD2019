@@ -8,6 +8,7 @@
 /public/*.txt
 /public/*.json
 /public/*.php
+/public/storage
 /storage/*.key
 /vendor
 /.idea
