@@ -17,8 +17,6 @@
 
         <div>
             <item v-bind:items = 'items'></item>
-            <p>{{this.accessToken}}</p>
-            <p>{{this.refreshToken}}</p>
         </div>
     </div>
 </template>
@@ -37,10 +35,6 @@
                 showFailure: false,
                 successMessage: '',
                 failMessage: '',
-                password: '',
-                email: '',
-                accessToken: null,
-                refreshToken:null,
                 items: [],
             }
         },
