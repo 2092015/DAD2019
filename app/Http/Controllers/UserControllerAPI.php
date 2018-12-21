@@ -79,6 +79,6 @@ class UserControllerAPI extends Controller
     }
     public function myProfile(Request $request)
     {
-        return new UserResource($request->user());
+        return User::where('email', $request->email);
     }
 }
