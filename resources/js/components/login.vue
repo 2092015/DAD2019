@@ -1,5 +1,5 @@
 <template>
-    <form v-if="!this.$store.state.user" class="dropdown-menu p-4 dropdown-menu-right" name="verifingUser">
+    <form class="dropdown-menu p-4 dropdown-menu-right" name="verifingUser">
         <h2>Login</h2>
         <div class="alert" :class="typeofmsg" v-if="showMessage">
             <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>

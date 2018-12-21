@@ -57,8 +57,6 @@ const app = new Vue({
     router,
     store,
     created() {
-        console.log(this.$store.state.user);
-        /*this.$store.commit('loadDepartments');*/
         this.$store.commit('loadTokenAndUserFromSession');
         console.log(this.$store.state.user);
     }

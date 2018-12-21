@@ -1,25 +1,33 @@
 <template>
-    <div>
-        <div class="alert" :class="typeofmsg" v-if="showMessage">             
-            <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
-            <strong>{{ message }}</strong>
+    <form>
+        <div class="dropdown-menu">
+            <a class="dropdown-item">{{this.$store.state.user.username}}</a>
+
+            <router-link class="dropdown-item" to="/profile">Editar Perfil</router-link>
+<!--
+            <a class="dropdown-item" v-on:click.prevent="logout">Editar Perfil</a>
+-->
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" v-on:click.prevent="logout">Logout</a>
         </div>
-        <div class="jumbotron">
-            <h2>Confirmar Logout</h2>
-            <div class="form-group">
-                <a class="btn btn-primary" v-on:click.prevent="logout">Logout</a>
+        <div>
+            <div class="jumbotron">
+                <h2>Confirmar Logout</h2>
+                <div class="form-group">
+                    <a class="btn btn-primary" ></a>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </template>
 
 <script type="text/javascript">    
     export default {
         data: function(){
             return { 
-                typeofmsg: "alert-success",
+                /*typeofmsg: "alert-success",
                 showMessage: false,
-                message: ""
+                message: ""*/
             }
         },
         methods: {
@@ -28,15 +36,15 @@
                 axios.post('api/logout')
                     .then(response => {
                         this.$store.commit('clearUserAndToken');
-                        this.typeofmsg = "alert-success";
+                        /*this.typeofmsg = "alert-success";
                         this.message = "User has logged out correctly";
-                        this.showMessage = true;
+                        this.showMessage = true;*/
                     })
                     .catch(error => {
                         this.$store.commit('clearUserAndToken');
-                        this.typeofmsg = "alert-danger";
+                        /*this.typeofmsg = "alert-danger";
                         this.message = "Logout incorrect. But local credentials were discarded";
-                        this.showMessage = true;
+                        this.showMessage = true;*/
                         console.log(error);
                     })            
                 }
