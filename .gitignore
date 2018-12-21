@@ -1,5 +1,14 @@
 /node_modules
-/public
+/public/css/*.css
+/public/img
+/public/js/*.js
+/public/svg
+/public/.htaccess
+/public/*.ico
+/public/*.txt
+/public/*.json
+/public/*.php
+/public/storage
 /storage/*.key
 /vendor
 /.idea
