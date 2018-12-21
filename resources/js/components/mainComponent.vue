@@ -8,9 +8,6 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <login></login>
-                <!--<v-form v-else>
-                    <h1>User Logged &lt;!&ndash;{{user.name}}&ndash;&gt;</h1>
-                </v-form>-->
             </div>
 
         </nav>
@@ -43,24 +40,7 @@
             'order': order,
             'item': item
         },methods: {
-            login: function () {
-                axios.post('api/login/', {
-                    email: this.email,
-                    password: this.password,
-                })
-                    .then(response => {
-                        this.showSuccess = true;
-                        this.successMessage = 'Login Successfull';
-                        this.accessToken = response.data.access_token;
-                        this.refreshToken = response.data.refresh_token;
-                        this.currentUser = null;
-                        console.log(this.accessToken);
-                        console.log(this.refreshToken);
-                    }).catch(function (error) {
-                    this.showFailure = true;
-                    this.failMessage = 'Login Invalid';
-                });
-            },
+
         },
         mounted() {
 

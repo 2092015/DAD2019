@@ -1,5 +1,5 @@
 <template>
-    <form v-if="accessToken==null" class="dropdown-menu p-4 dropdown-menu-right" name="verifingUser">
+    <form v-if="user==null" class="dropdown-menu p-4 dropdown-menu-right" name="verifingUser">
         <h2>Login</h2>
         <div class="alert" :class="typeofmsg" v-if="showMessage">
             <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
