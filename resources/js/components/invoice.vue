@@ -9,6 +9,8 @@
             <strong>{{ successMessage }}</strong>
         </div>
 
+
+
         <invoice-list v-bind:invoices = 'invoices'></invoice-list>
         
     </div>

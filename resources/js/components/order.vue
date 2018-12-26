@@ -8,7 +8,9 @@
             <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
             <strong>{{ successMessage }}</strong>
         </div>
-
+        <div>
+            <button type="button" class="btn btn-info">Create Order</button>
+        </div>
         <order-list v-bind:orders = 'orders' @edit-click="editOrder" @delete-click="deleteOrder"></order-list>
         <order-edit v-bind:current-order = 'currentOrder' :items='items' v-if="currentOrder" @order-saved="saveorder" @order-canceled="cancelEdit"></order-edit>
     </div>
@@ -40,6 +42,11 @@
         methods: {
             editOrder: function(order){
                 this.currentOrder = order;
+                this.editingOrder = true;
+                this.showSuccess = false;
+            },
+            createOrder: function(order){
+
                 this.editingOrder = true;
                 this.showSuccess = false;
             },

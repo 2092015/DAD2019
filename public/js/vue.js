@@ -51505,7 +51505,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51553,6 +51553,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__userList_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__userEdit_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__userEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__userEdit_vue__);
+//
+//
 //
 //
 //
@@ -52249,6 +52251,8 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
       _c("user-list", {
         attrs: { users: _vm.users },
         on: { "edit-click": _vm.editUser, "delete-click": _vm.deleteUser }
@@ -52264,7 +52268,18 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("button", { staticClass: "btn btn-info", attrs: { type: "button" } }, [
+        _vm._v("Create User")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -53115,6 +53130,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -53141,6 +53158,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         editOrder: function editOrder(order) {
             this.currentOrder = order;
+            this.editingOrder = true;
+            this.showSuccess = false;
+        },
+        createOrder: function createOrder(order) {
+
             this.editingOrder = true;
             this.showSuccess = false;
         },
@@ -53375,23 +53397,27 @@ var render = function() {
             _c("td", [_vm._v(_vm._s(order.end))]),
             _vm._v(" "),
             _c("td", [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-sm btn-success",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.editOrder(order)
-                    }
-                  }
-                },
-                [_vm._v("Prepared")]
-              ),
+              order.state == "in preparation"
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.editOrder(order)
+                        }
+                      }
+                    },
+                    [_vm._v("Prepared")]
+                  )
+                : _vm._e(),
               _vm._v(" "),
-              _c("a", { staticClass: "btn btn-sm btn-warning" }, [
-                _vm._v("In Preparation")
-              ])
+              order.state == "confirmed"
+                ? _c("a", { staticClass: "btn btn-sm btn-warning" }, [
+                    _vm._v("In Preparation")
+                  ])
+                : _vm._e()
             ])
           ]
         )
@@ -53774,6 +53800,8 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
       _c("order-list", {
         attrs: { orders: _vm.orders },
         on: { "edit-click": _vm.editOrder, "delete-click": _vm.deleteOrder }
@@ -53792,7 +53820,18 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("button", { staticClass: "btn btn-info", attrs: { type: "button" } }, [
+        _vm._v("Create Order")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -54732,7 +54771,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -54745,6 +54784,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__invoiceList_vue__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__invoiceList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__invoiceList_vue__);
+//
+//
 //
 //
 //

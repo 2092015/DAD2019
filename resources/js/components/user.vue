@@ -8,7 +8,9 @@
             <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
             <strong>{{ successMessage }}</strong>
         </div>
-
+        <div>
+            <button type="button" class="btn btn-info">Create User</button>
+        </div>
         <user-list v-bind:users = 'users' @edit-click="editUser" @delete-click="deleteUser"></user-list>
         <user-edit v-bind:current-user = 'currentUser' v-if="currentUser" @user-saved="saveUser" @user-canceled="cancelEdit"></user-edit>
     </div>
