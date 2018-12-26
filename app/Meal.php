@@ -33,7 +33,7 @@ class Meal extends Authenticatable
 
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class,'table_number', 'id');
     }
 
     public function table()

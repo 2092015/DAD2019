@@ -9,6 +9,7 @@
 namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 class Invoice extends Authenticatable
 {
     use Notifiable;
@@ -28,7 +29,7 @@ class Invoice extends Authenticatable
 
     public function meals()
     {
-        return $this->belongsTo(Meal::class);
+        return $this->belongsTo(Meal::class,'meal_id', 'id');
     }
 
     public function items()

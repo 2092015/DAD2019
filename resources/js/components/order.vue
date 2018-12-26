@@ -22,7 +22,7 @@
         data: function(){
             return {
                 title: 'List Orders',
-                editingorder: false,
+                editingOrder: false,
                 showSuccess: false,
                 showFailure: false,
                 successMessage: '',
@@ -52,7 +52,7 @@
                         this.getOrders();
                     });
             },
-            saveorder: function(){
+            saveOrder: function(){
                 this.editingorder = false;
                 axios.put('api/orders/'+this.currentOrder.id,this.currentOrder)
                     .then(response=>{

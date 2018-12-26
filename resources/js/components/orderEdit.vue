@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-            <label for="item_id">Responsable Cook</label>
+            <label for="item_id">Responsible Cook</label>
             <select class="form-control" id="responsible_cook_id" name="responsible_cook_id" v-model="currentOrder.responsible_cook_id" >
                 <option v-for="user in users" v-bind:value="item.id"> {{ user.name }} </option>
             </select>
