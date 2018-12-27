@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 */
 
 
-
 Route::get('users', 'UserControllerAPI@index');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 Route::get('users/{id}', 'UserControllerAPI@show');

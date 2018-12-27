@@ -11,8 +11,7 @@ class User extends Resource
         /*if(!starts_with($this->photo_url, '/storage/profiles/')){
             $this->photo_url = '/storage/profiles/'.$this->photo_url;
         }*/
-        var_dump($this);
-        /*return [
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
@@ -23,7 +22,7 @@ class User extends Resource
             'last_shift_start' => $this->last_shift_start,
             'last_shift_end' => $this->last_shift_end,
             'shift_active' => $this->shift_active,
-        ];*/
+        ];
     }
 
 }
