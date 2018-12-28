@@ -57,7 +57,7 @@ const app = new Vue({
     router,
     store,
     created() {
-        this.$store.commit('loadTokenAndUserFromSession');
+        //this.$store.commit('loadTokenAndUserFromSession');
         console.log(this.$store.state.user);
     }
 }).$mount('#app');

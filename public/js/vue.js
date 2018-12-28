@@ -25521,7 +25521,7 @@ var app = new Vue({
     router: router,
     store: __WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */],
     created: function created() {
-        this.$store.commit('loadTokenAndUserFromSession');
+        //this.$store.commit('loadTokenAndUserFromSession');
         console.log(this.$store.state.user);
     }
 }).$mount('#app');
@@ -55565,6 +55565,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.$store.commit('setToken', response.data.access_token);
                 return axios.get('api/users/me');
             }).then(function (response) {
+                console.log("teste");
+                console.log(response.data);
                 _this.$store.commit('setUser', response.data.data);
                 _this.typeofmsg = "alert-success";
                 _this.message = "User authenticated correctly";

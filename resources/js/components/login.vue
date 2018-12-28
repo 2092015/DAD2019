@@ -45,6 +45,8 @@
                         return axios.get('api/users/me');
                     })
                     .then(response => {
+                        console.log("teste");
+                        console.log(response.data);
                         this.$store.commit('setUser',response.data.data);
                         this.typeofmsg = "alert-success";
                         this.message = "User authenticated correctly";

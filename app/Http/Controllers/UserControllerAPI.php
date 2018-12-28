@@ -79,7 +79,6 @@ class UserControllerAPI extends Controller
     }
     public function myProfile(Request $request)
     {
-        var_dump($request);
         return new UserResource($request->user());
     }
 }
