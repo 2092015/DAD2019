@@ -26,6 +26,7 @@ class UserControllerAPI extends Controller
 
     public function show($id)
     {
+
         return new UserResource(User::find($id));
     }
 
@@ -79,6 +80,7 @@ class UserControllerAPI extends Controller
     }
     public function myProfile(Request $request)
     {
+        var_dump($request);
         return new UserResource($request->user());
     }
 }

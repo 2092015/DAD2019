@@ -16,13 +16,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 Route::get('users', 'UserControllerAPI@index');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
-//Route::get('users/{id}', 'UserControllerAPI@show');
+Route::get('users/{id}', 'UserControllerAPI@show');
 Route::post('users', 'UserControllerAPI@store');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@destroy');
-Route::get('users/me', 'UserControllerAPI@myProfile');
 
 Route::get('items', 'ItemControllerAPI@index');
 Route::get('items/{id}', 'ItemControllerAPI@show');
