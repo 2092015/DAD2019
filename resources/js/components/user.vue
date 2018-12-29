@@ -8,17 +8,17 @@
             <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
             <strong>{{ successMessage }}</strong>
         </div>
-        <div>
-            <button type="button" class="btn btn-info">Create User</button>
-        </div>
+
         <user-list v-bind:users = 'users' @edit-click="editUser" @delete-click="deleteUser"></user-list>
         <user-edit v-bind:current-user = 'currentUser' v-if="currentUser" @user-saved="saveUser" @user-canceled="cancelEdit"></user-edit>
+        <register @register-click="register"></register>
     </div>
 </template>
 
 <script>
     import userList from './userList.vue';
     import userEdit from './userEdit.vue';
+    import register from './register.vue';
 
     export default {
         name: "user",
@@ -37,9 +37,11 @@
         },
         components: {
             'user-list': userList,
-            'user-edit': userEdit
+            'user-edit': userEdit,
+            'register':register
         },
         methods: {
+
             editUser: function(user){
                 this.currentUser = user;
                 this.editingUser = true;
@@ -70,6 +72,17 @@
             cancelEdit: function(){
                 this.showSuccess = false;
                 this.editingUser = false;
+                axios.get('api/users/'+this.currentUser.id)
+                    .then(response=>{
+                        console.dir (this.currentUser);
+                        // Copies response.data.data properties to this.currentUser
+                        // without changing this.currentUser reference
+                        Object.assign(this.currentUser, response.data.data);
+                        console.dir (this.currentUser);
+                        this.currentUser = null;
+                    });
+            },
+            cancelRegister: function(){
                 axios.get('api/users/'+this.currentUser.id)
                     .then(response=>{
                         console.dir (this.currentUser);

@@ -21,6 +21,7 @@ const mainComponent = Vue.component('main_component', require('./components/main
 const profile = Vue.component('profile', require('./components/profile.vue'));
 const login = Vue.component('login', require('./components/login.vue'));
 const logout = Vue.component('logout', require('./components/logout.vue'));
+const register = Vue.component('register', require('./components/register.vue'));
 
 const routes = [
     {path: '/', redirect: '/mainComponent'},
@@ -33,7 +34,8 @@ const routes = [
     {path: '/invoices', component: invoice},
     { path: '/profile', component: profile, name: 'profile'},
     { path: '/login', component: login, name: 'login'},
-    { path: '/logout', component: logout, name: 'logout'}
+    { path: '/logout', component: logout, name: 'logout'},
+    { path: '/register', component: register, name: 'register'}
 
 ];
 
