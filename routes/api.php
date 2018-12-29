@@ -23,6 +23,7 @@ Route::post('users', 'UserControllerAPI@store');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@destroy');
 Route::get('users/me', 'UserControllerAPI@myProfile');
+Route::post('sendMail/{id}', 'UserControllerAPI@sendRegistrationMail');
 
 Route::get('items', 'ItemControllerAPI@index');
 Route::get('items/{id}', 'ItemControllerAPI@show');
