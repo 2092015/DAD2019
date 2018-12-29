@@ -40,7 +40,9 @@ class UserControllerAPI extends Controller
         $user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
+        $user->username=$request->email;
         $user->save();
+
         return response()->json(new UserResource($user), 201);
 
 
