@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\StoreUserRequest;
 use Hash;
+use Illuminate\View\View;
 
 class UserControllerAPI extends Controller
 {
@@ -84,5 +85,15 @@ class UserControllerAPI extends Controller
     {
         var_dump($request);
         return new UserResource($request->user());
+    }
+
+    public function sendRegistrationMail($id){
+        $user = User::find($id);
+        $user->id = Hash::make($user->id);
+        $this->prepareEmail(view('email')->with('user', $user), $user->email);
+    }
+
+    public function prepareEmail(View $content, $email){
+        mail($email,"Confirm Email",$content);
     }
 }
