@@ -1,19 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ciscomen
- * Date: 05/12/2018
- * Time: 18:29
- */
 
 namespace App\Http\Resources;
+use Illuminate\Http\Resources\Json\Resource;
 
 
 class Meal extends Resource
 {
     public function toArray($request)
     {
-
 
         return [
             'id' => $this->id,
@@ -29,4 +23,5 @@ class Meal extends Resource
 
         ];
     }
+
 }
