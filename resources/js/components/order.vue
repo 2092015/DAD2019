@@ -8,11 +8,7 @@
             <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
             <strong>{{ successMessage }}</strong>
         </div>
-        <div>
-            <button type="button" class="btn btn-info">Create Order</button>
-        </div>
-        <order-list v-bind:orders = 'orders' @edit-click="editOrder" @delete-click="deleteOrder"></order-list>
-        <order-edit v-bind:current-order = 'currentOrder' :items='items' v-if="currentOrder" @order-saved="saveorder" @order-canceled="cancelEdit"></order-edit>
+        <order-list v-bind:orders = 'orders' @prepared-click="preparedOrder" @inpreparation-click="inPreparationOrder"></order-list>
     </div>
 </template>
 
@@ -36,53 +32,38 @@
             }
         },
         components: {
-            'order-list': orderList,
-            'order-edit': orderEdit
+            'order-list': orderList
         },
         methods: {
-            editOrder: function(order){
+            preparedOrder: function(order){
                 this.currentOrder = order;
-                this.editingOrder = true;
                 this.showSuccess = false;
-            },
-            createOrder: function(order){
-
-                this.editingOrder = true;
-                this.showSuccess = false;
-            },
-
-            deleteOrder: function(order){
-                axios.delete('api/orders/'+order.id)
-                    .then(response => {
-                        this.showSuccess = true;
-                        this.successMessage = 'Order Deleted';
-                        this.getOrders();
-                    });
-            },
-            saveOrder: function(){
-                this.editingorder = false;
                 axios.put('api/orders/'+this.currentOrder.id,this.currentOrder)
                     .then(response=>{
-                        this.showSuccess = true;
-                        this.successMessage = 'order Saved';
-                        // Copies response.data.data properties to this.currentOrder
-                        // without changing this.currentOrder reference
+                        this.currentOrder.state='prepared';
+                        // Copies response.data.data properties to this.currentUser
+                        // without changing this.currentUser reference
                         Object.assign(this.currentOrder, response.data.data);
                         this.currentOrder = null;
-                        this.editingorder = false;
+                        /*this.editingOrder = false;*/
+                        this.showSuccess = true;
+                        this.successMessage = 'Order Saved';
                     });
             },
-            cancelEdit: function(){
+
+            inPreparationOrder: function(order){
+                this.currentOrder = order;
                 this.showSuccess = false;
-                this.editingorder = false;
-                axios.get('api/orders/'+this.currentOrder.id)
+                axios.put('api/orders/'+this.currentOrder.id,this.currentOrder)
                     .then(response=>{
-                        console.dir (this.currentOrder);
-                        // Copies response.data.data properties to this.currentOrder
-                        // without changing this.currentOrder reference
+                        this.currentOrder.state='in preparation';
+                        // Copies response.data.data properties to this.currentUser
+                        // without changing this.currentUser reference
                         Object.assign(this.currentOrder, response.data.data);
-                        console.dir (this.currentOrder);
+                        this.showSuccess = true;
+                        this.successMessage = 'Order Saved';
                         this.currentOrder = null;
+                        /*this.editingUser = false;*/
                     });
             },
             getOrders: function(){

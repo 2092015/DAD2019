@@ -9,7 +9,9 @@
             <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
             <strong>{{ successMessage }}</strong>
         </div>
-
+        <div>
+            <button type="button" class="btn btn-info">Create Meal</button>
+        </div>
         <meal-list v-bind:meals = 'meals'></meal-list>
         
     </div>
