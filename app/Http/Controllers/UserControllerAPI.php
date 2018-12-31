@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationEmail;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
 
 use App\Http\Resources\User as UserResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 use App\User;
 use App\StoreUserRequest;
@@ -43,6 +45,7 @@ class UserControllerAPI extends Controller
         $user->password = Hash::make($user->password);
         $user->username=$request->email;
         $user->save();
+        $this->sendRegistrationMail($user->id);
 
         return response()->json(new UserResource($user), 201);
 
@@ -89,11 +92,19 @@ class UserControllerAPI extends Controller
 
     public function sendRegistrationMail($id){
         $user = User::find($id);
-        $user->id = Hash::make($user->id);
-        $this->prepareEmail(view('email')->with('user', $user), $user->email);
+
+        Mail::to($user->email)->send(new RegistrationEmail($user));
     }
 
-    public function prepareEmail(View $content, $email){
-        mail($email,"Confirm Email",$content);
+    public function prepareEmail($email){
+        // Always set content-type when sending HTML email
+        //$headers = "MIME-Version: 1.0" . "\r\n";
+        //$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+        // More headers
+        //$headers .= 'From: <webmaster@example.com>' . "\r\n";
+        //$result = mail($email,"Confirm Email",$content);
+
+        //return $result;
     }
 }
