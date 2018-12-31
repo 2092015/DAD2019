@@ -21,8 +21,4 @@ class Item extends Resource
 
         ];
     }
-    public function item()
-    {
-        return $this->belongsTo(Item::class);
-    }
 }
