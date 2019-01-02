@@ -38,14 +38,11 @@
             preparedOrder: function(order){
                 this.currentOrder = order;
                 this.showSuccess = false;
+                this.currentOrder.state='prepared';
                 axios.put('api/orders/'+this.currentOrder.id, {'state':this.currentOrder.state})
                     .then(response=>{
-                        this.currentOrder.state='prepared';
-                        // Copies response.data.data properties to this.currentUser
-                        // without changing this.currentUser reference
                         Object.assign(this.currentOrder, response.data.data);
                         this.currentOrder = null;
-                        /*this.editingOrder = false;*/
                         this.showSuccess = true;
                         this.successMessage = 'Order Updated';
                     });
@@ -54,16 +51,13 @@
             inPreparationOrder: function(order){
                 this.currentOrder = order;
                 this.showSuccess = false;
+                this.currentOrder.state='in preparation';
                 axios.put('api/orders/'+this.currentOrder.id,{'state':this.currentOrder.state})
                     .then(response=>{
-                        this.currentOrder.state='in preparation';
-                        // Copies response.data.data properties to this.currentUser
-                        // without changing this.currentUser reference
                         Object.assign(this.currentOrder, response.data.data);
                         this.showSuccess = true;
                         this.successMessage = 'Order Saved';
                         this.currentOrder = null;
-                        /*this.editingUser = false;*/
                     });
             },
             getOrders: function(){

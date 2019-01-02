@@ -10,14 +10,6 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" v-on:click.prevent="logout">Logout</a>
         </div>
-        <div>
-            <div class="jumbotron">
-                <h2>Confirmar Logout</h2>
-                <div class="form-group">
-                    <a class="btn btn-primary" ></a>
-                </div>
-            </div>
-        </div>
     </form>
 </template>
 

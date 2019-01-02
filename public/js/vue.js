@@ -53480,13 +53480,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentOrder = order;
             this.showSuccess = false;
+            this.currentOrder.state = 'prepared';
             axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
-                _this.currentOrder.state = 'prepared';
-                // Copies response.data.data properties to this.currentUser
-                // without changing this.currentUser reference
                 Object.assign(_this.currentOrder, response.data.data);
                 _this.currentOrder = null;
-                /*this.editingOrder = false;*/
                 _this.showSuccess = true;
                 _this.successMessage = 'Order Updated';
             });
@@ -53497,15 +53494,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentOrder = order;
             this.showSuccess = false;
+            this.currentOrder.state = 'in preparation';
             axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
-                _this2.currentOrder.state = 'in preparation';
-                // Copies response.data.data properties to this.currentUser
-                // without changing this.currentUser reference
                 Object.assign(_this2.currentOrder, response.data.data);
                 _this2.showSuccess = true;
                 _this2.successMessage = 'Order Saved';
                 _this2.currentOrder = null;
-                /*this.editingUser = false;*/
             });
         },
         getOrders: function getOrders() {
@@ -53607,7 +53601,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -53660,7 +53654,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         preparedOrder: function preparedOrder(order) {
             this.editingOrder = order;
-            /*this.editingOrder = true;*/
             this.$emit('prepared-click', order);
         },
         inPreparationOrder: function inPreparationOrder(order) {
@@ -55698,14 +55691,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -55778,27 +55763,10 @@ var render = function() {
         )
       ],
       1
-    ),
-    _vm._v(" "),
-    _vm._m(0)
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "jumbotron" }, [
-        _c("h2", [_vm._v("Confirmar Logout")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("a", { staticClass: "btn btn-primary" })
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
