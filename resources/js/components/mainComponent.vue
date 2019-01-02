@@ -7,8 +7,7 @@
                 <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <login v-show="!this.$store.state.user"></login>
-                <logout v-show="this.$store.state.user"></logout>
+                <login></login>
             </div>
 
         </nav>
@@ -46,6 +45,9 @@
         mounted() {
 
 
+        },
+        computed:{
+           
         }
 
 }

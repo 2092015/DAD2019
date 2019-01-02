@@ -20,7 +20,6 @@ const invoice = Vue.component('invoice', require('./components/invoice.vue'));
 const mainComponent = Vue.component('main_component', require('./components/mainComponent.vue'));
 const profile = Vue.component('profile', require('./components/profile.vue'));
 const login = Vue.component('login', require('./components/login.vue'));
-const logout = Vue.component('logout', require('./components/logout.vue'));
 const register = Vue.component('register', require('./components/register.vue'));
 
 const routes = [
@@ -34,7 +33,6 @@ const routes = [
     {path: '/invoices', component: invoice},
     { path: '/profile', component: profile, name: 'profile'},
     { path: '/login', component: login, name: 'login'},
-    { path: '/logout', component: logout, name: 'logout'},
     { path: '/register', component: register, name: 'register'}
 
 ];
@@ -59,7 +57,7 @@ const app = new Vue({
     router,
     store,
     created() {
-        //this.$store.commit('loadTokenAndUserFromSession');
-        console.log(this.$store.state.user);
+        this.$store.commit('loadTokenAndUserFromSession');
+        //console.log(this.$store.state.user);
     }
 }).$mount('#app');
