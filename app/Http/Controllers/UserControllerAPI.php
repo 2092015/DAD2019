@@ -86,25 +86,11 @@ class UserControllerAPI extends Controller
     }
     public function myProfile(Request $request)
     {
-        var_dump($request);
         return new UserResource($request->user());
     }
 
     public function sendRegistrationMail($id){
         $user = User::find($id);
-
         Mail::to($user->email)->send(new RegistrationEmail($user));
-    }
-
-    public function prepareEmail($email){
-        // Always set content-type when sending HTML email
-        //$headers = "MIME-Version: 1.0" . "\r\n";
-        //$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-        // More headers
-        //$headers .= 'From: <webmaster@example.com>' . "\r\n";
-        //$result = mail($email,"Confirm Email",$content);
-
-        //return $result;
     }
 }
