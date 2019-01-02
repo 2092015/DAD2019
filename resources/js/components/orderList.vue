@@ -20,10 +20,8 @@
             <td>{{ order.start }}</td>
             <td>{{ order.end }}</td>
             <td>
-                <a class="btn btn-sm btn-success" v-if="order.state=='in preparation'" v-on:click.prevent="editOrder(order)">Prepared</a>
-                <a class="btn btn-sm btn-warning" v-if="order.state=='confirmed'">In Preparation</a>
-                <!--<a class="btn btn-sm btn-danger" >Delete</a>
-                <a class="btn btn-sm btn-danger" >Delete</a>-->
+                <a class="btn btn-sm btn-success" v-if="order.state=='in preparation'" v-on:click.prevent="preparedOrder(order)">Prepared</a>
+                <a class="btn btn-sm btn-warning" v-if="order.state=='confirmed'" v-on:click.prevent="inPreparationOrder(order)">In Preparation</a>
             </td>
         </tr>
         </tbody>
@@ -40,12 +38,14 @@
             }
         },
         methods: {
-            editOrder: function (order) {
+            preparedOrder: function (order) {
                 this.editingOrder = order;
-                this.$emit('edit-click', order);
+                /*this.editingOrder = true;*/
+                this.$emit('prepared-click', order);
             },
-            deleteOrder: function (order) {
-                this.$emit('delete-click', order);
+            inPreparationOrder: function (order) {
+                this.editingOrder = order;
+                this.$emit('inpreparation-click', order);
             }
         }
     }

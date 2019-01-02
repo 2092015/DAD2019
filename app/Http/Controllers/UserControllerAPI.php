@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationEmail;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
 
 use App\Http\Resources\User as UserResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 use App\User;
 use App\StoreUserRequest;
@@ -34,15 +36,16 @@ class UserControllerAPI extends Controller
     public function store(Request $request)
     {
         $request->validate([
-                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'min:3'
-            ]);
+            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'min:3'
+        ]);
         $user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
         $user->username=$request->email;
         $user->save();
+        $this->sendRegistrationMail($user->id);
 
         return response()->json(new UserResource($user), 201);
 
@@ -54,7 +57,7 @@ class UserControllerAPI extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email'
-            ]);
+        ]);
         /*if(starts_with($this->photo_url, '/storage/profiles/')){
             $request->photo_url = str_after($request->photo_url, '/storage/profiles/');
         }*/
@@ -83,17 +86,11 @@ class UserControllerAPI extends Controller
     }
     public function myProfile(Request $request)
     {
-        //var_dump($request);
         return new UserResource($request->user());
     }
 
     public function sendRegistrationMail($id){
         $user = User::find($id);
-        $user->id = Hash::make($user->id);
-        $this->prepareEmail(view('email')->with('user', $user), $user->email);
-    }
-
-    public function prepareEmail(View $content, $email){
-        mail($email,"Confirm Email",$content);
+        Mail::to($user->email)->send(new RegistrationEmail($user));
     }
 }
