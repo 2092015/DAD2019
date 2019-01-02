@@ -53439,8 +53439,6 @@ exports.push([module.i, "\n.dropdown-menu.p-4.dropdown-menu-right[data-v-438d891
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__orderList_vue__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__orderList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__orderList_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__orderEdit_vue__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__orderEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__orderEdit_vue__);
 //
 //
 //
@@ -53455,7 +53453,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 
@@ -53483,7 +53480,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentOrder = order;
             this.showSuccess = false;
-            axios.put('api/orders/' + this.currentOrder.id, this.currentOrder).then(function (response) {
+            axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
                 _this.currentOrder.state = 'prepared';
                 // Copies response.data.data properties to this.currentUser
                 // without changing this.currentUser reference
@@ -53491,7 +53488,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.currentOrder = null;
                 /*this.editingOrder = false;*/
                 _this.showSuccess = true;
-                _this.successMessage = 'Order Saved';
+                _this.successMessage = 'Order Updated';
             });
         },
 
@@ -53500,7 +53497,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentOrder = order;
             this.showSuccess = false;
-            axios.put('api/orders/' + this.currentOrder.id, this.currentOrder).then(function (response) {
+            axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
                 _this2.currentOrder.state = 'in preparation';
                 // Copies response.data.data properties to this.currentUser
                 // without changing this.currentUser reference
@@ -53776,313 +53773,11 @@ if (false) {
 }
 
 /***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(91)
-}
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(93)
-/* template */
-var __vue_template__ = __webpack_require__(94)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-6bb0de86"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/orderEdit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6bb0de86", Component.options)
-  } else {
-    hotAPI.reload("data-v-6bb0de86", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(92);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("4bb17957", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bb0de86\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./orderEdit.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bb0de86\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./orderEdit.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 93 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: "orderEdit",
-    props: ['currentOrder', 'editingOrder'],
-    methods: {
-        saveOrder: function saveOrder() {
-            this.$emit('order-saved');
-        },
-        cancelEdit: function cancelEdit() {
-            this.$emit('order-canceled');
-        }
-    }
-
-});
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "jumbotron" }, [
-    _c("h2", [_vm._v("Edit Order")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "inputState" } }, [_vm._v("State")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.currentOrder.state,
-            expression: "currentOrder.state"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", name: "state", id: "inputState", value: "" },
-        domProps: { value: _vm.currentOrder.state },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.currentOrder, "state", $event.target.value)
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "item_id" } }, [_vm._v("Item")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.currentOrder.item_id,
-              expression: "currentOrder.item_id"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { id: "item_id", name: "item_id" },
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.$set(
-                _vm.currentOrder,
-                "item_id",
-                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-              )
-            }
-          }
-        },
-        _vm._l(_vm.items, function(item) {
-          return _c("option", { domProps: { value: item.id } }, [
-            _vm._v(" " + _vm._s(item.name) + " ")
-          ])
-        })
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "item_id" } }, [_vm._v("Responsible Cook")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.currentOrder.responsible_cook_id,
-              expression: "currentOrder.responsible_cook_id"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { id: "responsible_cook_id", name: "responsible_cook_id" },
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.$set(
-                _vm.currentOrder,
-                "responsible_cook_id",
-                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-              )
-            }
-          }
-        },
-        _vm._l(_vm.users, function(user) {
-          return _c("option", { domProps: { value: _vm.item.id } }, [
-            _vm._v(" " + _vm._s(user.name) + " ")
-          ])
-        })
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.saveItem()
-            }
-          }
-        },
-        [_vm._v("Save")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-light",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.cancelEdit()
-            }
-          }
-        },
-        [_vm._v("Cancel")]
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6bb0de86", module.exports)
-  }
-}
-
-/***/ }),
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
 /* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 

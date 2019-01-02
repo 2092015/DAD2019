@@ -14,7 +14,7 @@
 
 <script>
     import orderList from './orderList.vue';
-    import orderEdit from './orderEdit.vue';
+
 
     export default {
         data: function(){
@@ -38,7 +38,7 @@
             preparedOrder: function(order){
                 this.currentOrder = order;
                 this.showSuccess = false;
-                axios.put('api/orders/'+this.currentOrder.id,this.currentOrder)
+                axios.put('api/orders/'+this.currentOrder.id, {'state':this.currentOrder.state})
                     .then(response=>{
                         this.currentOrder.state='prepared';
                         // Copies response.data.data properties to this.currentUser
@@ -47,14 +47,14 @@
                         this.currentOrder = null;
                         /*this.editingOrder = false;*/
                         this.showSuccess = true;
-                        this.successMessage = 'Order Saved';
+                        this.successMessage = 'Order Updated';
                     });
             },
 
             inPreparationOrder: function(order){
                 this.currentOrder = order;
                 this.showSuccess = false;
-                axios.put('api/orders/'+this.currentOrder.id,this.currentOrder)
+                axios.put('api/orders/'+this.currentOrder.id,{'state':this.currentOrder.state})
                     .then(response=>{
                         this.currentOrder.state='in preparation';
                         // Copies response.data.data properties to this.currentUser
