@@ -27,6 +27,8 @@ Route::delete('users/{id}', 'UserControllerAPI@destroy');
 Route::post('sendMail/{id}', 'UserControllerAPI@sendRegistrationMail');
 
 Route::get('items', 'ItemControllerAPI@index');
+Route::get('drink_items', 'ItemControllerAPI@drink');
+Route::get('dish_items', 'ItemControllerAPI@dish');
 Route::get('items/{id}', 'ItemControllerAPI@show');
 Route::post('items', 'ItemControllerAPI@store');
 Route::put('items/{id}', 'ItemControllerAPI@update');

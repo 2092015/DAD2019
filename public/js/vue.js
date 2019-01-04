@@ -25519,7 +25519,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(21);
-module.exports = __webpack_require__(135);
+module.exports = __webpack_require__(132);
 
 
 /***/ }),
@@ -25550,12 +25550,10 @@ var invoice = Vue.component('invoice', __webpack_require__(111));
 var mainComponent = Vue.component('main_component', __webpack_require__(121));
 var profile = Vue.component('profile', __webpack_require__(126));
 var login = Vue.component('login', __webpack_require__(129));
-/*const logout = Vue.component('logout', require('./components/logout.vue'));*/
 var register = Vue.component('register', __webpack_require__(17));
+var addMeal = Vue.component('addMeal', __webpack_require__(136));
 
-var routes = [{ path: '/', redirect: '/mainComponent' }, { path: '/mainComponent', component: mainComponent }, { path: '/users', component: user }, { path: '/items', component: item }, { path: '/orders', component: order }, { path: '/meals', component: meal }, { path: '/tables', component: restaurantTable }, { path: '/invoices', component: invoice }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' },
-/*{ path: '/logout', component: logout, name: 'logout'},*/
-{ path: '/register', component: register, name: 'register' }];
+var routes = [{ path: '/', redirect: '/mainComponent' }, { path: '/mainComponent', component: mainComponent }, { path: '/users', component: user }, { path: '/items', component: item }, { path: '/orders', component: order }, { path: '/meals', component: meal }, { path: '/tables', component: restaurantTable }, { path: '/invoices', component: invoice }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' }, { path: '/register', component: register, name: 'register' }, { path: '/addMeal', component: addMeal, name: 'addMeal' }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -52884,7 +52882,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "itemList",
@@ -53482,13 +53479,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentOrder = order;
             this.showSuccess = false;
+            this.currentOrder.state = 'prepared';
             axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
-                _this.currentOrder.state = 'prepared';
-                // Copies response.data.data properties to this.currentUser
-                // without changing this.currentUser reference
                 Object.assign(_this.currentOrder, response.data.data);
                 _this.currentOrder = null;
-                /*this.editingOrder = false;*/
                 _this.showSuccess = true;
                 _this.successMessage = 'Order Updated';
             });
@@ -53499,15 +53493,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.currentOrder = order;
             this.showSuccess = false;
+            this.currentOrder.state = 'in preparation';
             axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
-                _this2.currentOrder.state = 'in preparation';
-                // Copies response.data.data properties to this.currentUser
-                // without changing this.currentUser reference
                 Object.assign(_this2.currentOrder, response.data.data);
                 _this2.showSuccess = true;
                 _this2.successMessage = 'Order Saved';
                 _this2.currentOrder = null;
-                /*this.editingUser = false;*/
             });
         },
         getOrders: function getOrders() {
@@ -53609,7 +53600,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -53662,7 +53653,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         preparedOrder: function preparedOrder(order) {
             this.editingOrder = order;
-            /*this.editingOrder = true;*/
             this.$emit('prepared-click', order);
         },
         inPreparationOrder: function inPreparationOrder(order) {
@@ -53929,6 +53919,8 @@ exports.push([module.i, "\n.dropdown-menu.p-4.dropdown-menu-right[data-v-651a8d0
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mealList_vue__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mealList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mealList_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addMeal_vue__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addMeal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__addMeal_vue__);
 //
 //
 //
@@ -53948,6 +53940,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -53965,7 +53958,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     components: {
-        'meal-list': __WEBPACK_IMPORTED_MODULE_0__mealList_vue___default.a
+        'meal-list': __WEBPACK_IMPORTED_MODULE_0__mealList_vue___default.a,
+        'addMeal': __WEBPACK_IMPORTED_MODULE_1__addMeal_vue___default.a
     },
     methods: {
 
@@ -53974,6 +53968,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('api/meals').then(function (response) {
                 _this.meals = response.data.data;
+            });
+        },
+        getDrinkItems: function getDrinkItems() {
+            var _this2 = this;
+
+            axios.get('api/drink_items').then(function (response) {
+                _this2.items = response.data.data;
+            });
+        },
+        getDishItems: function getDishItems() {
+            var _this3 = this;
+
+            axios.get('api/dish_items').then(function (response) {
+                _this3.items = response.data.data;
             });
         }
     },
@@ -54218,25 +54226,33 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm._m(0),
+      _c(
+        "div",
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "btn btn-sm btn-primary",
+              attrs: { to: "/addMeal" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.createMeal()
+                }
+              }
+            },
+            [_vm._v("Create Meal")]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("meal-list", { attrs: { meals: _vm.meals } })
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("button", { staticClass: "btn btn-info", attrs: { type: "button" } }, [
-        _vm._v("Create Meal")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -55675,13 +55691,223 @@ if (false) {
 }
 
 /***/ }),
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */
+/* 132 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(137)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(139)
+/* template */
+var __vue_template__ = __webpack_require__(140)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-0152b0ee"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/addMeal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0152b0ee", Component.options)
+  } else {
+    hotAPI.reload("data-v-0152b0ee", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(138);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("3daa58fc", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0152b0ee\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./addMeal.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0152b0ee\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./addMeal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*    #addMealTab table {\r\n        color : white;\r\n        background-color: #428bca;\r\n        padding : 5px 15px;\r\n    }*/\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 139 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "addMeal",
+    props: ['items'],
+    data: function data() {
+        return {
+            editingItem: null
+        };
+    },
+    methods: {
+        getDrinkItems: function getDrinkItems() {
+
+            this.$emit('drinkitems-click');
+        },
+        getDishItems: function getDishItems() {
+
+            this.$emit('dishitems-click');
+        },
+        getItems: function getItems() {
+            var _this = this;
+
+            axios.get('api/items').then(function (response) {
+                _this.items = response.data.data;
+            });
+        },
+        editItem: function editItem(item) {
+            this.editingItem = item;
+            this.$emit('edit-click', item);
+        }
+    },
+    mounted: function mounted() {
+        this.getItems();
+    }
+});
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("table", { staticClass: "table table-striped" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "tbody",
+      _vm._l(_vm.items, function(item) {
+        return _c(
+          "tr",
+          { key: item.id, class: { active: _vm.editingItem === item } },
+          [
+            _c("td", [_vm._v(_vm._s(item.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.type))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.price) + " €")])
+          ]
+        )
+      })
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0152b0ee", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

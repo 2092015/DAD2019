@@ -23,6 +23,24 @@ class ItemControllerAPI extends Controller
         }
 
     }
+    public function drink(Request $request)
+    {
+        if ($request->has('page')) {
+            return ItemResource::collection(item::paginate(5));
+        } else {
+            return ItemResource::collection(item::where('type','drink')->get());
+        }
+
+    }
+    public function dish(Request $request)
+    {
+        if ($request->has('page')) {
+            return ItemResource::collection(item::paginate(5));
+        } else {
+            return ItemResource::collection(item::where('type','dish')->get());
+        }
+
+    }
 
     public function show($id)
     {

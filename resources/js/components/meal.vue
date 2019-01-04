@@ -10,7 +10,7 @@
             <strong>{{ successMessage }}</strong>
         </div>
         <div>
-            <button type="button" class="btn btn-info">Create Meal</button>
+            <router-link to="/addMeal" class="btn btn-sm btn-primary" v-on:click.prevent="createMeal()">Create Meal</router-link>
         </div>
         <meal-list v-bind:meals = 'meals'></meal-list>
         
@@ -19,6 +19,7 @@
 
 <script>
     import mealList from './mealList.vue';
+    import addMeal from './addMeal.vue';
 
     export default {
         data: function(){
@@ -30,17 +31,28 @@
                 successMessage: '',
                 failMessage: '',
                 currentMeal: null,
-                meals:[],
+                meals:[]
             }
         },
         components: {
             'meal-list': mealList,
+            'addMeal':addMeal
         },
         methods: {
 
             getMeals: function(){
                 axios.get('api/meals')
                     .then(response=>{this.meals = response.data.data;});
+
+            },
+            getDrinkItems: function(){
+                axios.get('api/drink_items')
+                    .then(response=>{this.items = response.data.data;});
+
+            },
+            getDishItems: function(){
+                axios.get('api/dish_items')
+                    .then(response=>{this.items = response.data.data;});
 
             }
         },
