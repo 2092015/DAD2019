@@ -120,6 +120,14 @@
             subtotal(item) {
                 return (item.qty * item.price)
             },
+            getDrinkItems: function () {
+
+                this.$emit('drinkitems-click');
+            },
+            getDishItems: function () {
+
+                this.$emit('dishitems-click');
+            },
             saveMeal(items) {
                 return (item.qty * item.price)
             }

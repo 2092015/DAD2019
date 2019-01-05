@@ -55948,6 +55948,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         subtotal: function subtotal(item) {
             return item.qty * item.price;
         },
+
+        getDrinkItems: function getDrinkItems() {
+
+            this.$emit('drinkitems-click');
+        },
+        getDishItems: function getDishItems() {
+
+            this.$emit('dishitems-click');
+        },
         saveMeal: function saveMeal(items) {
             return item.qty * item.price;
         }
