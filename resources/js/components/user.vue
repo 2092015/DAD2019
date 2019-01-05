@@ -11,7 +11,6 @@
 
         <user-list v-bind:users = 'users' @edit-click="editUser" @delete-click="deleteUser"></user-list>
         <user-edit v-bind:current-user = 'currentUser' v-if="currentUser" @user-saved="saveUser" @user-canceled="cancelEdit"></user-edit>
-        <register @register-click="register"></register>
     </div>
 </template>
 
@@ -97,7 +96,9 @@
                 axios.get('api/users')
                     .then(response=>{this.users = response.data.data;});
 
-            }
+            },
+
+
         },
         mounted() {
             this.getUsers();

@@ -55,14 +55,15 @@
         ],
         data: function() {
             return {
-            selected: '',//todo colocar aqui o tipo de user que está na bd
-            options: [
-                { text: 'Manager', value: 'manager' },
-                { text: 'Cook', value: 'cook' },
-                { text: 'Cashier', value: 'cashier' },
-                { text: 'Waiter', value: 'waiter' }
-            ]
-        }},
+                user: [this.$store.state.user],
+                selected: '',//todo colocar aqui o tipo de user que está na bd
+                options: [
+                    { text: 'Manager', value: 'manager' },
+                    { text: 'Cook', value: 'cook' },
+                    { text: 'Cashier', value: 'cashier' },
+                    { text: 'Waiter', value: 'waiter' }
+                ]
+            }},
         methods: {
             createUser: function () {
                 this.$emit('user-created');
