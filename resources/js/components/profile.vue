@@ -20,8 +20,7 @@
                 profileUser: {
                     email:"",
                     age:"",
-                    name:"",
-                    department_id: "1"
+                    name:""
                 },
                 successMessage: "",
                 showSuccess: false

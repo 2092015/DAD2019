@@ -1,7 +1,6 @@
 <template>
     <table class="table table-striped">
         <thead>
-        <!--<a class="btn btn-sm btn-primary" v-on:click.prevent="createUser()">Create</a>-->
         <router-link to="/register" class="btn btn-sm btn-primary" v-on:click.prevent="createUser()">Create</router-link>
         <tr>
             <th>Name</th>

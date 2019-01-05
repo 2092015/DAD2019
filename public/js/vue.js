@@ -51607,7 +51607,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51657,7 +51657,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__userEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__userEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__register_vue__);
-//
 //
 //
 //
@@ -51763,6 +51762,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this5.users = response.data.data;
             });
         }
+
     },
     mounted: function mounted() {
         this.getUsers();
@@ -51866,7 +51866,6 @@ exports.push([module.i, "\nimg[data-v-32d347d4] {\n    width: 75px;\n}\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -52065,7 +52064,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52131,6 +52130,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['currentUser', 'editingUser', 'usersTypes'],
     data: function data() {
         return {
+            user: [this.$store.state.user],
             selected: '', //todo colocar aqui o tipo de user que está na bd
             options: [{ text: 'Manager', value: 'manager' }, { text: 'Cook', value: 'cook' }, { text: 'Cashier', value: 'cashier' }, { text: 'Waiter', value: 'waiter' }]
         };
@@ -52374,7 +52374,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52385,6 +52385,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -52444,7 +52448,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.showSuccess = true;
                 _this.successMessage = 'User Created';
             });
+            this.$router.push({ name: 'users', query: { redirect: '/users' } });
         }
+
     }
 
 });
@@ -52461,6 +52467,26 @@ var render = function() {
     _c("h2", [_vm._v("Register User")]),
     _vm._v(" "),
     _c("form", [
+      _vm.showSuccess
+        ? _c("div", { staticClass: "alert alert-success" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close-btn",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.showSuccess = false
+                  }
+                }
+              },
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c("strong", [_vm._v(_vm._s(_vm.successMessage))])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "inputName" } }, [_vm._v("Name")]),
         _vm._v(" "),
@@ -52559,7 +52585,9 @@ var render = function() {
           _vm._l(_vm.options, function(option) {
             return _c("option", { domProps: { value: option.value } }, [
               _vm._v(
-                "\n                " + _vm._s(option.text) + "\n            "
+                "\n                    " +
+                  _vm._s(option.text) +
+                  "\n                "
               )
             ])
           })
@@ -52650,9 +52678,7 @@ var render = function() {
             attrs: { "current-user": _vm.currentUser },
             on: { "user-saved": _vm.saveUser, "user-canceled": _vm.cancelEdit }
           })
-        : _vm._e(),
-      _vm._v(" "),
-      _c("register", { on: { "register-click": _vm.register } })
+        : _vm._e()
     ],
     1
   )
@@ -55308,6 +55334,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__order_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__order_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__item_vue__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__item_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__item_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__meal_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__meal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__meal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__invoice_vue__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__invoice_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__invoice_vue__);
 //
 //
 //
@@ -55327,7 +55357,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
+
 
 
 
@@ -55348,11 +55379,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         'user': __WEBPACK_IMPORTED_MODULE_0__user_vue___default.a,
         'order': __WEBPACK_IMPORTED_MODULE_1__order_vue___default.a,
-        'item': __WEBPACK_IMPORTED_MODULE_2__item_vue___default.a
+        'item': __WEBPACK_IMPORTED_MODULE_2__item_vue___default.a,
+        'meal': __WEBPACK_IMPORTED_MODULE_3__meal_vue___default.a,
+        'invoice': __WEBPACK_IMPORTED_MODULE_4__invoice_vue___default.a
     }, methods: {},
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        console.log(this.$store.state.user);
+    },
 
-    computed: {}
+    computed: {
+        isLogged: function isLogged() {
+            // `this` points to the vm instance
+            return this.$store.state.user;
+            console.log(this.$store.state.user);
+        },
+        typeUser: function typeUser() {
+            if (!this.$store.state.user) {
+                // If not authenticated, add a path where to redirect after login.
+                console.log("sem user");
+                console.log(this.$store.state.user);
+                this.$router.push({ name: 'login', query: { redirect: '/items' } });
+            } else if (this.$store.state.user.type == 'cook') {
+                console.log("logado cook");
+                this.$router.push({ name: 'order', query: { redirect: '/orders' } });
+            } else if (this.$store.state.user.type == 'cashier') {
+                console.log("logado cashier");
+                this.$router.push({ name: 'invoice', query: { redirect: '/invoice' } });
+            } else if (this.$store.state.user.type == 'waiter') {
+                console.log("logado waiter");
+                console.log(this.$store.state.user);
+                this.$router.push({ name: 'meal', query: { redirect: '/meals' } });
+            } else if (this.$store.state.user.type == 'manager') {
+                console.log("logado manager");
+                console.log(this.$store.state.user);
+                this.$router.push({ name: 'user', query: { redirect: '/users' } });
+            }
+        }
+    }
 
 });
 
@@ -55488,8 +55551,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             profileUser: {
                 email: "",
                 age: "",
-                name: "",
-                department_id: "1"
+                name: ""
             },
             successMessage: "",
             showSuccess: false
@@ -55615,8 +55677,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__profile_vue__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__profile_vue__);
 //
 //
 //
@@ -55653,18 +55715,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             user: {
                 email: "",
-                password: ""
+                password: "",
+                users: this.$store.state.user
             },
             typeofmsg: "alert-success",
             showMessage: false,
             message: ""
         };
     },
+    component: {
+        'profile': __WEBPACK_IMPORTED_MODULE_0__profile_vue___default.a
+    },
+
     methods: {
         login: function login() {
             var _this = this;
@@ -55674,8 +55743,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.$store.commit('setToken', response.data.access_token);
                 return axios.get('api/users/me');
             }).then(function (response) {
-                console.log("teste");
-                console.log(response.data);
                 _this.$store.commit('setUser', response.data.data);
                 _this.typeofmsg = "alert-success";
                 _this.message = "User authenticated correctly";
@@ -55694,14 +55761,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.showMessage = false;
             axios.post('api/logout').then(function (response) {
                 _this2.$store.commit('clearUserAndToken');
-                /*this.typeofmsg = "alert-success";
-                this.message = "User has logged out correctly";
-                this.showMessage = true;*/
             }).catch(function (error) {
                 _this2.$store.commit('clearUserAndToken');
-                /*this.typeofmsg = "alert-danger";
-                this.message = "Logout incorrect. But local credentials were discarded";
-                this.showMessage = true;*/
+
                 console.log(error);
             });
         }
