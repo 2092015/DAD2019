@@ -13,18 +13,18 @@
             </thead>
             <tbody>
             <tr v-for="(item, index) in items" :key="index">
-                <td>
+                <!--<td>
                     <span v-if="editIndex !== index">{{ item.type }}</span>
                     <span v-if="editIndex === index">
               <input class="form-control form-control-sm" v-model="item.type">
             </span>
-                </td>
-                <td>
-                    <span v-if="editIndex !== index">{{ item.name }}</span>
-                    <span v-if="editIndex === index">
-              <input class="form-control form-control-sm" v-model="item.name">
-            </span>
-                </td>
+                </td>-->
+                <select v-model="selected" class="form-control form-control-sm">
+                    <option v-for="item in items" type="drink">Drink</option>
+                    <option v-for="item in items" type="dish">Dish</option>
+                </select>
+                <span>{{ selected }}</span>
+                <td>{{item.name}}</td>
                 <td>
                     <span v-if="editIndex !== index">{{ item.qty }}</span>
                     <span v-if="editIndex === index">
@@ -85,6 +85,7 @@
     export default {
         name: 'addMeal2',
         data() {
+            selected: ''
             return {
                 editIndex: null,
                 originalData: null,
@@ -142,6 +143,10 @@
                 return this.allSubTotal
             }
         },
+        mounted:{
+            this:getDishItems()
+
+        }
     }
 </script>
 

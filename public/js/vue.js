@@ -54078,7 +54078,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             successMessage: '',
             failMessage: '',
             currentMeal: null,
-            meals: []
+            meals: [],
+            items: []
         };
     },
     components: {
@@ -55912,6 +55913,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'addMeal2',
     data: function data() {
+        selected: '';
         return {
             editIndex: null,
             originalData: null,
@@ -55974,6 +55976,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         total: function total() {
             return this.allSubTotal;
         }
+    },
+    mounted: {
+        this: getDishItems()
+
     }
 });
 
@@ -56034,67 +56040,53 @@ var render = function() {
         "tbody",
         _vm._l(_vm.items, function(item, index) {
           return _c("tr", { key: index }, [
-            _c("td", [
-              _vm.editIndex !== index
-                ? _c("span", [_vm._v(_vm._s(item.type))])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.editIndex === index
-                ? _c("span", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.type,
-                          expression: "item.type"
-                        }
-                      ],
-                      staticClass: "form-control form-control-sm",
-                      domProps: { value: item.type },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(item, "type", $event.target.value)
-                        }
-                      }
-                    })
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selected,
+                    expression: "selected"
+                  }
+                ],
+                staticClass: "form-control form-control-sm",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _vm._l(_vm.items, function(item) {
+                  return _c("option", { attrs: { type: "drink" } }, [
+                    _vm._v("Drink")
                   ])
-                : _vm._e()
-            ]),
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.items, function(item) {
+                  return _c("option", { attrs: { type: "dish" } }, [
+                    _vm._v("Dish")
+                  ])
+                })
+              ],
+              2
+            ),
             _vm._v(" "),
-            _c("td", [
-              _vm.editIndex !== index
-                ? _c("span", [_vm._v(_vm._s(item.name))])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.editIndex === index
-                ? _c("span", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.name,
-                          expression: "item.name"
-                        }
-                      ],
-                      staticClass: "form-control form-control-sm",
-                      domProps: { value: item.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(item, "name", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                : _vm._e()
-            ]),
+            _c("span", [_vm._v(_vm._s(_vm.selected))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.name))]),
             _vm._v(" "),
             _c("td", [
               _vm.editIndex !== index

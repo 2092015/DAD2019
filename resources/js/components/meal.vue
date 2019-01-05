@@ -31,7 +31,8 @@
                 successMessage: '',
                 failMessage: '',
                 currentMeal: null,
-                meals:[]
+                meals:[],
+                items:[]
             }
         },
         components: {
