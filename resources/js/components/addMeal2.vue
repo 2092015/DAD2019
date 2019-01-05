@@ -19,11 +19,19 @@
               <input class="form-control form-control-sm" v-model="item.type">
             </span>
                 </td>-->
+                <td>
                 <select v-model="selected" class="form-control form-control-sm">
                     <option v-for="item in items" type="drink">Drink</option>
                     <option v-for="item in items" type="dish">Dish</option>
                 </select>
                 <span>{{ selected }}</span>
+                </td>
+                <!--<td>
+                <select v-model="selected" class="form-control form-control-sm">
+                    <option v-for="item in items" >Drink</option>
+                </select>
+                <span>{{ selected }}</span>
+                </td>-->
                 <td>{{item.name}}</td>
                 <td>
                     <span v-if="editIndex !== index">{{ item.qty }}</span>
@@ -144,7 +152,7 @@
             }
         },
         mounted:{
-            this:getDishItems()
+            /*this:getDishItems()*/
 
         }
     }
