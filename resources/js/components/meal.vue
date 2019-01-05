@@ -10,7 +10,7 @@
             <strong>{{ successMessage }}</strong>
         </div>
         <div>
-            <router-link to="/addMeal" class="btn btn-sm btn-primary" v-on:click.prevent="createMeal()">Create Meal</router-link>
+            <router-link to="/addMeal2" class="btn btn-sm btn-primary" v-on:click.prevent="createMeal()">Create Meal</router-link>
         </div>
         <meal-list v-bind:meals = 'meals'></meal-list>
         
@@ -19,7 +19,7 @@
 
 <script>
     import mealList from './mealList.vue';
-    import addMeal from './addMeal.vue';
+    import addMeal2 from './addMeal2.vue';
 
     export default {
         data: function(){
@@ -36,7 +36,7 @@
         },
         components: {
             'meal-list': mealList,
-            'addMeal':addMeal
+            'addMeal2':addMeal2
         },
         methods: {
 

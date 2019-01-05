@@ -21,7 +21,7 @@ const mainComponent = Vue.component('main_component', require('./components/main
 const profile = Vue.component('profile', require('./components/profile.vue'));
 const login = Vue.component('login', require('./components/login.vue'));
 const register = Vue.component('register', require('./components/register.vue'));
-const addMeal = Vue.component('addMeal', require('./components/addMeal.vue'));
+const addMeal2 = Vue.component('addMeal2', require('./components/addMeal2.vue'));
 
 const routes = [
     {path: '/', redirect: '/mainComponent'},
@@ -35,7 +35,7 @@ const routes = [
     { path: '/profile', component: profile, name: 'profile'},
     { path: '/login', component: login, name: 'login'},
     { path: '/register', component: register, name: 'register'},
-    { path: '/addMeal', component: addMeal, name: 'addMeal'}
+    { path: '/addMeal2', component: addMeal2, name: 'addMeal2'}
 
 ];
 

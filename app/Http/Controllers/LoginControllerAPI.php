@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
-define('YOUR_SERVER_URL', 'http://restaurant.restadadurant.tk');
+
+//define('YOUR_SERVER_URL', 'http://restaurant.restadadurant.tk');
 //define('YOUR_SERVER_URL', 'http://restaurant.test');
 // Check "oauth_clients" table for next 2 values:
 define('CLIENT_ID', '2');
@@ -15,8 +17,11 @@ class LoginControllerAPI extends Controller
 {
     public function login(Request $request)
     {
+        /*var_dump(URL::to('/'));*/
+        $url=str_replace_first('/api/login','/oauth/token',URL::current());
+        /*var_dump($url);*/
         $http = new \GuzzleHttp\Client;
-        $response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
+        $response = $http->post($url, [
             'form_params' => [
                 'grant_type' => 'password',
                 'client_id' => CLIENT_ID,
