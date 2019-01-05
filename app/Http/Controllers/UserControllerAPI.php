@@ -58,10 +58,6 @@ class UserControllerAPI extends Controller
             'name' => 'required',
             'email' => 'required|email'
         ]);
-        /*if(starts_with($this->photo_url, '/storage/profiles/')){
-            $request->photo_url = str_after($request->photo_url, '/storage/profiles/');
-        }*/
-
 
         $user = User::findOrFail($id);
         $user->update($request->all());
@@ -74,7 +70,7 @@ class UserControllerAPI extends Controller
         $user->delete();
         return response()->json(null, 204);
     }
-    public function emailAvailable(Request $request)
+    /*public function emailAvailable(Request $request)
     {
         $totalEmail = 1;
         if ($request->has('email') && $request->has('id')) {
@@ -83,14 +79,15 @@ class UserControllerAPI extends Controller
             $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
         }
         return response()->json($totalEmail == 0);
-    }
+    }*/
     public function myProfile(Request $request)
     {
         return new UserResource($request->user());
     }
 
     public function sendRegistrationMail($id){
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         Mail::to($user->email)->send(new RegistrationEmail($user));
+        return count(Mail::failures());
     }
 }
