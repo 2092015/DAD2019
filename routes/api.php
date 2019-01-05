@@ -35,7 +35,8 @@ Route::put('items/{id}', 'ItemControllerAPI@update');
 Route::delete('items/{id}', 'ItemControllerAPI@destroy');
 
 Route::get('orders', 'OrderControllerAPI@pending');
-//Route::get('pendingorders', 'OrderControllerAPI@pending');
+Route::get('all_orders', 'OrderControllerAPI@index');
+Route::get('pending_confirmed_orders', 'OrderControllerAPI@pendingconfirmed');
 Route::get('orders/{id}', 'OrderControllerAPI@show');
 Route::post('orders', 'OrderControllerAPI@store');
 Route::put('orders/{id}', 'OrderControllerAPI@update');

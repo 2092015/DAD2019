@@ -33,6 +33,16 @@ class OrderControllerAPI extends Controller
         }
 
     }
+    public function pendingconfirmed(Request $request)
+    {
+        if ($request->has('page')) {
+
+            return OrderResource::collection(order::where('state', ['pending','confirmed'])->orderByRaw('start')->paginate(5));
+        } else {
+            return OrderResource::collection(order::where('state', ['pending','confirmed'])->orderByRaw('start')->get());
+        }
+
+    }
 
     public function show($id)
     {

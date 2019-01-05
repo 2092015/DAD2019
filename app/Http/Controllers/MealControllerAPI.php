@@ -17,9 +17,9 @@ class MealControllerAPI extends Controller
     public function index(Request $request)
     {
         if ($request->has('page')) {
-            return MealResource::collection(meal::paginate(5));
+            return MealResource::collection(meal::orderBy('end','desc')->paginate(5));
         } else {
-            return MealResource::collection(meal::all());
+            return MealResource::collection(meal::orderBy('end','desc')->get());
         }
 
     }
@@ -29,7 +29,7 @@ class MealControllerAPI extends Controller
 
             return MealResource::collection(meal::whereNotIn('state', ['paid'])->paginate(5));
         } else {
-            return MealResource::collection(meal::whereNotIn('state', ['paid'])->mealByRaw('start')->get());
+            return MealResource::collection(meal::whereNotIn('state', ['paid'])->orderBy('start')->get());
         }
 
     }

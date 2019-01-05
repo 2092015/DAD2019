@@ -13,13 +13,13 @@
         </thead>
         <tbody>
         <tr v-for="order in orders"  :key="order.id" :class="{active: editingOrder === order}">
-            <td>{{ order.state }}</td>
-            <td>{{ order.item }}</td>
-            <td>{{ order.meal_id }}</td>
-            <td>{{ order.responsible_cook }}</td>
-            <td>{{ order.start }}</td>
-            <td>{{ order.end }}</td>
-            <td>
+            <td >{{ order.state }}</td>
+            <td >{{ order.item }}</td>
+            <td >{{ order.meal_id }}</td>
+            <td >{{ order.responsible_cook }}</td>
+            <td >{{ order.start }}</td>
+            <td >{{ order.end }}</td>
+            <td >
                 <a class="btn btn-sm btn-success" v-if="order.state=='in preparation'" v-on:click.prevent="preparedOrder(order)">Prepared</a>
                 <a class="btn btn-sm btn-warning" v-if="order.state=='confirmed'" v-on:click.prevent="inPreparationOrder(order)">In Preparation</a>
             </td>
