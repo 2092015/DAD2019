@@ -52546,7 +52546,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.showSuccess = true;
                 _this.successMessage = 'User Created';
             });
-            this.$router.push({ name: 'users', query: { redirect: '/users' } });
+            //this.$router.push({ name: 'users', query: { redirect: '/users' } });
         }
 
     }

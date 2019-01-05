@@ -66,7 +66,7 @@
                         this.showSuccess = true;
                         this.successMessage = 'User Created';
                     });
-                this.$router.push({ name: 'users', query: { redirect: '/users' } });
+                //this.$router.push({ name: 'users', query: { redirect: '/users' } });
             },
 
 
