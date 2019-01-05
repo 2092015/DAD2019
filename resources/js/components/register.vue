@@ -2,10 +2,6 @@
     <div class="jumbotron" >
         <h2>Register User</h2>
         <form>
-            <div class="alert alert-success" v-if="showSuccess">
-                <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
-                <strong>{{ successMessage }}</strong>
-            </div>
             <div class="form-group">
                 <label for="inputName">Name</label>
                 <input
