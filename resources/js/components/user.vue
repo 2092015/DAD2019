@@ -57,6 +57,7 @@
             },
             saveUser: function(){
                 this.editingUser = false;
+                /*this.currentUser.photo_url=this.file.name;*/
                 axios.put('api/users/'+this.currentUser.id,this.currentUser)
                     .then(response=>{
                         this.showSuccess = true;

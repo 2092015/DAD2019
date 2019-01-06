@@ -13,17 +13,23 @@
             </thead>
             <tbody>
             <tr v-for="(mealItem, index) in mealItems" :key="index">
-                <td>
+                <td >
+                    <span v-if="editIndex !== index">{{ item.type }}</span>
+                    <span v-if="editIndex === index">
                     <select v-model="item.type" v-on:change="getItemsByType" class="form-control form-control-sm">
                         <option v-for="option in options" v-bind:value="option.value" >
                             {{ option.text }}
                         </option>
                     </select>
+                    </span>
                 </td>
                 <td>
+                    <span v-if="editIndex !== index">{{ item.name }}</span>
+                    <span v-if="editIndex === index">
                     <select v-model="item.name" class="form-control form-control-sm">
                         <option v-for="item in items" type="option.text" :key="item.id">{{ item.name }}  </option>
                     </select>
+                    </span>
                 </td>
                 <td>
                     <span v-if="editIndex !== index">{{ item.qty }}</span>

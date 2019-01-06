@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="order in orders"  :key="order.id" :class="{active: editingOrder === order}">
+        <tr v-for="order in orders"  :key="order.id" :class='greenRow'>
             <td >{{ order.state }}</td>
             <td >{{ order.item }}</td>
             <td >{{ order.meal_id }}</td>
@@ -32,24 +32,40 @@
     export default {
         name: "orderList",
         props: ['orders'],
-        data: function(){
-            return{
+        data: function () {
+            return {
                 editingOrder: null,
+                order:{
+                    state:null,
+                }
             }
         },
         methods: {
             preparedOrder: function (order) {
                 this.editingOrder = order;
                 this.$emit('prepared-click', order);
+                this.class = 'prepared';
+
             },
             inPreparationOrder: function (order) {
                 this.editingOrder = order;
                 this.$emit('inpreparation-click', order);
+            }
+        },
+        computed: {
+
+            greenRow: function () {
+                console.log(order);
+                return {
+                    green: this.orders.state == "prepared"
+                }
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .green{
+        background-color: mediumspringgreen;
+    }
 </style>

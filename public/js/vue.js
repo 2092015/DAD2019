@@ -51756,7 +51756,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51868,6 +51868,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.editingUser = false;
+            /*this.currentUser.photo_url=this.file.name;*/
             axios.put('api/users/' + this.currentUser.id, this.currentUser).then(function (response) {
                 _this2.showSuccess = true;
                 _this2.successMessage = 'User Saved';
@@ -52213,7 +52214,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52272,7 +52273,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "userEdit",
@@ -52281,10 +52281,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             user: [this.$store.state.user],
             selected: '', //todo colocar aqui o tipo de user que está na bd
-            options: [{ text: 'Manager', value: 'manager' }, { text: 'Cook', value: 'cook' }, { text: 'Cashier', value: 'cashier' }, { text: 'Waiter', value: 'waiter' }]
+            options: [{ text: 'Manager', value: 'manager' }, { text: 'Cook', value: 'cook' }, { text: 'Cashier', value: 'cashier' }, { text: 'Waiter', value: 'waiter' }],
+            file: ''
         };
     },
     methods: {
+
         createUser: function createUser() {
             this.$emit('user-created');
         },
@@ -52293,6 +52295,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cancelEdit: function cancelEdit() {
             this.$emit('user-canceled');
+        },
+        handleFileUpload: function handleFileUpload() {
+            this.file = this.$refs.file.files[0];
+            console.log(this.user);
         }
     }
 
@@ -52391,8 +52397,7 @@ var render = function() {
           name: "email",
           id: "inputEmail",
           placeholder: "Email address",
-          value: "",
-          disabled: ""
+          value: ""
         },
         domProps: { value: _vm.currentUser.email },
         on: {
@@ -52407,6 +52412,8 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputTypeUser" } }, [_vm._v("Type")]),
+      _vm._v(" "),
       _c(
         "select",
         {
@@ -52445,6 +52452,21 @@ var render = function() {
           ])
         })
       )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
+      _c("label", [
+        _vm._v("Photo\n            "),
+        _c("input", {
+          ref: "file",
+          attrs: { type: "file", id: "file" },
+          on: {
+            change: function($event) {
+              _vm.handleFileUpload()
+            }
+          }
+        })
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
@@ -53627,7 +53649,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.dropdown-menu.p-4.dropdown-menu-right[data-v-438d8913]{\n    min-width: 15rem;\n}\n", ""]);
+exports.push([module.i, "\n.dropdown-menu.p-4.dropdown-menu-right[data-v-438d8913]{\n    min-width: 15rem;\n}\n\n", ""]);
 
 // exports
 
@@ -53688,6 +53710,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.showSuccess = true;
                 _this.successMessage = 'Order Updated';
             });
+            this.class = "table-success";
         },
 
         inPreparationOrder: function inPreparationOrder(order) {
@@ -53699,7 +53722,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
                 Object.assign(_this2.currentOrder, response.data.data);
                 _this2.showSuccess = true;
-                _this2.successMessage = 'Order Saved';
+                _this2.successMessage = 'Order Updated';
                 _this2.currentOrder = null;
             });
         },
@@ -53802,7 +53825,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.green[data-v-8a412d5e]{\n    background-color: mediumspringgreen;\n}\n", ""]);
 
 // exports
 
@@ -53849,17 +53872,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['orders'],
     data: function data() {
         return {
-            editingOrder: null
+            editingOrder: null,
+            order: {
+                state: null
+            }
         };
     },
     methods: {
         preparedOrder: function preparedOrder(order) {
             this.editingOrder = order;
             this.$emit('prepared-click', order);
+            this.class = 'prepared';
         },
         inPreparationOrder: function inPreparationOrder(order) {
             this.editingOrder = order;
             this.$emit('inpreparation-click', order);
+        }
+    },
+    computed: {
+
+        greenRow: function greenRow() {
+            console.log(order);
+            return {
+                green: this.orders.state == "prepared"
+            };
         }
     }
 });
@@ -53878,57 +53914,53 @@ var render = function() {
     _c(
       "tbody",
       _vm._l(_vm.orders, function(order) {
-        return _c(
-          "tr",
-          { key: order.id, class: { active: _vm.editingOrder === order } },
-          [
-            _c("td", [_vm._v(_vm._s(order.state))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.item))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.meal_id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.responsible_cook))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.start))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.end))]),
-            _vm._v(" "),
-            _c("td", [
-              order.state == "in preparation"
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-sm btn-success",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.preparedOrder(order)
-                        }
+        return _c("tr", { key: order.id, class: _vm.greenRow }, [
+          _c("td", [_vm._v(_vm._s(order.state))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(order.item))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(order.meal_id))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(order.responsible_cook))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(order.start))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(order.end))]),
+          _vm._v(" "),
+          _c("td", [
+            order.state == "in preparation"
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-sm btn-success",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.preparedOrder(order)
                       }
-                    },
-                    [_vm._v("Prepared")]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              order.state == "confirmed"
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-sm btn-warning",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.inPreparationOrder(order)
-                        }
+                    }
+                  },
+                  [_vm._v("Prepared")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            order.state == "confirmed"
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-sm btn-warning",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.inPreparationOrder(order)
                       }
-                    },
-                    [_vm._v("In Preparation")]
-                  )
-                : _vm._e()
-            ])
-          ]
-        )
+                    }
+                  },
+                  [_vm._v("In Preparation")]
+                )
+              : _vm._e()
+          ])
+        ])
       })
     )
   ])
@@ -54462,6 +54494,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'addMeal2',
@@ -54571,94 +54609,114 @@ var render = function() {
         _vm._l(_vm.mealItems, function(mealItem, index) {
           return _c("tr", { key: index }, [
             _c("td", [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.item.type,
-                      expression: "item.type"
-                    }
-                  ],
-                  staticClass: "form-control form-control-sm",
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.item,
-                          "type",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
+              _vm.editIndex !== index
+                ? _c("span", [_vm._v(_vm._s(_vm.item.type))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.editIndex === index
+                ? _c("span", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.item.type,
+                            expression: "item.type"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.item,
+                                "type",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            _vm.getItemsByType
+                          ]
+                        }
                       },
-                      _vm.getItemsByType
-                    ]
-                  }
-                },
-                _vm._l(_vm.options, function(option) {
-                  return _c("option", { domProps: { value: option.value } }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(option.text) +
-                        "\n                    "
+                      _vm._l(_vm.options, function(option) {
+                        return _c(
+                          "option",
+                          { domProps: { value: option.value } },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(option.text) +
+                                "\n                    "
+                            )
+                          ]
+                        )
+                      })
                     )
                   ])
-                })
-              )
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("td", [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.item.name,
-                      expression: "item.name"
-                    }
-                  ],
-                  staticClass: "form-control form-control-sm",
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.item,
-                        "name",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
-                },
-                _vm._l(_vm.items, function(item) {
-                  return _c(
-                    "option",
-                    { key: item.id, attrs: { type: "option.text" } },
-                    [_vm._v(_vm._s(item.name) + "  ")]
-                  )
-                })
-              )
+              _vm.editIndex !== index
+                ? _c("span", [_vm._v(_vm._s(_vm.item.name))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.editIndex === index
+                ? _c("span", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.item.name,
+                            expression: "item.name"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.item,
+                              "name",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.items, function(item) {
+                        return _c(
+                          "option",
+                          { key: item.id, attrs: { type: "option.text" } },
+                          [_vm._v(_vm._s(item.name) + "  ")]
+                        )
+                      })
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("td", [

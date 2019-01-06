@@ -40,14 +40,16 @@ class UserControllerAPI extends Controller
         $request->validate([
             'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
             'email' => 'required|email|unique:users,email',
-            'password' => 'min:3'
+            'password' => 'min:3',
         ]);
         $user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
         $user->username=$request->email;
+        $user->photo_url = basename($request->file('photo_url')->store('public/profiles'));
         $user->save();
         $this->sendRegistrationMail($user->id);
+
 
         return response()->json(new UserResource($user), 201);
 
@@ -60,8 +62,10 @@ class UserControllerAPI extends Controller
             'name' => 'required',
             'email' => 'required|email'
         ]);
-
+        var_dump($request);
+        $user->photo_url = basename($request->file('photo_url')->store('public/profiles'));
         $user = User::findOrFail($id);
+
         $user->update($request->all());
         return new UserResource($user);
     }

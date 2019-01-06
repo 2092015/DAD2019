@@ -46,6 +46,7 @@
                         this.showSuccess = true;
                         this.successMessage = 'Order Updated';
                     });
+                this.class="table-success"
             },
 
             inPreparationOrder: function(order){
@@ -56,9 +57,10 @@
                     .then(response=>{
                         Object.assign(this.currentOrder, response.data.data);
                         this.showSuccess = true;
-                        this.successMessage = 'Order Saved';
+                        this.successMessage = 'Order Updated';
                         this.currentOrder = null;
                     });
+
             },
             getOrders: function(){
                 axios.get('api/orders')
@@ -77,4 +79,5 @@
     .dropdown-menu.p-4.dropdown-menu-right{
         min-width: 15rem;
     }
+
 </style>

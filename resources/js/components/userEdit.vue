@@ -20,10 +20,10 @@
             <input
                 type="email" class="form-control" v-model="currentUser.email"
                 name="email" id="inputEmail"
-                placeholder="Email address" value="" disabled/>
+                placeholder="Email address" value=""/>
         </div>
         <div class="form-group">
-
+            <label for="inputTypeUser">Type</label>
             <select name="type" id="selectType" v-model="currentUser.type">
                 <option v-for="option in options" v-bind:value="option.value">
                     {{ option.text }}
@@ -32,12 +32,11 @@
 
 
         </div>
-        <!--<div class="large-12 medium-12 small-12 cell">
-            <label>File
-                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+        <div class="large-12 medium-12 small-12 cell">
+            <label>Photo
+                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/> <!--{{currentUser.photo_url}}-->
             </label>
-            <button v-on:click="submitFile()">Submit</button>
-        </div>-->
+        </div>
 
         <div class="form-group">
             <a class="btn btn-primary" v-on:click.prevent="saveUser()">Save</a>
@@ -62,9 +61,11 @@
                     { text: 'Cook', value: 'cook' },
                     { text: 'Cashier', value: 'cashier' },
                     { text: 'Waiter', value: 'waiter' }
-                ]
+                ],
+                file: ''
             }},
         methods: {
+
             createUser: function () {
                 this.$emit('user-created');
             },
@@ -73,6 +74,10 @@
             },
             cancelEdit: function () {
                 this.$emit('user-canceled');
+            },
+            handleFileUpload: function () {
+                this.file = this.$refs.file.files[0];
+                console.log(this.user);
             }
         }
 
