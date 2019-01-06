@@ -15,8 +15,8 @@
 <script>
     import orderList from './orderList.vue';
 
-
     export default {
+        name: "order",
         data: function(){
             return {
                 title: 'List Orders',

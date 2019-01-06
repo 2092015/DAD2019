@@ -12,7 +12,8 @@
         </nav>
 
         <div>
-            <item v-bind:items = 'items'></item>
+            <router-view></router-view>
+            <!--<item v-bind:items = 'items'></item>-->
         </div>
     </div>
 </template>
@@ -53,7 +54,6 @@
             isLogged: function () {
                 // `this` points to the vm instance
                 return this.$store.state.user;
-                console.log(this.$store.state.user);
             },
             typeUser:function () {
                 if(!this.$store.state.user) {
