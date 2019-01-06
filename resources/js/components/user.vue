@@ -94,11 +94,11 @@
             },
             getUsers: function(){
                 axios.get('api/users')
-                    .then(response=>{this.users = response.data.data;});
-
+                    .then(response=>{this.users = response.data.data;})
+                    .catch(error => {
+                        console.log("ERROR");
+                    })
             },
-
-
         },
         mounted() {
             this.getUsers();

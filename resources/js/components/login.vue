@@ -23,7 +23,19 @@
             <button type="submit" class="btn btn-primary"  v-on:click.prevent="login">Login</button>
         </div>
         <div v-if="this.$store.state.user">
-            <a v-if="this.$store.state.user" class="dropdown-item">{{this.$store.state.user.username}}</a>
+
+            <a class="dropdown-item">
+                <img :src='this.$store.state.user.photo_url' />
+                {{this.$store.state.user.username}}
+            </a>
+
+            <a v-if="this.$store.state.user.shift_active" class="dropdown-item">
+                Início do turno: {{this.$store.state.user.last_shift_start}}
+            </a>
+
+            <a v-if="this.$store.state.user.shift_active" class="dropdown-item">
+                Fim do turno: {{this.$store.state.user.last_shift_end}}
+            </a>
 
             <router-link class="dropdown-item" to="/profile">Editar Perfil</router-link>
 
@@ -91,3 +103,9 @@
         },
     }
 </script>
+
+<style scoped>
+    img {
+        width: 30px;
+    }
+</style>

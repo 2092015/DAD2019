@@ -4,8 +4,7 @@
 
 @section('content')
 
-{{--    <router-link to="/users">Users</router-link>--}}
-    <router-view></router-view>
+    <main_component></main_component>
 
 @endsection
 @section('pagescript')

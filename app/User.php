@@ -17,11 +17,13 @@ class User extends Authenticatable
         'email', 
         'type',
         'username',
-        'email_verified_at'
-        /*'photo_url',*/
+        'email_verified_at',
+        'photo_url',
+        'blocked',
+        'last_shift_start',
+        'last_shift_end',
+        'shift_active'
     ];
-
-
 
     protected $hidden = [
         'password', 'remember_token',

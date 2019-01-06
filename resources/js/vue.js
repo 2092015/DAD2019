@@ -24,18 +24,23 @@ const register = Vue.component('register', require('./components/register.vue'))
 const addMeal2 = Vue.component('addMeal2', require('./components/addMeal2.vue'));
 
 const routes = [
-    {path: '/', redirect: '/mainComponent'},
-    {path: '/mainComponent', component: mainComponent},
-    {path: '/users', component: user},
-    {path: '/items', component: item},
+    {path: '/', component: item },
+    {path: '/users', component: user ,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'manager') {
+                next();
+            }else{
+                next(false);
+            }
+        }},
     {path: '/orders', component: order},
     {path: '/meals', component: meal},
     {path: '/tables', component: restaurantTable},
     {path: '/invoices', component: invoice},
-    { path: '/profile', component: profile, name: 'profile'},
-    { path: '/login', component: login, name: 'login'},
-    { path: '/register', component: register, name: 'register'},
-    { path: '/addMeal2', component: addMeal2, name: 'addMeal2'}
+    {path: '/profile', component: profile, name: 'profile'},
+    {path: '/login', component: login, name: 'login'},
+    {path: '/register', component: register, name: 'register'},
+    {path: '/addMeal2', component: addMeal2, name: 'addMeal2'}
 
 ];
 
@@ -45,13 +50,16 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if ((to.name == 'mainComponent') || (to.name == 'logout')) {
+    if(to.path !== '/') {
         if (!store.state.user) {
-            next("/login");
-            return;
+            next('/');
+        }else{
+            next();
         }
+    }else{
+        next();
     }
-    next();
+
 });
 
 
@@ -60,6 +68,7 @@ const app = new Vue({
     store,
     created() {
         this.$store.commit('loadTokenAndUserFromSession');
+
         //console.log(this.$store.state.user);
     }
 }).$mount('#app');
