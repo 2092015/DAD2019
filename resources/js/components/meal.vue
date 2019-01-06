@@ -10,7 +10,7 @@
             <strong>{{ successMessage }}</strong>
         </div>
         <div>
-            <router-link to="/addMeal2" class="btn btn-sm btn-primary" v-on:click.prevent="createMeal()">Create Meal</router-link>
+            <router-link to="/addMeal2" class="btn btn-sm btn-primary" @items-click="getItems"v-on:click.prevent="createMeal()">Create Meal</router-link>
         </div>
         <meal-list v-bind:meals = 'meals'></meal-list>
         
@@ -46,19 +46,16 @@
                     .then(response=>{this.meals = response.data.data;});
 
             },
-            getDrinkItems: function(){
-                axios.get('api/drink_items')
+            getItems: function(){
+                axios.get('api/items')
                     .then(response=>{this.items = response.data.data;});
 
             },
-            getDishItems: function(){
-                axios.get('api/dish_items')
-                    .then(response=>{this.items = response.data.data;});
 
-            }
         },
         mounted() {
             this.getMeals();
+            this.getItems();
 
         }
     }
