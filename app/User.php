@@ -17,6 +17,7 @@ class User extends Authenticatable
         'email', 
         'type',
         'username',
+        'email_verified_at'
         /*'photo_url',*/
     ];
 

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Hash;
+use Illuminate\Support\Facades\URL;
 
 class RegistrationEmail extends Mailable
 {
@@ -21,9 +22,12 @@ class RegistrationEmail extends Mailable
 
     protected $user;
 
+    protected $url;
+
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->url = $url = URL::to('/');
     }
 
     /**
@@ -35,9 +39,10 @@ class RegistrationEmail extends Mailable
     {
         return $this->from("postmaster@mail.restadadurant.tk")->view('email')
             ->with([
-                'id' => Hash::make($this->user->id),
+                'id' => $this->user->id,
                 'name' => $this->user->name,
-                'email' => $this->user->email
+                'email' => $this->user->email,
+                'url' => $this->url
             ]);
     }
 }
