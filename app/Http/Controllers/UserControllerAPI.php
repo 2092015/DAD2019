@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\StoreUserRequest;
 use Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 
 class UserControllerAPI extends Controller
@@ -85,7 +86,7 @@ class UserControllerAPI extends Controller
         return new UserResource($request->user());
     }
 
-    public function sendRegistrationMail($id){
+    public function sendRegistrationMail($id, $url=''){
         $user = User::findOrFail($id);
         Mail::to($user->email)->send(new RegistrationEmail($user));
         return count(Mail::failures());
