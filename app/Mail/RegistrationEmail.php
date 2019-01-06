@@ -39,7 +39,7 @@ class RegistrationEmail extends Mailable
     {
         return $this->from("postmaster@mail.restadadurant.tk")->view('email')
             ->with([
-                'id' => Hash::make($this->user->id),
+                'id' => $this->user->id,
                 'name' => $this->user->name,
                 'email' => $this->user->email,
                 'url' => $this->url

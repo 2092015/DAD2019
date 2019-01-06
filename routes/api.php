@@ -63,6 +63,8 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
+Route::get('users/confirm/{id}', 'UserControllerAPI@confirmUser');
+
 /*Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');*/
 
 

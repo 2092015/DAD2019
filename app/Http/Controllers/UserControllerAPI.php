@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\RegistrationEmail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
 
@@ -90,5 +91,22 @@ class UserControllerAPI extends Controller
         $user = User::findOrFail($id);
         Mail::to($user->email)->send(new RegistrationEmail($user));
         return count(Mail::failures());
+    }
+
+    public function confirmUser($id){
+        $user = User::findOrFail($id);
+        $pass = str_random(8);
+
+        if(!$user->email_verified_at){
+            $user->email_verified_at = Carbon::now()->toDateTimeString();
+            $user->password = Hash::make($pass);
+            $user->save();
+        }
+
+        return view('confirmed')->with([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $pass
+        ]);
     }
 }
