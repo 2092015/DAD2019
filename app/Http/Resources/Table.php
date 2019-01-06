@@ -17,9 +17,6 @@ class Table extends Resource
 
         ];
     }
-    public function table()
-    {
-        return $this->belongsToMany(Order::class);
-    }
+
 }
 

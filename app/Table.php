@@ -23,13 +23,13 @@ class Table extends Authenticatable
 
     protected $fillable = [
         'table_number',
-        'deleted_at',
-        'created_at',
-        'updated_at',
     ];
+
+    protected $primaryKey = 'table_number';
 
     public function meals()
     {
-        return $this->hasMany(Meal::class);
+        return $this->hasMany(Meal::class,'table_number');
     }
 }
+

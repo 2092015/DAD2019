@@ -93,6 +93,7 @@
                     qty:'1'
 
                 },
+                orders:[],
                 options: [
                     { text: 'Drink', value: 'drink' },
                     { text: 'Dish', value: 'dish' }
@@ -121,7 +122,7 @@
             remove(mealItem, index) {
                 this.items.splice(index, 1)
             },
-            save(mealItem) {
+            save(item) {
                 this.originalData = null
                 this.editIndex = null
             },
@@ -129,12 +130,8 @@
                 return (mealItem.qty * mealItem.price)
             },
             saveMeal(mealItems) {
-                return (mealItem.qty * mealItem.price)
-            },
-            getItems: function(){
-                axios.get('api/items')
-                    .then(response=>{this.items = response.data.data;});
-
+                axios.post('api/meals')
+                    .then(response=>{this.mealItems = response.data.data;});
             },
             getItemsByType() {
 
@@ -149,6 +146,7 @@
                 }
 
             }
+
         },
         computed: {
             allSubTotal() {
