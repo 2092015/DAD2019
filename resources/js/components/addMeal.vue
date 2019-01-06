@@ -25,7 +25,7 @@
 <script>
     export default {
         name: "addMeal",
-        props: ['items'],
+        props: ['dishes_items','drink_items'],
         data: function(){
           return {
               editingItem: null,

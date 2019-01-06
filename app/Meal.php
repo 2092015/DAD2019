@@ -21,6 +21,7 @@ class Meal extends Authenticatable
     ];
 
 
+
     public function responsible_waiter()
     {
         return $this->belongsTo(User::class);
@@ -38,6 +39,6 @@ class Meal extends Authenticatable
 
     public function table()
     {
-        return $this->belongsTo(Table::class);
+        return $this->belongsTo(Table::class, 'table_number');
     }
 }
