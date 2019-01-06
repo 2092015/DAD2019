@@ -52324,7 +52324,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52335,10 +52335,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -52417,26 +52413,6 @@ var render = function() {
     _c("h2", [_vm._v("Register User")]),
     _vm._v(" "),
     _c("form", [
-      _vm.showSuccess
-        ? _c("div", { staticClass: "alert alert-success" }, [
-            _c(
-              "button",
-              {
-                staticClass: "close-btn",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.showSuccess = false
-                  }
-                }
-              },
-              [_vm._v("×")]
-            ),
-            _vm._v(" "),
-            _c("strong", [_vm._v(_vm._s(_vm.successMessage))])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "inputName" } }, [_vm._v("Name")]),
         _vm._v(" "),
@@ -55947,6 +55923,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'addMeal2',
@@ -56016,7 +56000,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: {
-        this: getDishItems()
+        /*this:getDishItems()*/
 
     }
 });
@@ -56037,51 +56021,53 @@ var render = function() {
         "tbody",
         _vm._l(_vm.items, function(item, index) {
           return _c("tr", { key: index }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.selected,
-                    expression: "selected"
+            _c("td", [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selected,
+                      expression: "selected"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selected = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
                   }
+                },
+                [
+                  _vm._l(_vm.items, function(item) {
+                    return _c("option", { attrs: { type: "drink" } }, [
+                      _vm._v("Drink")
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.items, function(item) {
+                    return _c("option", { attrs: { type: "dish" } }, [
+                      _vm._v("Dish")
+                    ])
+                  })
                 ],
-                staticClass: "form-control form-control-sm",
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.selected = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _vm._l(_vm.items, function(item) {
-                  return _c("option", { attrs: { type: "drink" } }, [
-                    _vm._v("Drink")
-                  ])
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.items, function(item) {
-                  return _c("option", { attrs: { type: "dish" } }, [
-                    _vm._v("Dish")
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(_vm.selected))]),
+                2
+              ),
+              _vm._v(" "),
+              _c("span", [_vm._v(_vm._s(_vm.selected))])
+            ]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(item.name))]),
             _vm._v(" "),
