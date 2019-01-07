@@ -46,7 +46,7 @@ class UserControllerAPI extends Controller
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
         $user->username=$request->email;
-        $user->photo_url = basename($request->file('photo_url')->store('public/profiles'));
+        $user->photo_url = basename($request->file('file')->store('public/profiles'));
         $user->save();
         $this->sendRegistrationMail($user->id);
 
@@ -58,14 +58,17 @@ class UserControllerAPI extends Controller
 
     public function update(Request $request, $id)
     {
+      var_dump($request);
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'photo_url' =>'image'
         ]);
-        var_dump($request);
-        $user->photo_url = basename($request->file('photo_url')->store('public/profiles'));
-        $user = User::findOrFail($id);
 
+
+
+        $user = User::findOrFail($id);
+        $user->photo_url = basename($request->file('file')->store('public/profiles'));
         $user->update($request->all());
         return new UserResource($user);
     }

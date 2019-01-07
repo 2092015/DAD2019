@@ -25719,7 +25719,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(25);
-module.exports = __webpack_require__(137);
+module.exports = __webpack_require__(139);
 
 
 /***/ }),
@@ -25753,20 +25753,29 @@ var login = Vue.component('login', __webpack_require__(134));
 var register = Vue.component('register', __webpack_require__(17));
 var addMeal2 = Vue.component('addMeal2', __webpack_require__(21));
 
-var routes = [{ path: '/', redirect: '/mainComponent' }, { path: '/mainComponent', component: mainComponent }, { path: '/users', component: user }, { path: '/items', component: item }, { path: '/orders', component: order }, { path: '/meals', component: meal }, { path: '/tables', component: restaurantTable }, { path: '/invoices', component: invoice }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' }, { path: '/register', component: register, name: 'register' }, { path: '/addMeal2', component: addMeal2, name: 'addMeal2' }];
+var routes = [{ path: '/', component: item }, { path: '/users', component: user,
+    beforeEnter: function beforeEnter(to, from, next) {
+        if (__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'manager') {
+            next();
+        } else {
+            next(false);
+        }
+    } }, { path: '/orders', component: order }, { path: '/meals', component: meal }, { path: '/tables', component: restaurantTable }, { path: '/invoices', component: invoice }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' }, { path: '/register', component: register, name: 'register' }, { path: '/addMeal2', component: addMeal2, name: 'addMeal2' }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
 });
 
 router.beforeEach(function (to, from, next) {
-    if (to.name == 'mainComponent' || to.name == 'logout') {
+    if (to.path !== '/') {
         if (!__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user) {
-            next("/login");
-            return;
+            next('/');
+        } else {
+            next();
         }
+    } else {
+        next();
     }
-    next();
 });
 
 var app = new Vue({
@@ -25774,6 +25783,7 @@ var app = new Vue({
     store: __WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */],
     created: function created() {
         this.$store.commit('loadTokenAndUserFromSession');
+
         //console.log(this.$store.state.user);
     }
 }).$mount('#app');
@@ -51756,7 +51766,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51839,6 +51849,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             failMessage: '',
             currentUser: null,
             users: [],
+            file: '',
             usersTypes: [{ userType: "Cook" }, { userType: "Manager" }, { userType: "Waiter" }, { userType: "Cashier" }]
         };
     },
@@ -51868,17 +51879,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.editingUser = false;
-            /*this.currentUser.photo_url=this.file.name;*/
-            axios.put('api/users/' + this.currentUser.id, this.currentUser).then(function (response) {
+            var formData = new FormData();
+            formData.append('file', this.file);
+            formData.append('name', this.currentUser.name);
+            formData.append('username', this.currentUser.username);
+            formData.append('email', this.currentUser.email);
+            formData.append('type', this.currentUser.type);
+            console.log(formData);
+            axios.put('api/users/' + this.currentUser.id, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function (response) {
                 _this2.showSuccess = true;
                 _this2.successMessage = 'User Saved';
-                // Copies response.data.data properties to this.currentUser
-                // without changing this.currentUser reference
                 Object.assign(_this2.currentUser, response.data.data);
                 _this2.currentUser = null;
                 _this2.editingUser = false;
             });
         },
+
         cancelEdit: function cancelEdit() {
             var _this3 = this;
 
@@ -51910,9 +51930,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('api/users').then(function (response) {
                 _this5.users = response.data.data;
+            }).catch(function (error) {
+                console.log("ERROR");
             });
         }
-
     },
     mounted: function mounted() {
         this.getUsers();
@@ -52214,7 +52235,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52276,13 +52297,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "userEdit",
-    props: ['currentUser', 'editingUser', 'usersTypes'],
+    props: ['currentUser', 'editingUser', 'usersTypes', 'file'],
     data: function data() {
         return {
             user: [this.$store.state.user],
             selected: '', //todo colocar aqui o tipo de user que está na bd
-            options: [{ text: 'Manager', value: 'manager' }, { text: 'Cook', value: 'cook' }, { text: 'Cashier', value: 'cashier' }, { text: 'Waiter', value: 'waiter' }],
-            file: ''
+            options: [{ text: 'Manager', value: 'manager' }, { text: 'Cook', value: 'cook' }, { text: 'Cashier', value: 'cashier' }, { text: 'Waiter', value: 'waiter' }]
         };
     },
     methods: {
@@ -52296,9 +52316,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         cancelEdit: function cancelEdit() {
             this.$emit('user-canceled');
         },
-        handleFileUpload: function handleFileUpload() {
-            this.file = this.$refs.file.files[0];
-            console.log(this.user);
+        handleFileUpload: function handleFileUpload(event) {
+            this.file = event.target.files[0]; //this.$refs.file.files[0];
         }
     }
 
@@ -52460,11 +52479,7 @@ var render = function() {
         _c("input", {
           ref: "file",
           attrs: { type: "file", id: "file" },
-          on: {
-            change: function($event) {
-              _vm.handleFileUpload()
-            }
-          }
+          on: { change: _vm.handleFileUpload }
         })
       ])
     ]),
@@ -53680,6 +53695,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    name: "order",
     data: function data() {
         return {
             title: 'List Orders',
@@ -55811,6 +55827,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -55845,7 +55862,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         isLogged: function isLogged() {
             // `this` points to the vm instance
             return this.$store.state.user;
-            console.log(this.$store.state.user);
         },
         typeUser: function typeUser() {
             if (!this.$store.state.user) {
@@ -55895,7 +55911,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", [_c("item", { attrs: { items: _vm.items } })], 1)
+    _c("div", [_c("router-view")], 1)
   ])
 }
 var staticRenderFns = [
@@ -56036,17 +56052,21 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(135)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(135)
+var __vue_script__ = __webpack_require__(137)
 /* template */
-var __vue_template__ = __webpack_require__(136)
+var __vue_template__ = __webpack_require__(138)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-172b28a4"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -56080,12 +56100,64 @@ module.exports = Component.exports
 
 /***/ }),
 /* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(136);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("6bbdb163", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-172b28a4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./login.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-172b28a4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./login.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nimg[data-v-172b28a4] {\n    width: 30px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 137 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__profile_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__profile_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56178,7 +56250,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 136 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56307,9 +56379,32 @@ var render = function() {
         ? _c(
             "div",
             [
-              this.$store.state.user
+              _c("a", { staticClass: "dropdown-item" }, [
+                _c("img", { attrs: { src: this.$store.state.user.photo_url } }),
+                _vm._v(
+                  "\n            " +
+                    _vm._s(this.$store.state.user.username) +
+                    "\n        "
+                )
+              ]),
+              _vm._v(" "),
+              this.$store.state.user.shift_active
                 ? _c("a", { staticClass: "dropdown-item" }, [
-                    _vm._v(_vm._s(this.$store.state.user.username))
+                    _vm._v(
+                      "\n            Início do turno: " +
+                        _vm._s(this.$store.state.user.last_shift_start) +
+                        "\n        "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              this.$store.state.user.shift_active
+                ? _c("a", { staticClass: "dropdown-item" }, [
+                    _vm._v(
+                      "\n            Fim do turno: " +
+                        _vm._s(this.$store.state.user.last_shift_end) +
+                        "\n        "
+                    )
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -56370,7 +56465,7 @@ if (false) {
 }
 
 /***/ }),
-/* 137 */
+/* 139 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
