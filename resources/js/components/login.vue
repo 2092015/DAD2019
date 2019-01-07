@@ -30,11 +30,15 @@
             </a>
 
             <a v-if="this.$store.state.user.shift_active" class="dropdown-item">
-                Início do turno: {{this.$store.state.user.last_shift_start}}
+                <label>Turno atual:</label>
+                <p class="text-10">
+                    {{this.$store.state.user.last_shift_start}} - {{this.$store.state.user.last_shift_end}}
+                </p>
             </a>
 
             <a v-if="this.$store.state.user.shift_active" class="dropdown-item">
-                Fim do turno: {{this.$store.state.user.last_shift_end}}
+                <label>Fim do turno:</label>
+
             </a>
 
             <router-link class="dropdown-item" to="/profile">Editar Perfil</router-link>
