@@ -25663,12 +25663,33 @@ var routes = [{ path: '/', component: item }, { path: '/users', component: user,
         }
     } }, { path: '/orders', component: order,
     beforeEnter: function beforeEnter(to, from, next) {
-        if (__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'cook') {
+        if (__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'cook' || __WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'manager') {
             next();
         } else {
-            next();
+            next(false);
         }
-    } }, { path: '/meals', component: meal }, { path: '/tables', component: restaurantTable }, { path: '/invoices', component: invoice }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' }, { path: '/addMeal2', component: addMeal2, name: 'addMeal2' }];
+    } }, { path: '/meals', component: meal,
+    beforeEnter: function beforeEnter(to, from, next) {
+        if (__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'waiter' || __WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'manager') {
+            next();
+        } else {
+            next(false);
+        }
+    } }, { path: '/tables', component: restaurantTable,
+    beforeEnter: function beforeEnter(to, from, next) {
+        if (__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'manager') {
+            next();
+        } else {
+            next(false);
+        }
+    } }, { path: '/invoices', component: invoice,
+    beforeEnter: function beforeEnter(to, from, next) {
+        if (__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'cashier' || __WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user.type == 'manager') {
+            next();
+        } else {
+            next(false);
+        }
+    } }, { path: '/profile', component: profile, name: 'profile' }, { path: '/login', component: login, name: 'login' }, { path: '/addMeal2', component: addMeal2, name: 'addMeal2' }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -53994,7 +54015,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             editingOrder: null,
             order: {
-                state: null
+                state: ''
             }
         };
     },
@@ -54002,20 +54023,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         preparedOrder: function preparedOrder(order) {
             this.editingOrder = order;
             this.$emit('prepared-click', order);
-            this.class = 'prepared';
+            /*                this.class = 'prepared';*/
         },
         inPreparationOrder: function inPreparationOrder(order) {
             this.editingOrder = order;
             this.$emit('inpreparation-click', order);
-        } /*,
-          computed: {
-              greenRow: function () {
-                  return {
-                     green: this.orders.state == "prepared"
-                 }
-             }
-          }*/
-    } });
+        }
+    }
+});
 
 /***/ }),
 /* 93 */
@@ -54025,59 +54040,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-striped" }, [
+  return _c("table", { staticClass: "table" }, [
     _vm._m(0),
     _vm._v(" "),
     _c(
       "tbody",
       _vm._l(_vm.orders, function(order) {
-        return _c("tr", { key: order.id }, [
-          _c("td", [_vm._v(_vm._s(order.state))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(order.item))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(order.meal_id))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(order.responsible_cook))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(order.start))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(order.end))]),
-          _vm._v(" "),
-          _c("td", [
-            order.state == "in preparation"
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-sm btn-success",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.preparedOrder(order)
-                      }
-                    }
-                  },
-                  [_vm._v("Prepared")]
-                )
-              : _vm._e(),
+        return _c(
+          "tr",
+          { key: order.id, class: { green: order.state === "prepared" } },
+          [
+            _c("td", [_vm._v(_vm._s(order.state))]),
             _vm._v(" "),
-            order.state == "confirmed"
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-sm btn-warning",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.inPreparationOrder(order)
+            _c("td", [_vm._v(_vm._s(order.item))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.meal_id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.responsible_cook))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.start))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.end))]),
+            _vm._v(" "),
+            _c("td", [
+              order.state == "in preparation"
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.preparedOrder(order)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("In Preparation")]
-                )
-              : _vm._e()
-          ])
-        ])
+                    },
+                    [_vm._v("Prepared")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              order.state == "confirmed"
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-warning",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.inPreparationOrder(order)
+                        }
+                      }
+                    },
+                    [_vm._v("In Preparation")]
+                  )
+                : _vm._e()
+            ])
+          ]
+        )
       })
     )
   ])

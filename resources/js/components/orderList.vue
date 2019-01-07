@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-striped">
+    <table class="table" >
         <thead>
         <tr>
             <th>State</th>
@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="order in orders"  :key="order.id" ><!--:class='greenRow'-->
+        <tr v-for="order in orders"  :key="order.id" :class="{'green':(order.state ==='prepared')}" >
             <td >{{ order.state }}</td>
             <td >{{ order.item }}</td>
             <td >{{ order.meal_id }}</td>
@@ -36,7 +36,7 @@
             return {
                 editingOrder: null,
                 order:{
-                    state:null,
+                    state:'',
                 }
             }
         },
@@ -44,23 +44,14 @@
             preparedOrder: function (order) {
                 this.editingOrder = order;
                 this.$emit('prepared-click', order);
-                this.class = 'prepared';
+/*                this.class = 'prepared';*/
 
             },
             inPreparationOrder: function (order) {
                 this.editingOrder = order;
                 this.$emit('inpreparation-click', order);
             }
-        }/*,
-        computed: {
-
-            greenRow: function () {
-
-                return {
-                    green: this.orders.state == "prepared"
-                }
-            }
-        }*/
+        }
     }
 </script>
 
