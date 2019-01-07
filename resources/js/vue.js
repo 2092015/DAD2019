@@ -32,15 +32,36 @@ const routes = [
         }},
     {path: '/orders', component: order,
         beforeEnter:(to, from, next) => {
-            if (store.state.user.type == 'cook') {
+            if (store.state.user.type == 'cook' || store.state.user.type == 'manager') {
                 next();
             }else{
-                next();
+                next(false);
             }
         }},
-    {path: '/meals', component: meal},
-    {path: '/tables', component: restaurantTable},
-    {path: '/invoices', component: invoice},
+    {path: '/meals', component: meal,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'waiter' || store.state.user.type == 'manager') {
+                next();
+            }else{
+                next(false);
+            }
+        }},
+    {path: '/tables', component: restaurantTable,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'manager') {
+                next();
+            }else{
+                next(false);
+            }
+        }},
+    {path: '/invoices', component: invoice,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'cashier' || store.state.user.type == 'manager') {
+                next();
+            }else{
+                next(false);
+            }
+        }},
     {path: '/profile', component: profile, name: 'profile'},
     {path: '/login', component: login, name: 'login'},
     {path: '/addMeal2', component: addMeal2, name: 'addMeal2'}
