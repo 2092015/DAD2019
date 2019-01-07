@@ -25775,7 +25775,6 @@ router.beforeEach(function (to, from, next) {
             __WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].commit('loadTokenAndUserFromSession');
         }
         if (!__WEBPACK_IMPORTED_MODULE_0__stores_global_store__["a" /* default */].state.user) {
-
             next('/');
         } else {
             next();
@@ -25790,8 +25789,6 @@ var app = new Vue({
     router: router,
     created: function created() {
         this.$store.commit('loadTokenAndUserFromSession');
-
-        console.log('Load ' + this.$store.state.user);
     }
 }).$mount('#app');
 
@@ -55874,7 +55871,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.dropdown-menu.p-4.dropdown-menu-right[data-v-541f3109]{\n    min-width: 15rem;\n}\nh1[data-v-541f3109] {\n    color: white;\n}\n", ""]);
+exports.push([module.i, "\n.dropdown-menu.p-4.dropdown-menu-right[data-v-541f3109]{\n    min-width: 15rem;\n}\nh1[data-v-541f3109] {\n    color: white;\n}\n.navbar-nav[data-v-541f3109]{\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n}\n.navbar-nav .nav-link[data-v-541f3109]{\n    padding-right: 5px;\n    padding-left: 5px;\n}\n", ""]);
 
 // exports
 
@@ -55895,6 +55892,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__meal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__meal_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__invoice_vue__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__invoice_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__invoice_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -55986,6 +55995,60 @@ var render = function() {
     _c("nav", { staticClass: "navbar navbar-dark bg-dark" }, [
       _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
         _vm._v(_vm._s(_vm.title))
+      ]),
+      _vm._v(" "),
+      _c("ul", { staticClass: "navbar-nav mr-auto" }, [
+        _c(
+          "li",
+          { staticClass: "nav-item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/users" } },
+              [_vm._v("Users")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/orders" } },
+              [_vm._v("Orders")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/meals" } },
+              [_vm._v("Meals")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/tables" } },
+              [_vm._v("Tables")]
+            )
+          ],
+          1
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -56128,6 +56191,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.showSuccess = true;
                 _this.successMessage = 'User Edited';
                 _this.$store.commit('setUser', response.data.data);
+                _this.password = '';
             });
         },
         handleFile: function handleFile(event) {
@@ -56692,7 +56756,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 

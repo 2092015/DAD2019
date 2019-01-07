@@ -96,6 +96,7 @@
                         this.showSuccess = true;
                         this.successMessage = 'User Edited';
                         this.$store.commit('setUser',response.data.data);
+                        this.password = '';
                     });
             },
             handleFile: function (event) {

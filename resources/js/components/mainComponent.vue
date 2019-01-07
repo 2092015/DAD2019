@@ -2,15 +2,27 @@
     <div>
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand" href="#">{{title}}</a>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/users" >Users</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/orders">Orders</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/meals">Meals</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/tables">Tables</router-link>
+                    </li>
+                </ul>
             <div class="dropdown">
                 <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <login></login>
             </div>
-
         </nav>
-
         <div>
             <router-view></router-view>
             <!--<item v-bind:items = 'items'></item>-->
@@ -47,7 +59,6 @@
 
         },
         mounted() {
-
         },
         computed:{
             isLogged: function () {
@@ -91,5 +102,13 @@
     }
     h1 {
         color: white;
+    }
+    .navbar-nav{
+        flex-direction: row;
+
+    }
+    .navbar-nav .nav-link{
+        padding-right: 5px;
+        padding-left: 5px;
     }
 </style>
