@@ -11,6 +11,7 @@
 
         <user-list v-bind:users = 'users' @edit-click="editUser" @delete-click="deleteUser"></user-list>
         <user-edit v-bind:current-user = 'currentUser' v-if="currentUser" @user-saved="saveUser" @user-canceled="cancelEdit"></user-edit>
+        <profile v-bind:current-user = 'currentUser' v-if="currentUser" @user-saved="saveUser" @user-canceled="cancelEdit"></profile>
     </div>
 </template>
 
@@ -18,6 +19,7 @@
     import userList from './userList.vue';
     import userEdit from './userEdit.vue';
     import register from './register.vue';
+    import profile from './profile';
 
     export default {
         name: "user",
@@ -38,7 +40,8 @@
         components: {
             'user-list': userList,
             'user-edit': userEdit,
-            'register':register
+            'register':register,
+            'profile':profile
         },
         methods: {
 

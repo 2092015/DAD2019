@@ -34,7 +34,7 @@
         </div>
         <div class="large-12 medium-12 small-12 cell">
             <label>Photo
-                <input type="file" id="file" ref="file" v-on:change="handleFileUpload"/>
+                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
             </label>
         </div>
 
@@ -64,10 +64,6 @@
                 ],
             }},
         methods: {
-
-            createUser: function () {
-                this.$emit('user-created');
-            },
             saveUser: function () {
                 this.$emit('user-saved');
             },

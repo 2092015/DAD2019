@@ -51766,7 +51766,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51816,6 +51816,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__userEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__userEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__register_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profile__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__profile__);
 //
 //
 //
@@ -51832,6 +51834,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
@@ -51856,7 +51860,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         'user-list': __WEBPACK_IMPORTED_MODULE_0__userList_vue___default.a,
         'user-edit': __WEBPACK_IMPORTED_MODULE_1__userEdit_vue___default.a,
-        'register': __WEBPACK_IMPORTED_MODULE_2__register_vue___default.a
+        'register': __WEBPACK_IMPORTED_MODULE_2__register_vue___default.a,
+        'profile': __WEBPACK_IMPORTED_MODULE_3__profile___default.a
     },
     methods: {
 
@@ -52235,7 +52240,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52306,10 +52311,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
-
-        createUser: function createUser() {
-            this.$emit('user-created');
-        },
         saveUser: function saveUser() {
             this.$emit('user-saved');
         },
@@ -52479,7 +52480,11 @@ var render = function() {
         _c("input", {
           ref: "file",
           attrs: { type: "file", id: "file" },
-          on: { change: _vm.handleFileUpload }
+          on: {
+            change: function($event) {
+              _vm.handleFileUpload()
+            }
+          }
         })
       ])
     ]),
@@ -52837,6 +52842,13 @@ var render = function() {
       _vm._v(" "),
       _vm.currentUser
         ? _c("user-edit", {
+            attrs: { "current-user": _vm.currentUser },
+            on: { "user-saved": _vm.saveUser, "user-canceled": _vm.cancelEdit }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.currentUser
+        ? _c("profile", {
             attrs: { "current-user": _vm.currentUser },
             on: { "user-saved": _vm.saveUser, "user-canceled": _vm.cancelEdit }
           })
@@ -55950,8 +55962,6 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userEdit_vue__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__userEdit_vue__);
 //
 //
 //
@@ -55962,35 +55972,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        'user-edit': __WEBPACK_IMPORTED_MODULE_0__userEdit_vue___default.a
-    },
+    name: "profile",
+    props: ['currentUser', 'file'],
     data: function data() {
         return {
-            profileUser: {
-                email: "",
-                age: "",
-                name: ""
-            },
+            /*user: [this.$store.state.user],*/
             successMessage: "",
             showSuccess: false
         };
     },
     methods: {
         getInformationFromLoggedUser: function getInformationFromLoggedUser() {
-            this.profileUser = this.$store.state.user;
+            this.currentUser = this.$store.state.user;
         },
 
-        savedUser: function savedUser() {
-            this.showSuccess = true;
-            this.successMessage = "User's Profile Updated";
+        saveUser: function saveUser() {
+            console.log(this.currentUser);
+            this.$emit('user-saved');
         },
         cancelEdit: function cancelEdit() {
-            this.showSuccess = false;
+            this.$emit('user-canceled');
+        },
+        handleFileUpload: function handleFileUpload(event) {
+            this.file = event.target.files[0]; //this.$refs.file.files[0];
         }
     },
     mounted: function mounted() {
@@ -56006,36 +56045,153 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.showSuccess
-        ? _c("div", { staticClass: "alert alert-success" }, [
-            _c(
-              "button",
-              {
-                staticClass: "close-btn",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.showSuccess = false
-                  }
-                }
-              },
-              [_vm._v("×")]
-            ),
-            _vm._v(" "),
-            _c("strong", [_vm._v(_vm._s(_vm.successMessage))])
-          ])
-        : _vm._e(),
+  return _c("div", { staticClass: "jumbotron" }, [
+    _c("h2", [_vm._v("Edit Profile")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputName" } }, [_vm._v("Name")]),
       _vm._v(" "),
-      _c("user-edit", {
-        attrs: { user: _vm.profileUser, state: this.$store.state },
-        on: { "user-saved": _vm.savedUser, "user-canceled": _vm.cancelEdit }
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.currentUser.name,
+            expression: "currentUser.name"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "name",
+          id: "inputName",
+          placeholder: "Fullname",
+          value: ""
+        },
+        domProps: { value: _vm.currentUser.name },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.currentUser, "name", $event.target.value)
+          }
+        }
       })
-    ],
-    1
-  )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputName" } }, [_vm._v("Username")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.currentUser.username,
+            expression: "currentUser.username"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "name",
+          id: "inputUsername",
+          placeholder: "Username",
+          value: ""
+        },
+        domProps: { value: _vm.currentUser.username },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.currentUser, "username", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Email")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.currentUser.email,
+            expression: "currentUser.email"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "email",
+          name: "email",
+          id: "inputEmail",
+          placeholder: "Email address",
+          value: "",
+          disabled: ""
+        },
+        domProps: { value: _vm.currentUser.email },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.currentUser, "email", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputTypeUser" } }, [_vm._v("Type")]),
+      _vm._v(" "),
+      _c("label", [_vm._v(_vm._s(_vm.currentUser.type))])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
+      _c("label", [
+        _vm._v("Photo\n            "),
+        _c("input", {
+          ref: "file",
+          attrs: { type: "file", id: "file" },
+          on: { change: _vm.handleFileUpload }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.saveUser()
+            }
+          }
+        },
+        [_vm._v("Save")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-light",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.cancelEdit()
+            }
+          }
+        },
+        [_vm._v("Cancel")]
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
