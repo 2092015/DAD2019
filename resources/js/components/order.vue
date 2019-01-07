@@ -20,7 +20,7 @@
         data: function(){
             return {
                 title: 'List Orders',
-                userId: this.$store.state.user.id,
+                user: this.$store.state.user,
                 editingOrder: false,
                 showSuccess: false,
                 showFailure: false,
@@ -64,23 +64,20 @@
 
             },
             getOrders: function(){
-                axios.get('api/orders')
-                    .then(response=>{console.log(response);this.orders = response.data.data;});
+                axios.get('api/pending/orders')
+                    .then(response=>{this.orders = response.data.data;});
 
             },
-            getCookOrders: function(){
-                axios.get('api/cookorders',{
-                    params: {
-                        responsible_cook_id: this.userId
-                    }
-                })
-                    .then(response=>{console.log(response);this.orders = response.data.data;});
+            getOrdersByCook: function(){
+                console.log(this.user.id);
+                axios.get('api/orders/'+this.user.id)
+                    .then(response=>{this.orders = response.data.data;});
 
             }
         },
         mounted() {
             /*this.getOrders();*/
-            this.getCookOrders();
+            this.getOrdersByCook();
 
         }
     }

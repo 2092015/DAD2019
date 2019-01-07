@@ -14,16 +14,26 @@ use Hash;
 
 class OrderControllerAPI extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
-        if ($request->has('page')) {
-            return OrderResource::collection(order::paginate(5));
-        } else {
-            return OrderResource::collection(order::all());
-            var_dump($request);
-        }
+        if (!$id){
+
+            if ($request->has('page')) {
+                return OrderResource::collection(order::paginate(5));
+            } else {
+                return OrderResource::collection(order::all());
+            }}
+        else{
+            if ($request->has('page')) {
+                return OrderResource::collection(order::where('responsible_cook_id',$id)->whereIn('state', ['confirmed','in preparation','prepared'])->orderBy('start','desc')->paginate(5));
+            } else {
+                return OrderResource::collection(order::where('responsible_cook_id',$id)->whereIn('state', ['confirmed','in preparation','prepared'])->orderBy('start','desc')->get());
+
+            }}
 
     }
+
+
     public function pending(Request $request)
     {
         if ($request->has('page')) {
@@ -41,16 +51,6 @@ class OrderControllerAPI extends Controller
             return OrderResource::collection(order::where('state', ['pending','confirmed'])->orderByRaw('start')->paginate(5));
         } else {
             return OrderResource::collection(order::where('state', ['pending','confirmed'])->orderByRaw('start')->get());
-        }
-
-    }
-    public function ordersByCookId(Request $request)
-    {
-        if ($request->has('page')) {
-
-            return OrderResource::collection(order::where('responsible_cook_id', '$request.data.data.responsible_cook_id')->orderByRaw('start')->paginate(5));
-        } else {
-            return OrderResource::collection(order::where('responsible_cook_id', '$request.data.data.responsible_cook_id')->orderByRaw('start')->get());
         }
 
     }

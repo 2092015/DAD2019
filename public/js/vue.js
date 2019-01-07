@@ -53793,7 +53793,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: 'List Orders',
-            userId: this.$store.state.user.id,
+            user: this.$store.state.user,
             editingOrder: false,
             showSuccess: false,
             showFailure: false,
@@ -53840,25 +53840,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getOrders: function getOrders() {
             var _this3 = this;
 
-            axios.get('api/orders').then(function (response) {
-                console.log(response);_this3.orders = response.data.data;
+            axios.get('api/pending/orders').then(function (response) {
+                _this3.orders = response.data.data;
             });
         },
-        getCookOrders: function getCookOrders() {
+        getOrdersByCook: function getOrdersByCook() {
             var _this4 = this;
 
-            axios.get('api/cookorders', {
-                params: {
-                    responsible_cook_id: this.userId
-                }
-            }).then(function (response) {
-                console.log(response);_this4.orders = response.data.data;
+            console.log(this.user.id);
+            axios.get('api/orders/' + this.user.id).then(function (response) {
+                _this4.orders = response.data.data;
             });
         }
     },
     mounted: function mounted() {
         /*this.getOrders();*/
-        this.getCookOrders();
+        this.getOrdersByCook();
     }
 });
 
@@ -54010,18 +54007,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         inPreparationOrder: function inPreparationOrder(order) {
             this.editingOrder = order;
             this.$emit('inpreparation-click', order);
-        }
-    },
-    computed: {
-
-        greenRow: function greenRow() {
-            console.log(order);
-            return {
-                green: this.orders.state == "prepared"
-            };
-        }
-    }
-});
+        } /*,
+          computed: {
+              greenRow: function () {
+                  return {
+                     green: this.orders.state == "prepared"
+                 }
+             }
+          }*/
+    } });
 
 /***/ }),
 /* 93 */
@@ -54037,7 +54031,7 @@ var render = function() {
     _c(
       "tbody",
       _vm._l(_vm.orders, function(order) {
-        return _c("tr", { key: order.id, class: _vm.greenRow }, [
+        return _c("tr", { key: order.id }, [
           _c("td", [_vm._v(_vm._s(order.state))]),
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(order.item))]),
