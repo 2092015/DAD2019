@@ -54023,7 +54023,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         preparedOrder: function preparedOrder(order) {
             this.editingOrder = order;
             this.$emit('prepared-click', order);
-            /*                this.class = 'prepared';*/
         },
         inPreparationOrder: function inPreparationOrder(order) {
             this.editingOrder = order;
@@ -55505,7 +55504,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55561,6 +55560,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('api/invoices').then(function (response) {
                 _this.invoices = response.data.data;
             });
+        },
+        paid: function paid(invoice) {
+            var _this2 = this;
+
+            this.currentInvoice = invoice;
+            this.showSuccess = false;
+            this.currentInvoice.state = 'paid';
+            axios.put('api/invoices/' + this.currentInvoice.id, { 'state': this.currentInvoice.state }).then(function (response) {
+                Object.assign(_this2.currentInvoice, response.data.data);
+                _this2.currentInvoice = null;
+                _this2.showSuccess = true;
+                _this2.successMessage = 'Invoice Paid';
+            });
+            this.class = "table-success";
+            this.getInvoices();
+        },
+        notPaid: function notPaid(invoice) {
+            var _this3 = this;
+
+            this.currentInvoice = invoice;
+            this.showSuccess = false;
+            this.currentInvoice.state = 'not paid';
+            axios.put('api/invoices/' + this.currentInvoice.id, { 'state': this.currentInvoice.state }).then(function (response) {
+                Object.assign(_this3.currentInvoice, response.data.data);
+                _this3.currentInvoice = null;
+                _this3.showFailure = true;
+                _this3.failMessage = 'Invoice Not Paid';
+            });
+            this.class = "table-success";
+            this.getInvoices();
         }
     },
     mounted: function mounted() {
@@ -55654,7 +55683,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55693,6 +55722,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "invoiceList",
@@ -55702,6 +55736,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             editingInvoice: null
 
         };
+    },
+    methods: {
+        paid: function paid(invoice) {
+            this.editingInvoice = invoice;
+            this.$emit('paid-click', invoice);
+        },
+        notPaid: function notPaid(invoice) {
+            this.editingInvoice = invoice;
+            this.$emit('notpaid-click', invoice);
+        }
     }
 });
 
@@ -55732,7 +55776,41 @@ var render = function() {
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(invoice.name))]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")])
+          _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
+          _vm._v(" "),
+          _c("td", [
+            invoice.state == "pending"
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-sm btn-success",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.paid(invoice)
+                      }
+                    }
+                  },
+                  [_vm._v("Paid")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            invoice.state == "pending"
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-sm btn-danger",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.notPaid(invoice)
+                      }
+                    }
+                  },
+                  [_vm._v("Not Paid")]
+                )
+              : _vm._e()
+          ])
         ])
       })
     )
@@ -55757,7 +55835,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Nome")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total Price")])
+        _c("th", [_vm._v("Total Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
       ])
     ])
   }
@@ -55806,7 +55886,10 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("invoice-list", { attrs: { invoices: _vm.invoices } })
+      _c("invoice-list", {
+        attrs: { invoices: _vm.invoices },
+        on: { "paid-click": _vm.paid, "notpaid-click": _vm.notPaid }
+      })
     ],
     1
   )
@@ -55960,6 +56043,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -56081,6 +56166,19 @@ var render = function() {
               "router-link",
               { staticClass: "nav-link", attrs: { to: "/tables" } },
               [_vm._v("Tables")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: "/invoices" } },
+              [_vm._v("Invoices")]
             )
           ],
           1

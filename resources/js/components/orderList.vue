@@ -44,7 +44,6 @@
             preparedOrder: function (order) {
                 this.editingOrder = order;
                 this.$emit('prepared-click', order);
-/*                this.class = 'prepared';*/
 
             },
             inPreparationOrder: function (order) {

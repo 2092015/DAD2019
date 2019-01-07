@@ -11,7 +11,7 @@
 
 
 
-        <invoice-list v-bind:invoices = 'invoices'></invoice-list>
+        <invoice-list v-bind:invoices = 'invoices' @paid-click="paid" @notpaid-click="notPaid"></invoice-list>
         
     </div>
 </template>
@@ -39,7 +39,35 @@
                 axios.get('api/invoices')
                     .then(response=>{this.invoices = response.data.data;});
 
-            }
+            },
+            paid: function(invoice){
+                this.currentInvoice = invoice;
+                this.showSuccess = false;
+                this.currentInvoice.state='paid';
+                axios.put('api/invoices/'+this.currentInvoice.id, {'state':this.currentInvoice.state})
+                    .then(response=>{
+                        Object.assign(this.currentInvoice, response.data.data);
+                        this.currentInvoice = null;
+                        this.showSuccess = true;
+                        this.successMessage = 'Invoice Paid';
+                    });
+                this.class="table-success"
+                this.getInvoices();
+            },
+            notPaid: function(invoice){
+                this.currentInvoice = invoice;
+                this.showSuccess = false;
+                this.currentInvoice.state='not paid';
+                axios.put('api/invoices/'+this.currentInvoice.id, {'state':this.currentInvoice.state})
+                    .then(response=>{
+                        Object.assign(this.currentInvoice, response.data.data);
+                        this.currentInvoice = null;
+                        this.showFailure = true;
+                        this.failMessage = 'Invoice Not Paid';
+                    });
+                this.class="table-success"
+                this.getInvoices();
+            },
         },
         mounted() {
             this.getInvoices();

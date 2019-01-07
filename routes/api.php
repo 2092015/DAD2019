@@ -52,8 +52,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('invoices', 'InvoiceControllerAPI@index');
     Route::get('all', 'InvoiceControllerAPI@all');
-    Route::get('invoicespaid', 'InvoiceControllerAPI@paid');
-    Route::get('invoicesnotpaid', 'InvoiceControllerAPI@notpaid');
+    Route::get('invoices/paid', 'InvoiceControllerAPI@paid');
+    Route::get('invoices/notpaid', 'InvoiceControllerAPI@notpaid');
     Route::get('invoices/{id}', 'InvoiceControllerAPI@show');
     Route::post('invoices', 'InvoiceControllerAPI@store');
     Route::put('invoices/{id}', 'InvoiceControllerAPI@update');
