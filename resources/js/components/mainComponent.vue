@@ -47,7 +47,6 @@
 
         },
         mounted() {
-            console.log(this.$store.state.user);
 
         },
         computed:{
@@ -55,7 +54,7 @@
                 // `this` points to the vm instance
                 return this.$store.state.user;
             },
-            typeUser:function () {
+            /*typeUser:function () {
                 if(!this.$store.state.user) {
                     // If not authenticated, add a path where to redirect after login.
                     console.log("sem user");
@@ -80,7 +79,7 @@
                     this.$router.push({ name: 'user', query: { redirect: '/users' } });
 
                 }
-            }
+            }*/
         }
 
 }

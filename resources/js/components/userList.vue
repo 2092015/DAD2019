@@ -1,7 +1,6 @@
 <template>
     <table class="table table-striped">
         <thead>
-        <router-link to="/register" class="btn btn-sm btn-primary" v-on:click.prevent="createUser()">Create</router-link>
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -39,10 +38,10 @@
             }
         },
         methods: {
-            createUser: function (user) {
+            /*createUser: function (user) {
                 this.editingUser = null;
                 this.$emit('register-click', user);
-            },
+            },*/
             editUser: function (user) {
                 this.editingUser = user;
                 this.$emit('edit-click', user);

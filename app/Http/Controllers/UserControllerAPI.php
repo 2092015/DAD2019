@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
 
 use App\Http\Resources\User as UserResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -39,37 +40,66 @@ class UserControllerAPI extends Controller
     {
         $request->validate([
             'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+            'username' => 'required|min:3|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'password' => 'min:3',
+            'type' => 'required|in:manager,waiter,cook,cashier',
+            'file' => 'image',
         ]);
         $user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
         $user->username=$request->email;
-        $user->photo_url = basename($request->file('file')->store('public/profiles'));
+        if($request->file('file')!=null) {
+            $user->photo_url = basename($request->file('file')->store('public/profiles'));
+        }
         $user->save();
         $this->sendRegistrationMail($user->id);
 
 
         return response()->json(new UserResource($user), 201);
-
-
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id='')
     {
-      var_dump($request);
+        if($id!=''){
+            $user = User::findOrFail($id);
+        }else{
+            $user = User::findOrFail(Auth::user()->id);
+        }
+
+        if($request['password']=='' || $request['password']==''){
+            $request['password']=$user->password;
+        }
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'photo_url' =>'image'
+            'name' => 'min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+            'type' => 'in:manager,waiter,cook,cashier',
+            'file' => 'image',
+            'password' => 'min:3'
         ]);
 
 
+        $users = User::where('email',$request['email'])->where('id', '!=', $user->id)->get();
+        if(count($users)!=0){
+            return response()->json('["The email has already been taken."]',405);
+        }
+        $users = User::where('username', $request['username'])->where('id', '!=', $user->id)->get();
+        if(count($users)!=0){
+            return response()->json('["The username has already been taken."]',405);
+        }
 
-        $user = User::findOrFail($id);
-        $user->photo_url = basename($request->file('file')->store('public/profiles'));
-        $user->update($request->all());
+
+        $user->fill($request->except(['photo_url', 'password']));
+        $user->password = Hash::make($request['password']);
+        if($request->file('file')!=null) {
+            $user->photo_url = basename($request->file('file')->store('public/profiles'));
+        }
+        $userArray = (new UserResource($user))->toArray('');
+        if(starts_with($userArray['photo_url'], '/storage/profiles/')){
+            $userArray['photo_url'] = str_replace_first('/storage/profiles/', '', $userArray['photo_url']);
+        }
+
+        //$user->save();
+        $user->update($userArray);
         return new UserResource($user);
     }
 
@@ -116,4 +146,25 @@ class UserControllerAPI extends Controller
             'password' => $pass
         ]);
     }
+
+    public function startShift()
+    {
+        $user = Auth::user();
+        $user->last_shift_start = Carbon::now()->toDateTimeString();
+        $user->shift_active = 1;
+
+        $user->save();
+        return new UserResource($user);
+    }
+
+    public function endShift()
+    {
+        $user = Auth::user();
+        $user->last_shift_end = Carbon::now()->toDateTimeString();
+        $user->shift_active = 0;
+
+        $user->save();
+        return new UserResource($user);
+    }
+
 }

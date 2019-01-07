@@ -9,8 +9,10 @@
             <strong>{{ successMessage }}</strong>
         </div>
 
+        <button type="button" class="btn btn-sm btn-primary" v-on:click.prevent="registerUser">Create</button>
+        <register v-bind:current-user = 'currentUser' v-if="registeringUser" @user-added="addUser" @user-canceled="cancelRegister"></register>
         <user-list v-bind:users = 'users' @edit-click="editUser" @delete-click="deleteUser"></user-list>
-        <user-edit v-bind:current-user = 'currentUser' v-if="currentUser" @user-saved="saveUser" @user-canceled="cancelEdit"></user-edit>
+        <user-edit v-bind:current-user = 'currentUser' v-if="editingUser" @user-saved="saveUser" @user-canceled="cancelEdit"></user-edit>
     </div>
 </template>
 
@@ -25,13 +27,13 @@
             return {
                 title: 'List Users',
                 editingUser: false,
+                registeringUser: false,
                 showSuccess: false,
                 showFailure: false,
                 successMessage: '',
                 failMessage: '',
-                currentUser: null,
+                currentUser: {name:'', email:'', username:'', type:''},
                 users: [],
-                file:'',
                 usersTypes: [{ userType: "Cook"},{ userType: "Manager"},{ userType: "Waiter"},{ userType: "Cashier"}]
             }
         },
@@ -48,6 +50,11 @@
                 this.showSuccess = false;
             },
 
+            registerUser: function(){
+                this.registeringUser = true;
+                this.showSuccess = false;
+            },
+
             deleteUser: function(user){
                 axios.delete('api/users/'+user.id)
                     .then(response => {
@@ -56,28 +63,53 @@
                         this.getUsers();
                     });
             },
-            saveUser: function() {
+            saveUser: function(file, password) {
                 this.editingUser = false;
-                let formData = new FormData();
-                formData.append('file', this.file);
-                formData.append('name',this.currentUser.name);
-                formData.append('username',this.currentUser.username);
-                formData.append('email',this.currentUser.email);
-                formData.append('type',this.currentUser.type);
-                console.log(formData);
-                axios.put('api/users/' + this.currentUser.id,formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
+                var formData = new FormData();
+
+                formData.append('name', this.currentUser.name);
+                formData.append('email', this.currentUser.email);
+                formData.append('type', this.currentUser.type);
+                formData.append('username', this.currentUser.username);
+                formData.append('password', password);
+                if(file!=null){
+                    formData.append('file', file, file.name);
+                }
+
+                axios.post('api/users/edit/' + this.currentUser.id, formData)
                     .then(response => {
                         this.showSuccess = true;
                         this.successMessage = 'User Saved';
                         Object.assign(this.currentUser, response.data.data);
-                        this.currentUser = null;
+                        this.currentUser= {name:'', email:'', username:'', type:''};
                         this.editingUser = false;
                     });
+            },
+
+            addUser: function(file) {
+                this.registeringUser = false;
+                var formData = new FormData();
+                formData.append('name', this.currentUser.name);
+                formData.append('email', this.currentUser.email);
+                formData.append('type', this.currentUser.type);
+                formData.append('username', this.currentUser.username);
+                if(file!=null){
+                    formData.append('file', file, file.name);
+                }
+                axios.post('api/users/',formData)
+                    .then(response=>{
+                        this.showSuccess = true;
+                        this.successMessage = 'User Added';
+                        //this.users.push(response.data.data);
+                        this.currentUser= {name:'', email:'', username:'', type:''};
+                        this.registeringUser = false;
+                        this.getUsers();
+                    })
+                    .catch(error=>{
+                        console.log(error);
+                        this.showFailure= true;
+                        this.failMessage= 'Email Already in use!';
+                    })
             },
 
             cancelEdit: function(){
@@ -85,24 +117,16 @@
                 this.editingUser = false;
                 axios.get('api/users/'+this.currentUser.id)
                     .then(response=>{
-                        console.dir (this.currentUser);
                         // Copies response.data.data properties to this.currentUser
                         // without changing this.currentUser reference
                         Object.assign(this.currentUser, response.data.data);
-                        console.dir (this.currentUser);
-                        this.currentUser = null;
+                        this.currentUser= {name:'', email:'', username:'', type:''};
                     });
             },
             cancelRegister: function(){
-                axios.get('api/users/'+this.currentUser.id)
-                    .then(response=>{
-                        console.dir (this.currentUser);
-                        // Copies response.data.data properties to this.currentUser
-                        // without changing this.currentUser reference
-                        Object.assign(this.currentUser, response.data.data);
-                        console.dir (this.currentUser);
-                        this.currentUser = null;
-                    });
+                this.showSuccess = false;
+                this.registeringUser = false;
+                this.currentUser= {name:'', email:'', username:'', type:''};
             },
             getUsers: function(){
                 axios.get('api/users')

@@ -14,12 +14,12 @@
                 <label for="exampleDropdownFormPassword2">Password</label>
                 <input v-model="user.password" type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
             </div>
-            <div class="form-check">
+            <!--<div class="form-check">
                 <input type="checkbox" class="form-check-input" id="dropdownCheck2">
                 <label class="form-check-label" for="dropdownCheck2">
                     Remember me
                 </label>
-            </div>
+            </div>-->
             <button type="submit" class="btn btn-primary"  v-on:click.prevent="login">Login</button>
         </div>
         <div v-if="this.$store.state.user">
@@ -29,21 +29,36 @@
                 {{this.$store.state.user.username}}
             </a>
 
+            <router-link class="dropdown-item" to="/profile">Edit Profile</router-link>
+
+            <div class="dropdown-divider"></div>
+
             <a v-if="this.$store.state.user.shift_active" class="dropdown-item">
-                <label>Turno atual:</label>
-                <p class="text-10">
-                    {{this.$store.state.user.last_shift_start}} - {{this.$store.state.user.last_shift_end}}
+                <label>Shift started at:</label>
+                <p>
+                    {{this.$store.state.user.last_shift_start}}
+                </p>
+                <label>Time Enlapsed:</label>
+                {{this.timeEnlapsed.hours}}:{{this.timeEnlapsed.minutes}}:{{this.timeEnlapsed.seconds}}
+            </a>
+
+            <a v-if="!this.$store.state.user.shift_active" class="dropdown-item">
+                <label>Shift ended at:</label>
+                <p>
+                    {{this.$store.state.user.last_shift_end}}
                 </p>
             </a>
 
-            <a v-if="this.$store.state.user.shift_active" class="dropdown-item">
-                <label>Fim do turno:</label>
+            <button v-if="!this.$store.state.user.shift_active" v-on:click.prevent="startShift()" class="btn-dark">
+                Start Shift
+            </button>
 
-            </a>
-
-            <router-link class="dropdown-item" to="/profile">Editar Perfil</router-link>
+            <button v-if="this.$store.state.user.shift_active" v-on:click.prevent="endShift()" class="btn-dark">
+                End Shift
+            </button>
 
             <div class="dropdown-divider"></div>
+
             <a class="dropdown-item" v-on:click.prevent="logout">Logout</a>
         </div>
     </form>
@@ -59,6 +74,12 @@
                     email:"",
                     password:"",
                     users: this.$store.state.user
+                },
+                timeEnlapsed: {
+                    hours:0,
+                    minutes:0,
+                    seconds:0,
+                    intervalId:null
                 },
                 typeofmsg: "alert-success",
                 showMessage: false,
@@ -96,6 +117,7 @@
                 axios.post('api/logout')
                     .then(response => {
                         this.$store.commit('clearUserAndToken');
+                        this.$router.push({path:'/'});
 
                     })
                     .catch(error => {
@@ -103,6 +125,36 @@
 
                         console.log(error);
                     })
+            },
+            startShift(){
+                axios.get('api/users/startShift')
+                    .then(response => {
+                        this.$store.commit('setUser',response.data.data);
+                        this.timeEnlapsed.interval = setInterval(() => this.countTime(), 1000);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            },
+            endShift(){
+                axios.get('api/users/endShift')
+                    .then(response => {
+                        this.$store.commit('setUser',response.data.data);
+                        clearInterval(this.timeEnlapsed.intervalId);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            },
+            countTime(){
+                this.timeEnlapsed.seconds++;
+                if(this.timeEnlapsed.seconds==60){
+                    this.timeEnlapsed.seconds=0;
+                    this.timeEnlapsed.minutes++;
+                }
+                if(this.timeEnlapsed.minutes==60){
+                    this.timeEnlapsed.hours++;
+                }
             }
         },
     }
@@ -111,5 +163,8 @@
 <style scoped>
     img {
         width: 30px;
+    }
+    .btn-dark{
+        margin: 0.25rem 1.5rem;
     }
 </style>

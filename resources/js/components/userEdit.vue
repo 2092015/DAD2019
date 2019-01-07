@@ -20,10 +20,11 @@
             <input
                 type="email" class="form-control" v-model="currentUser.email"
                 name="email" id="inputEmail"
-                placeholder="Email address" value=""/>
+                placeholder="Email address" value="" />
         </div>
+
         <div class="form-group">
-            <label for="inputTypeUser">Type</label>
+            <label for="selectType">Type</label>
             <select name="type" id="selectType" v-model="currentUser.type">
                 <option v-for="option in options" v-bind:value="option.value">
                     {{ option.text }}
@@ -34,7 +35,7 @@
         </div>
         <div class="large-12 medium-12 small-12 cell">
             <label>Photo
-                <input type="file" id="file" ref="file" v-on:change="handleFileUpload"/>
+                <input type="file" id="file" ref="file" v-on:change="handleFile"/>
             </label>
         </div>
 
@@ -50,12 +51,12 @@
     export default {
         name: "userEdit",
         props: [
-            'currentUser','editingUser','usersTypes','file'
+            'currentUser','usersTypes'
         ],
         data: function() {
             return {
+                file:null,
                 user: [this.$store.state.user],
-                selected: '',//todo colocar aqui o tipo de user que está na bd
                 options: [
                     { text: 'Manager', value: 'manager' },
                     { text: 'Cook', value: 'cook' },
@@ -65,20 +66,17 @@
             }},
         methods: {
 
-            createUser: function () {
-                this.$emit('user-created');
-            },
             saveUser: function () {
-                this.$emit('user-saved');
+                this.$emit('user-saved', this.file );
+            },
+            handleFile: function (event) {
+                this.file = event.target.files[0];
+
             },
             cancelEdit: function () {
                 this.$emit('user-canceled');
             },
-            handleFileUpload: function (event) {
-                this.file= event.target.files[0]; //this.$refs.file.files[0];
-            }
-        }
-
+        },
     }
 </script>
 

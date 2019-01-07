@@ -8,15 +8,15 @@ class User extends Resource
 {
     public function toArray($request)
     {
-        /*if(!starts_with($this->photo_url, '/storage/profiles/')){
+        if(!starts_with($this->photo_url, '/storage/profiles/')){
             $this->photo_url = '/storage/profiles/'.$this->photo_url;
-        }*/
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'type' => $this->type,
-            'photo_url' => '/storage/profiles/'.$this->photo_url,
+            'photo_url' => $this->photo_url,
             'username' => $this->username,
             'blocked' => $this->blocked,
             'last_shift_start' => $this->last_shift_start,

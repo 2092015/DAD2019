@@ -20,11 +20,14 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout','LoginControllerAPI@logout');
 
     Route::get('users/me', 'UserControllerAPI@myProfile');
+    Route::get('users/startShift', 'UserControllerAPI@startShift');
+    Route::get('users/endShift', 'UserControllerAPI@endShift');
     Route::get('users', 'UserControllerAPI@index');
-    Route::get('users/{id}', 'UserControllerAPI@show');
+    Route::post('users/edit/{id?}', 'UserControllerAPI@update');
     Route::post('users', 'UserControllerAPI@store');
-    Route::put('users/{id}', 'UserControllerAPI@update');
     Route::delete('users/{id}', 'UserControllerAPI@destroy');
+    Route::get('users/{id}', 'UserControllerAPI@show');
+
     Route::post('sendMail/{id}', 'UserControllerAPI@sendRegistrationMail');
 
     Route::get('drink_items', 'ItemControllerAPI@drink');
