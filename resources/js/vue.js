@@ -26,11 +26,18 @@ const routes = [
         beforeEnter:(to, from, next) => {
             if (store.state.user.type == 'manager') {
                 next();
-            }else{
+            }else {
                 next(false);
             }
         }},
-    {path: '/orders', component: order},
+    {path: '/orders', component: order,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'cook') {
+                next();
+            }else{
+                next();
+            }
+        }},
     {path: '/meals', component: meal},
     {path: '/tables', component: restaurantTable},
     {path: '/invoices', component: invoice},
@@ -50,6 +57,7 @@ router.beforeEach((to, from, next) => {
             store.commit('loadTokenAndUserFromSession');
         }
         if (!store.state.user) {
+
             next('/');
         }else{
             next();
@@ -65,5 +73,7 @@ const app = new Vue({
     router,
     created() {
         this.$store.commit('loadTokenAndUserFromSession');
+
+        console.log('Load '+this.$store.state.user);
     }
 }).$mount('#app');

@@ -20,6 +20,7 @@ class OrderControllerAPI extends Controller
             return OrderResource::collection(order::paginate(5));
         } else {
             return OrderResource::collection(order::all());
+            var_dump($request);
         }
 
     }
@@ -40,6 +41,16 @@ class OrderControllerAPI extends Controller
             return OrderResource::collection(order::where('state', ['pending','confirmed'])->orderByRaw('start')->paginate(5));
         } else {
             return OrderResource::collection(order::where('state', ['pending','confirmed'])->orderByRaw('start')->get());
+        }
+
+    }
+    public function ordersByCookId(Request $request)
+    {
+        if ($request->has('page')) {
+
+            return OrderResource::collection(order::where('responsible_cook_id', '$request.data.data.responsible_cook_id')->orderByRaw('start')->paginate(5));
+        } else {
+            return OrderResource::collection(order::where('responsible_cook_id', '$request.data.data.responsible_cook_id')->orderByRaw('start')->get());
         }
 
     }
