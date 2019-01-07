@@ -36,6 +36,17 @@
             'order-list': orderList
         },
         methods: {
+            getOrders: function(){
+                axios.get('api/pending/orders')
+                    .then(response=>{this.orders = response.data.data;});
+
+            },
+            getOrdersByCook: function(){
+                console.log(this.user.id);
+                axios.get('api/orders/'+this.user.id)
+                    .then(response=>{this.orders = response.data.data;});
+
+            },
             preparedOrder: function(order){
                 this.currentOrder = order;
                 this.showSuccess = false;
@@ -48,6 +59,7 @@
                         this.successMessage = 'Order Updated';
                     });
                 this.class="table-success"
+                this.getOrdersByCook();
             },
 
             inPreparationOrder: function(order){
@@ -61,19 +73,11 @@
                         this.successMessage = 'Order Updated';
                         this.currentOrder = null;
                     });
+                this.class="table-success"
+                this.getOrdersByCook();
 
             },
-            getOrders: function(){
-                axios.get('api/pending/orders')
-                    .then(response=>{this.orders = response.data.data;});
 
-            },
-            getOrdersByCook: function(){
-                console.log(this.user.id);
-                axios.get('api/orders/'+this.user.id)
-                    .then(response=>{this.orders = response.data.data;});
-
-            }
         },
         mounted() {
             /*this.getOrders();*/

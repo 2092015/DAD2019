@@ -53830,49 +53830,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'order-list': __WEBPACK_IMPORTED_MODULE_0__orderList_vue___default.a
     },
     methods: {
-        preparedOrder: function preparedOrder(order) {
+        getOrders: function getOrders() {
             var _this = this;
+
+            axios.get('api/pending/orders').then(function (response) {
+                _this.orders = response.data.data;
+            });
+        },
+        getOrdersByCook: function getOrdersByCook() {
+            var _this2 = this;
+
+            console.log(this.user.id);
+            axios.get('api/orders/' + this.user.id).then(function (response) {
+                _this2.orders = response.data.data;
+            });
+        },
+        preparedOrder: function preparedOrder(order) {
+            var _this3 = this;
 
             this.currentOrder = order;
             this.showSuccess = false;
             this.currentOrder.state = 'prepared';
             axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
-                Object.assign(_this.currentOrder, response.data.data);
-                _this.currentOrder = null;
-                _this.showSuccess = true;
-                _this.successMessage = 'Order Updated';
+                Object.assign(_this3.currentOrder, response.data.data);
+                _this3.currentOrder = null;
+                _this3.showSuccess = true;
+                _this3.successMessage = 'Order Updated';
             });
             this.class = "table-success";
+            this.getOrdersByCook();
         },
 
         inPreparationOrder: function inPreparationOrder(order) {
-            var _this2 = this;
+            var _this4 = this;
 
             this.currentOrder = order;
             this.showSuccess = false;
             this.currentOrder.state = 'in preparation';
             axios.put('api/orders/' + this.currentOrder.id, { 'state': this.currentOrder.state }).then(function (response) {
-                Object.assign(_this2.currentOrder, response.data.data);
-                _this2.showSuccess = true;
-                _this2.successMessage = 'Order Updated';
-                _this2.currentOrder = null;
+                Object.assign(_this4.currentOrder, response.data.data);
+                _this4.showSuccess = true;
+                _this4.successMessage = 'Order Updated';
+                _this4.currentOrder = null;
             });
-        },
-        getOrders: function getOrders() {
-            var _this3 = this;
-
-            axios.get('api/pending/orders').then(function (response) {
-                _this3.orders = response.data.data;
-            });
-        },
-        getOrdersByCook: function getOrdersByCook() {
-            var _this4 = this;
-
-            console.log(this.user.id);
-            axios.get('api/orders/' + this.user.id).then(function (response) {
-                _this4.orders = response.data.data;
-            });
+            this.class = "table-success";
+            this.getOrdersByCook();
         }
+
     },
     mounted: function mounted() {
         /*this.getOrders();*/
