@@ -34,7 +34,7 @@
         </div>
         <div class="large-12 medium-12 small-12 cell">
             <label>Photo
-                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/> <!--{{currentUser.photo_url}}-->
+                <input type="file" id="file" ref="file" v-on:change="handleFileUpload"/>
             </label>
         </div>
 
@@ -50,7 +50,7 @@
     export default {
         name: "userEdit",
         props: [
-            'currentUser','editingUser','usersTypes'
+            'currentUser','editingUser','usersTypes','file'
         ],
         data: function() {
             return {
@@ -62,7 +62,6 @@
                     { text: 'Cashier', value: 'cashier' },
                     { text: 'Waiter', value: 'waiter' }
                 ],
-                file: ''
             }},
         methods: {
 
@@ -75,9 +74,8 @@
             cancelEdit: function () {
                 this.$emit('user-canceled');
             },
-            handleFileUpload: function () {
-                this.file = this.$refs.file.files[0];
-                console.log(this.user);
+            handleFileUpload: function (event) {
+                this.file= event.target.files[0]; //this.$refs.file.files[0];
             }
         }
 

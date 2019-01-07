@@ -31,6 +31,7 @@
                 failMessage: '',
                 currentUser: null,
                 users: [],
+                file:'',
                 usersTypes: [{ userType: "Cook"},{ userType: "Manager"},{ userType: "Waiter"},{ userType: "Cashier"}]
             }
         },
@@ -55,20 +56,30 @@
                         this.getUsers();
                     });
             },
-            saveUser: function(){
+            saveUser: function() {
                 this.editingUser = false;
-                /*this.currentUser.photo_url=this.file.name;*/
-                axios.put('api/users/'+this.currentUser.id,this.currentUser)
-                    .then(response=>{
+                let formData = new FormData();
+                formData.append('file', this.file);
+                formData.append('name',this.currentUser.name);
+                formData.append('username',this.currentUser.username);
+                formData.append('email',this.currentUser.email);
+                formData.append('type',this.currentUser.type);
+                console.log(formData);
+                axios.put('api/users/' + this.currentUser.id,formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(response => {
                         this.showSuccess = true;
                         this.successMessage = 'User Saved';
-                        // Copies response.data.data properties to this.currentUser
-                        // without changing this.currentUser reference
                         Object.assign(this.currentUser, response.data.data);
                         this.currentUser = null;
                         this.editingUser = false;
                     });
             },
+
             cancelEdit: function(){
                 this.showSuccess = false;
                 this.editingUser = false;
