@@ -46,6 +46,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('orders/{id}', 'OrderControllerAPI@destroy');
 
     Route::get('meals', 'MealControllerAPI@index');
+    Route::get('meals/{id?}', 'MealControllerAPI@active');
     Route::get('meals/{id}', 'MealControllerAPI@show');
     Route::post('meals', 'MealControllerAPI@store');
     Route::put('meals/{id}', 'MealControllerAPI@update');

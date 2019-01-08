@@ -52033,10 +52033,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
-        /*createUser: function (user) {
-            this.editingUser = null;
-            this.$emit('register-click', user);
-        },*/
         editUser: function editUser(user) {
             this.editingUser = user;
             this.$emit('edit-click', user);
@@ -54270,6 +54266,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             title: 'List Meals',
+            user: this.$store.state.user,
             editingMeal: false,
             showSuccess: false,
             showFailure: false,
@@ -54289,7 +54286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getMeals: function getMeals() {
             var _this = this;
 
-            axios.get('api/meals').then(function (response) {
+            axios.get('api/meals' + this.user.id).then(function (response) {
                 _this.meals = response.data.data;
             });
         },
@@ -54299,11 +54296,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('api/items').then(function (response) {
                 _this2.items = response.data.data;
             });
+        },
+        getActiveMeals: function getActiveMeals() {
+            var _this3 = this;
+
+            axios.get('api/meals/' + this.user.id).then(function (response) {
+                _this3.meals = response.data.data;
+            });
         }
 
     },
     mounted: function mounted() {
-        this.getMeals();
+        this.getActiveMeals();
+        /*this.getMeals();*/
         this.getItems();
     }
 });
@@ -54394,7 +54399,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.blue[data-v-f3f81068]{\n    background-color: lightskyblue;\n}\n\n", ""]);
 
 // exports
 
@@ -54451,7 +54456,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-striped" }, [
+  return _c("table", { staticClass: "table" }, [
     _vm._m(0),
     _vm._v(" "),
     _c(
@@ -54459,7 +54464,7 @@ var render = function() {
       _vm._l(_vm.meals, function(meal) {
         return _c(
           "tr",
-          { key: meal.id, class: { active: _vm.editingMeal === meal } },
+          { key: meal.id, class: { blue: meal.state === "active" } },
           [
             _c("td", [_vm._v(_vm._s(meal.state))]),
             _vm._v(" "),
@@ -55508,7 +55513,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55551,6 +55556,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             successMessage: '',
             failMessage: '',
             currentInvoice: null,
+            editingInvoice: false,
             invoices: []
         };
     },
@@ -55594,6 +55600,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.class = "table-success";
             this.getInvoices();
+        },
+        invoiceDetail: function invoiceDetail(invoice) {
+            this.currentInvoice = user;
+            this.editingInvoice = true;
+            this.showSuccess = false;
         }
     },
     mounted: function mounted() {
@@ -55687,7 +55698,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55749,6 +55760,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         notPaid: function notPaid(invoice) {
             this.editingInvoice = invoice;
             this.$emit('notpaid-click', invoice);
+        },
+        invoiceDetail: function invoiceDetail(invoice) {
+            this.editingInvoice = invoice;
+            this.$emit('invoiceDetail-click', invoice);
         }
     }
 });
@@ -55767,55 +55782,77 @@ var render = function() {
     _c(
       "tbody",
       _vm._l(_vm.invoices, function(invoice) {
-        return _c("tr", { key: invoice.id }, [
-          _c("td", [_vm._v(_vm._s(invoice.state))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.date))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.responsible_waiter))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.table_number))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.nif))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.name))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
-          _vm._v(" "),
-          _c("td", [
-            invoice.state == "pending"
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-sm btn-success",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.paid(invoice)
-                      }
-                    }
-                  },
-                  [_vm._v("Paid")]
-                )
-              : _vm._e(),
+        return _c(
+          "tr",
+          {
+            key: invoice.id,
+            class: { active: _vm.editingInvoice === invoice }
+          },
+          [
+            _c("td", [_vm._v(_vm._s(invoice.state))]),
             _vm._v(" "),
-            invoice.state == "pending"
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-sm btn-danger",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.notPaid(invoice)
-                      }
+            _c("td", [_vm._v(_vm._s(invoice.date))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(invoice.responsible_waiter))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(_vm._s(invoice.table_number) + " "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-sm btn-info",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.invoiceDetail(invoice)
                     }
-                  },
-                  [_vm._v("Not Paid")]
-                )
-              : _vm._e()
-          ])
-        ])
+                  }
+                },
+                [_vm._v("Detail")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(invoice.nif))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(invoice.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
+            _vm._v(" "),
+            _c("td", [
+              invoice.state == "pending"
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-success",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.paid(invoice)
+                        }
+                      }
+                    },
+                    [_vm._v("Paid")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              invoice.state == "pending"
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.notPaid(invoice)
+                        }
+                      }
+                    },
+                    [_vm._v("Not Paid")]
+                  )
+                : _vm._e()
+            ])
+          ]
+        )
       })
     )
   ])
@@ -55892,7 +55929,11 @@ var render = function() {
       _vm._v(" "),
       _c("invoice-list", {
         attrs: { invoices: _vm.invoices },
-        on: { "paid-click": _vm.paid, "notpaid-click": _vm.notPaid }
+        on: {
+          "paid-click": _vm.paid,
+          "notpaid-click": _vm.notPaid,
+          "invoiceDetail-click": function($event) {}
+        }
       })
     ],
     1

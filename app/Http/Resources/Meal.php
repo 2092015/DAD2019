@@ -12,7 +12,7 @@ class Meal extends Resource
         return [
             'id' => $this->id,
             'state' => $this->state,
-            'table_number' => $this->meal_id,
+            'table_number' => $this->table_number,
             'responsible_waiter_id' => $this->responsible_waiter,
             'responsible_waiter' => $this->responsible_waiter->name,
             'start' => $this->start,

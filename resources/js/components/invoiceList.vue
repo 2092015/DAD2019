@@ -13,11 +13,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="invoice in invoices"  :key="invoice.id" >
+        <tr v-for="invoice in invoices"  :key="invoice.id" :class="{active: editingInvoice === invoice} ">
             <td>{{ invoice.state }}</td>
             <td>{{ invoice.date }}</td>
             <td>{{ invoice.responsible_waiter }}</td>
-            <td>{{ invoice.table_number }}</td>
+            <td>{{ invoice.table_number }} <a class="btn btn-sm btn-info" v-on:click.prevent="invoiceDetail(invoice)">Detail</a></td>
             <td>{{ invoice.nif }}</td>
             <td>{{ invoice.name }}</td>
             <td>{{ invoice.total_price }} €</td>
@@ -50,6 +50,10 @@
         notPaid: function (invoice) {
             this.editingInvoice = invoice;
             this.$emit('notpaid-click', invoice);
+        },
+        invoiceDetail: function (invoice) {
+            this.editingInvoice = invoice;
+            this.$emit('invoiceDetail-click', invoice);
         }
     }
     }

@@ -25,6 +25,7 @@
         data: function(){
             return {
                 title: 'List Meals',
+                user: this.$store.state.user,
                 editingMeal: false,
                 showSuccess: false,
                 showFailure: false,
@@ -42,7 +43,7 @@
         methods: {
 
             getMeals: function(){
-                axios.get('api/meals')
+                axios.get('api/meals'+this.user.id)
                     .then(response=>{this.meals = response.data.data;});
 
             },
@@ -51,10 +52,16 @@
                     .then(response=>{this.items = response.data.data;});
 
             },
+            getActiveMeals: function(){
+                axios.get('api/meals/'+this.user.id)
+                    .then(response=>{this.meals = response.data.data;});
+
+            },
 
         },
         mounted() {
-            this.getMeals();
+            this.getActiveMeals();
+            /*this.getMeals();*/
             this.getItems();
 
         }

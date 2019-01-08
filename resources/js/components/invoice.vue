@@ -11,8 +11,8 @@
 
 
 
-        <invoice-list v-bind:invoices = 'invoices' @paid-click="paid" @notpaid-click="notPaid"></invoice-list>
-        
+        <invoice-list v-bind:invoices = 'invoices' @paid-click="paid" @notpaid-click="notPaid" @invoiceDetail-click=""></invoice-list>
+
     </div>
 </template>
 
@@ -28,6 +28,7 @@
                 successMessage: '',
                 failMessage: '',
                 currentInvoice: null,
+                editingInvoice: false,
                 invoices: [],
             }
         },
@@ -67,6 +68,11 @@
                     });
                 this.class="table-success"
                 this.getInvoices();
+            },
+            invoiceDetail: function(invoice){
+                this.currentInvoice = user;
+                this.editingInvoice = true;
+                this.showSuccess = false;
             },
         },
         mounted() {
