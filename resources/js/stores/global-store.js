@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: { 
         token: "",
-        user: null, 
+        user: null,
+        meals: []
     },
     mutations: { 
         clearUserAndToken: (state) => {
@@ -49,11 +50,18 @@ export default new Vuex.Store({
                 state.user = JSON.parse(user);
             }
         },
-        /*loadDepartments: (state) => {
-            axios.get('api/departments')
-                    .then(response => {
-                        state.departments = response.data.data; 
-                    });
-        }*/
+        setMeal: (state, meal) => {
+            state.meals.push(meal);
+            sessionStorage.setItem('meals', JSON.stringify(state.meals));
+        },
+        removeMeal: (state, meal) => {
+            state.meals.splice(state.meals.indexOf(meal), 1);
+            sessionStorage.setItem('meals', JSON.stringify(state.meals));
+        },
+        clearAllMeals: (state) => {
+            state.meals = [];
+            sessionStorage.removeItem('meals');
+        },
+
     } 
 });

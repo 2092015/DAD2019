@@ -45,9 +45,9 @@ Route::middleware('auth:api')->group(function () {
     Route::put('orders/{id}', 'OrderControllerAPI@update');
     Route::delete('orders/{id}', 'OrderControllerAPI@destroy');
 
+    Route::post('meals/startMeal/{id}', 'MealControllerAPI@startMeal');
     Route::get('meals', 'MealControllerAPI@index');
     Route::get('meals/{id}', 'MealControllerAPI@show');
-    Route::post('meals', 'MealControllerAPI@store');
     Route::put('meals/{id}', 'MealControllerAPI@update');
 
     Route::get('invoices', 'InvoiceControllerAPI@index');

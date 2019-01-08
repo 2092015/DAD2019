@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use App\Http\Resources\Table as TableResource;
 use Illuminate\Support\Facades\DB;
 
-use App\table;
+use App\Table;
 use App\StoreTableRequest;
 use Hash;
 
@@ -19,16 +19,18 @@ class TableControllerAPI extends Controller
     public function index(Request $request)
     {
         if ($request->has('page')) {
-            return TableResource::collection(table::paginate(5));
+            return TableResource::collection(Table::paginate(5));
         } else {
-            return TableResource::collection(table::orderByRaw('table_number')->get());
+            return TableResource::collection(Table::orderByRaw('table_number')->with(['meals' => function ($query) {
+                $query->where('state','active');
+            }])->get());
         }
 
     }
 
     public function show($table_number)
     {
-        return new TableResource(table::find($table_number));
+        return new TableResource(Table::find($table_number));
     }
 
     public function store(Request $request)
@@ -37,7 +39,7 @@ class TableControllerAPI extends Controller
             'table_number' => 'required|integer',
 
         ]);
-        $table = new table();
+        $table = new Table();
         $table->fill($request->all());
         $table->save();
         return response()->json(new TableResource($table), 201);
@@ -48,7 +50,7 @@ class TableControllerAPI extends Controller
         $request->validate([
             'table_number' => 'required|integer',
         ]);
-        $table = table::findOrFail($table_number);
+        $table = Table::findOrFail($table_number);
         $table->update($request->all());
         return new TableResource($table);
     }

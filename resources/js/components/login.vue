@@ -49,11 +49,11 @@
                 </p>
             </a>
 
-            <button v-if="!this.$store.state.user.shift_active" v-on:click.prevent="startShift()" class="btn-dark">
+            <button v-if="!this.$store.state.user.shift_active" v-on:click.prevent="startShift()" class="btn btn-dark">
                 Start Shift
             </button>
 
-            <button v-if="this.$store.state.user.shift_active" v-on:click.prevent="endShift()" class="btn-dark">
+            <button v-if="this.$store.state.user.shift_active" v-on:click.prevent="endShift()" class="btn btn-dark">
                 End Shift
             </button>
 

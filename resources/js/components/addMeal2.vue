@@ -4,41 +4,48 @@
         <table class="table table-bordered mt-4">
             <thead class="thead-light">
             <tr>
-                <th width="15%">Type</th>
-                <th width="45%">Name</th>
+                <th width="10%">Type</th>
+                <th width="33%">Name</th>
                 <th width="10%">Qty</th>
                 <th width="10%">Price</th>
                 <th width="15%">Total</th>
+                <th width="27%">Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(mealItem, index) in mealItems" :key="index">
                 <td >
-                    <span v-if="editIndex !== index">{{ item.type }}</span>
-                    <span v-if="editIndex === index">
-                    <select v-model="item.type" v-on:change="getItemsByType" class="form-control form-control-sm">
-                        <option v-for="option in options" v-bind:value="option.value" >
-                            {{ option.text }}
+                    <span v-if="editIndex !== index">{{ mealItem.type }}</span>
+                    <select v-if="editIndex === index" v-model="auxItem.type" v-on:change="getItemsByType"
+                            class="form-control form-control-sm">
+                        <option value="drink">Drink</option>
+                        <option value="dish">Dish</option>
+                    </select>
+                </td>
+                <td>
+                    <span v-if="editIndex !== index">{{ mealItem.name }}</span>
+                    <select v-if="editIndex === index" v-model="auxItem.index" v-on:change="fillItem()" class="form-control form-control-sm">
+
+                        <option v-for="(item, index2) in items" :value="index2" :key="item.id">
+                            {{ item.name }}
                         </option>
+
                     </select>
+                </td>
+                <td>
+                    <span v-if="editIndex !== index">{{ mealItem.qty }}</span>
+                    <span v-if="editIndex === index">
+                      <input class="form-control form-control-sm" type="number" v-model.number="auxItem.qty">
                     </span>
                 </td>
                 <td>
-                    <span v-if="editIndex !== index">{{ item.name }}</span>
-                    <span v-if="editIndex === index">
-                    <select v-model="item.name" class="form-control form-control-sm">
-                        <option v-for="item in items" type="option.text" :key="item.id">{{ item.name }}  </option>
-                    </select>
-                    </span>
+                    <span v-if="editIndex !== index">{{mealItem.price}}</span>
+                    <span v-if="editIndex === index">{{mealItem.price}}</span>
                 </td>
                 <td>
-                    <span v-if="editIndex !== index">{{ item.qty }}</span>
-                    <span v-if="editIndex === index">
-              <input class="form-control form-control-sm" type="number" v-model.number="item.qty">
-            </span>
+                    <span v-if="editIndex !== index">{{mealItem.sub_total}}</span>
+                    <span v-if="editIndex === index" class="text-right">{{ subtotal(auxItem)}} €</span>
                 </td>
-                <td >{{items.price}}</td>
-                <td><div class="text-right">{{ subtotal(item)}} €</div></td>
                 <td>
             <span v-if="editIndex !== index">
               <button @click="edit(mealItem, index)" class="btn btn-sm btn-outline-secondary mr-2">Edit</button>
@@ -92,10 +99,12 @@
                 originalData: null,
                 mealItems: [],
                 items:[],
-                item:{
+                auxItem:{
+                    index:null,
                     name: '',
                     type: '',
                     price:'',
+                    sub_total:'',
                     qty:'1'
 
                 },
@@ -131,9 +140,19 @@
             save(item) {
                 this.originalData = null
                 this.editIndex = null
+                this.mealItems.push(item);
+                this.auxItem = {
+                    index:null,
+                    name: '',
+                    type: '',
+                    price:'',
+                    sub_total:'',
+                    qty:'1'
+                };
             },
-            subtotal(mealItem) {
-                return (mealItem.qty * mealItem.price)
+            subtotal(item) {
+                this.auxItem.sub_total = (item.qty * item.price)
+                return this.auxItem.sub_total;
             },
             saveMeal(mealItems) {
                 axios.post('api/meals')
@@ -141,16 +160,24 @@
             },
             getItemsByType() {
 
-                if (this.item.type=='drink'){
+                if (this.auxItem.type=='drink'){
 
                     axios.get('api/drink_items')
-                        .then(response=>{this.items = response.data.data;});
+                        .then(response=>{
+                            this.items = response.data.data;
+                        });
 
                 }else {
                     axios.get('api/dish_items')
                         .then(response=>{this.items = response.data.data;});
                 }
 
+            },
+            fillItem(){
+                console.log(this.auxItem.index);
+                let item = this.items[this.auxItem.index];
+                this.auxItem.name = item.name;
+                this.auxItem.price = item.price;
             }
 
         },

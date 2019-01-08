@@ -48115,7 +48115,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
         token: "",
-        user: null
+        user: null,
+        meals: []
     },
     mutations: {
         clearUserAndToken: function clearUserAndToken(state) {
@@ -48155,13 +48156,20 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
             if (user) {
                 state.user = JSON.parse(user);
             }
+        },
+        setMeal: function setMeal(state, meal) {
+            state.meals.push(meal);
+            sessionStorage.setItem('meals', JSON.stringify(state.meals));
+        },
+        removeMeal: function removeMeal(state, meal) {
+            state.meals.splice(state.meals.indexOf(meal), 1);
+            sessionStorage.setItem('meals', JSON.stringify(state.meals));
+        },
+        clearAllMeals: function clearAllMeals(state) {
+            state.meals = [];
+            sessionStorage.removeItem('meals');
         }
-        /*loadDepartments: (state) => {
-            axios.get('api/departments')
-                    .then(response => {
-                        state.departments = response.data.data; 
-                    });
-        }*/
+
     }
 }));
 
@@ -54600,6 +54608,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'addMeal2',
@@ -54610,10 +54625,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             originalData: null,
             mealItems: [],
             items: [],
-            item: {
+            auxItem: {
+                index: null,
                 name: '',
                 type: '',
                 price: '',
+                sub_total: '',
                 qty: '1'
 
             },
@@ -54647,9 +54664,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save(item) {
             this.originalData = null;
             this.editIndex = null;
+            this.mealItems.push(item);
+            this.auxItem = {
+                index: null,
+                name: '',
+                type: '',
+                price: '',
+                sub_total: '',
+                qty: '1'
+            };
         },
-        subtotal: function subtotal(mealItem) {
-            return mealItem.qty * mealItem.price;
+        subtotal: function subtotal(item) {
+            this.auxItem.sub_total = item.qty * item.price;
+            return this.auxItem.sub_total;
         },
         saveMeal: function saveMeal(mealItems) {
             var _this = this;
@@ -54661,7 +54688,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getItemsByType: function getItemsByType() {
             var _this2 = this;
 
-            if (this.item.type == 'drink') {
+            if (this.auxItem.type == 'drink') {
 
                 axios.get('api/drink_items').then(function (response) {
                     _this2.items = response.data.data;
@@ -54671,6 +54698,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.items = response.data.data;
                 });
             }
+        },
+        fillItem: function fillItem() {
+            console.log(this.auxItem.index);
+            var item = this.items[this.auxItem.index];
+            this.auxItem.name = item.name;
+            this.auxItem.price = item.price;
         }
     },
     computed: {
@@ -54710,85 +54743,25 @@ var render = function() {
           return _c("tr", { key: index }, [
             _c("td", [
               _vm.editIndex !== index
-                ? _c("span", [_vm._v(_vm._s(_vm.item.type))])
+                ? _c("span", [_vm._v(_vm._s(mealItem.type))])
                 : _vm._e(),
               _vm._v(" "),
               _vm.editIndex === index
-                ? _c("span", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.item.type,
-                            expression: "item.type"
-                          }
-                        ],
-                        staticClass: "form-control form-control-sm",
-                        on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.item,
-                                "type",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            },
-                            _vm.getItemsByType
-                          ]
+                ? _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.auxItem.type,
+                          expression: "auxItem.type"
                         }
-                      },
-                      _vm._l(_vm.options, function(option) {
-                        return _c(
-                          "option",
-                          { domProps: { value: option.value } },
-                          [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(option.text) +
-                                "\n                    "
-                            )
-                          ]
-                        )
-                      })
-                    )
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _vm.editIndex !== index
-                ? _c("span", [_vm._v(_vm._s(_vm.item.name))])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.editIndex === index
-                ? _c("span", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.item.name,
-                            expression: "item.name"
-                          }
-                        ],
-                        staticClass: "form-control form-control-sm",
-                        on: {
-                          change: function($event) {
+                      ],
+                      staticClass: "form-control form-control-sm",
+                      on: {
+                        change: [
+                          function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
                                 return o.selected
@@ -54798,30 +54771,93 @@ var render = function() {
                                 return val
                               })
                             _vm.$set(
-                              _vm.item,
-                              "name",
+                              _vm.auxItem,
+                              "type",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
                             )
-                          }
-                        }
-                      },
-                      _vm._l(_vm.items, function(item) {
-                        return _c(
-                          "option",
-                          { key: item.id, attrs: { type: "option.text" } },
-                          [_vm._v(_vm._s(item.name) + "  ")]
-                        )
-                      })
-                    )
-                  ])
+                          },
+                          _vm.getItemsByType
+                        ]
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "drink" } }, [
+                        _vm._v("Drink")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "dish" } }, [
+                        _vm._v("Dish")
+                      ])
+                    ]
+                  )
                 : _vm._e()
             ]),
             _vm._v(" "),
             _c("td", [
               _vm.editIndex !== index
-                ? _c("span", [_vm._v(_vm._s(_vm.item.qty))])
+                ? _c("span", [_vm._v(_vm._s(mealItem.name))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.editIndex === index
+                ? _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.auxItem.index,
+                          expression: "auxItem.index"
+                        }
+                      ],
+                      staticClass: "form-control form-control-sm",
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.auxItem,
+                              "index",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            _vm.fillItem()
+                          }
+                        ]
+                      }
+                    },
+                    _vm._l(_vm.items, function(item, index2) {
+                      return _c(
+                        "option",
+                        { key: item.id, domProps: { value: index2 } },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(item.name) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    })
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm.editIndex !== index
+                ? _c("span", [_vm._v(_vm._s(mealItem.qty))])
                 : _vm._e(),
               _vm._v(" "),
               _vm.editIndex === index
@@ -54831,20 +54867,24 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model.number",
-                          value: _vm.item.qty,
-                          expression: "item.qty",
+                          value: _vm.auxItem.qty,
+                          expression: "auxItem.qty",
                           modifiers: { number: true }
                         }
                       ],
                       staticClass: "form-control form-control-sm",
                       attrs: { type: "number" },
-                      domProps: { value: _vm.item.qty },
+                      domProps: { value: _vm.auxItem.qty },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.item, "qty", _vm._n($event.target.value))
+                          _vm.$set(
+                            _vm.auxItem,
+                            "qty",
+                            _vm._n($event.target.value)
+                          )
                         },
                         blur: function($event) {
                           _vm.$forceUpdate()
@@ -54855,12 +54895,26 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(_vm.items.price))]),
+            _c("td", [
+              _vm.editIndex !== index
+                ? _c("span", [_vm._v(_vm._s(mealItem.price))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.editIndex === index
+                ? _c("span", [_vm._v(_vm._s(mealItem.price))])
+                : _vm._e()
+            ]),
             _vm._v(" "),
             _c("td", [
-              _c("div", { staticClass: "text-right" }, [
-                _vm._v(_vm._s(_vm.subtotal(_vm.item)) + " €")
-              ])
+              _vm.editIndex !== index
+                ? _c("span", [_vm._v(_vm._s(mealItem.sub_total))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.editIndex === index
+                ? _c("span", { staticClass: "text-right" }, [
+                    _vm._v(_vm._s(_vm.subtotal(_vm.auxItem)) + " €")
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("td", [
@@ -54993,15 +55047,17 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-light" }, [
       _c("tr", [
-        _c("th", { attrs: { width: "15%" } }, [_vm._v("Type")]),
+        _c("th", { attrs: { width: "10%" } }, [_vm._v("Type")]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "45%" } }, [_vm._v("Name")]),
+        _c("th", { attrs: { width: "33%" } }, [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "10%" } }, [_vm._v("Qty")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "10%" } }, [_vm._v("Price")]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "15%" } }, [_vm._v("Total")])
+        _c("th", { attrs: { width: "15%" } }, [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", { attrs: { width: "27%" } }, [_vm._v("Actions")])
       ])
     ])
   },
@@ -55327,7 +55383,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -55360,10 +55416,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "tableList",
-    props: ['tables']
+    props: ['tables'],
+    data: function data() {
+        return {};
+    },
+    methods: {
+        startMeal: function startMeal(tableNum) {
+            var _this = this;
+
+            axios.post('api/meals/startMeal/' + tableNum).then(function (response) {
+                _this.$store.commit('setMeal', response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+
 });
 
 /***/ }),
@@ -55381,7 +55459,24 @@ var render = function() {
       "tbody",
       _vm._l(_vm.tables, function(restaurant_table) {
         return _c("tr", { key: restaurant_table.id }, [
-          _c("td", [_vm._v(_vm._s(restaurant_table.table_number))])
+          _c("td", [_vm._v(_vm._s(restaurant_table.table_number))]),
+          _vm._v(" "),
+          _c("td", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-dark",
+                attrs: { disabled: restaurant_table.meals.length > 0 },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.startMeal(restaurant_table.table_number)
+                  }
+                }
+              },
+              [_vm._v("Start Meal")]
+            )
+          ])
         ])
       })
     )
@@ -55392,7 +55487,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [_c("tr", [_c("th", [_vm._v("Table Number")])])])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Table Number")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -56652,7 +56753,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn-dark",
+                      staticClass: "btn btn-dark",
                       on: {
                         click: function($event) {
                           $event.preventDefault()
@@ -56668,7 +56769,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn-dark",
+                      staticClass: "btn btn-dark",
                       on: {
                         click: function($event) {
                           $event.preventDefault()

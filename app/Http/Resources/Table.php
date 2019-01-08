@@ -11,6 +11,7 @@ class Table extends Resource
     {
         return [
             'table_number' => $this->table_number,
+            'meals' => $this->meals,
             'deleted_at' => $this->deleted_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
