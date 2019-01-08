@@ -38,10 +38,6 @@
             }
         },
         methods: {
-            /*createUser: function (user) {
-                this.editingUser = null;
-                this.$emit('register-click', user);
-            },*/
             editUser: function (user) {
                 this.editingUser = user;
                 this.$emit('edit-click', user);

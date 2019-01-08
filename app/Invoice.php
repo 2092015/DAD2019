@@ -32,9 +32,9 @@ class Invoice extends Authenticatable
         return $this->belongsTo(Meal::class,'meal_id', 'id');
     }
 
-    public function items()
+    public function invoiceItems()
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Item::class,'item_id', 'id');
     }
 
 }

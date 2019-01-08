@@ -26,13 +26,13 @@ class MealControllerAPI extends Controller
         }
 
     }
-    public function pending(Request $request)
+    public function active(Request $request, $id)
     {
         if ($request->has('page')) {
 
-            return MealResource::collection(meal::whereNotIn('state', ['paid'])->paginate(5));
+            return MealResource::collection(meal::where('state', ['active'])->paginate(5));
         } else {
-            return MealResource::collection(meal::whereNotIn('state', ['paid'])->orderBy('start')->get());
+            return MealResource::collection(meal::where('state', ['active'])->orderBy('start','desc')->get());
         }
 
     }

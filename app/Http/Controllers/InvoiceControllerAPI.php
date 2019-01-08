@@ -22,42 +22,28 @@ class InvoiceControllerAPI extends Controller
     public function all(Request $request)
     {
         if ($request->has('page')) {
-            return InvoiceResource::collection(Invoice::paginate(5));
+            return InvoiceResource::collection(Invoice::orderBy('date','desc')->paginate(5));
         } else {
-            return InvoiceResource::collection(Invoice::all());
+            return InvoiceResource::collection(Invoice::orderBy('date','desc')->get());
         }
 
     }
     public function index(Request $request)
     {
         if ($request->has('page')) {
-            return InvoiceResource::collection(Invoice::paginate(5));
+            return InvoiceResource::collection(Invoice::orderBy('date','desc')->paginate(5));
         } else {
-            return InvoiceResource::collection(Invoice::whereNotIn('state', ['paid'])->orderByRaw('date')->get());
+            return InvoiceResource::collection(Invoice::whereNotIn('state', ['paid'])->orderByRaw('state')->orderBy('date','desc')->get());
         }
 
     }
-    /*public function index2(Request $request)
-    {
-        if ($request->has('page')) {
-            return InvoiceResource::collection(Invoice::paginate(5));
-        } else {
-            return DB::table('invoices')
-                ->leftJoin('meals', 'invoices.meal_id', '=', 'meals.id')
-                ->where('invoices.state','=','not paid')
-                ->get();
-            return InvoiceResource::collection(Invoice::all());
-
-        }
-
-    }*/
     public function paid(Request $request)
     {
         if ($request->has('page')) {
 
-            return InvoiceResource::collection(Invoice::where('state', ['paid'])->paginate(5));
+            return InvoiceResource::collection(Invoice::where('state', ['paid'])->orderBy('date','desc')->paginate(5));
         } else {
-            return InvoiceResource::collection(Invoice::where('state', ['paid'])->orderBy('date')->get());
+            return InvoiceResource::collection(Invoice::where('state', ['paid'])->orderBy('date','desc')->get());
         }
 
     }
@@ -65,10 +51,19 @@ class InvoiceControllerAPI extends Controller
     {
         if ($request->has('page')) {
 
-            return InvoiceResource::collection(Invoice::where('state', ['not paid'])->paginate(5));
+            return InvoiceResource::collection(Invoice::where('state', ['not paid'])->orderBy('date','desc')->paginate(5));
         } else {
-            return InvoiceResource::collection(Invoice::where('state', ['not paid'])->orderBy('date')->get());
+            return InvoiceResource::collection(Invoice::where('state', ['not paid'])->orderBy('date','desc')->get());
         }
 
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'state' => 'required|in:paid,not paid,pending'
+        ]);
+        $invoice = invoice::findOrFail($id);
+        $invoice->update($request->all());
+        return new InvoiceResource($invoice);
     }
 }

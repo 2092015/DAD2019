@@ -37,8 +37,8 @@ Route::middleware('auth:api')->group(function () {
     Route::put('items/{id}', 'ItemControllerAPI@update');
     Route::delete('items/{id}', 'ItemControllerAPI@destroy');
 
-    Route::get('orders', 'OrderControllerAPI@pending');
-    Route::get('all_orders', 'OrderControllerAPI@index');
+    Route::get('pending/orders', 'OrderControllerAPI@pending');
+    Route::get('orders/{id?}', 'OrderControllerAPI@index');
     Route::get('pending_confirmed_orders', 'OrderControllerAPI@pendingconfirmed');
     Route::get('orders/{id}', 'OrderControllerAPI@show');
     Route::post('orders', 'OrderControllerAPI@store');
@@ -47,13 +47,14 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('meals/startMeal/{id}', 'MealControllerAPI@startMeal');
     Route::get('meals', 'MealControllerAPI@index');
+    Route::get('meals/{id?}', 'MealControllerAPI@active');
     Route::get('meals/{id}', 'MealControllerAPI@show');
     Route::put('meals/{id}', 'MealControllerAPI@update');
 
     Route::get('invoices', 'InvoiceControllerAPI@index');
     Route::get('all', 'InvoiceControllerAPI@all');
-    Route::get('invoicespaid', 'InvoiceControllerAPI@paid');
-    Route::get('invoicesnotpaid', 'InvoiceControllerAPI@notpaid');
+    Route::get('invoices/paid', 'InvoiceControllerAPI@paid');
+    Route::get('invoices/notpaid', 'InvoiceControllerAPI@notpaid');
     Route::get('invoices/{id}', 'InvoiceControllerAPI@show');
     Route::post('invoices', 'InvoiceControllerAPI@store');
     Route::put('invoices/{id}', 'InvoiceControllerAPI@update');

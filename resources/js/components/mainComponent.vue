@@ -15,6 +15,9 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/tables">Tables</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/invoices">Invoices</router-link>
+                    </li>
                 </ul>
             <div class="dropdown">
                 <button class="btn btn-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -25,7 +28,6 @@
         </nav>
         <div>
             <router-view></router-view>
-            <!--<item v-bind:items = 'items'></item>-->
         </div>
     </div>
 </template>

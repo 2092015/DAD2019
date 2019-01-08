@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
         <tr>
             <th>State</th>
@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="meal in meals"  :key="meal.id" :class="{active: editingMeal === meal}">
+        <tr v-for="meal in meals"  :key="meal.id" :class="{'blue':(meal.state ==='active')}">
             <td>{{ meal.state }}</td>
             <td>{{ meal.table_number }}</td>
             <td>{{ meal.responsible_waiter }}</td>
@@ -38,5 +38,8 @@
 </script>
 
 <style scoped>
+    .blue{
+        background-color: lightskyblue;
+    }
 
 </style>

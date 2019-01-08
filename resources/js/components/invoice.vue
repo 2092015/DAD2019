@@ -11,8 +11,8 @@
 
 
 
-        <invoice-list v-bind:invoices = 'invoices'></invoice-list>
-        
+        <invoice-list v-bind:invoices = 'invoices' @paid-click="paid" @notpaid-click="notPaid" @invoiceDetail-click=""></invoice-list>
+
     </div>
 </template>
 
@@ -28,6 +28,7 @@
                 successMessage: '',
                 failMessage: '',
                 currentInvoice: null,
+                editingInvoice: false,
                 invoices: [],
             }
         },
@@ -39,7 +40,40 @@
                 axios.get('api/invoices')
                     .then(response=>{this.invoices = response.data.data;});
 
-            }
+            },
+            paid: function(invoice){
+                this.currentInvoice = invoice;
+                this.showSuccess = false;
+                this.currentInvoice.state='paid';
+                axios.put('api/invoices/'+this.currentInvoice.id, {'state':this.currentInvoice.state})
+                    .then(response=>{
+                        Object.assign(this.currentInvoice, response.data.data);
+                        this.currentInvoice = null;
+                        this.showSuccess = true;
+                        this.successMessage = 'Invoice Paid';
+                    });
+                this.class="table-success"
+                this.getInvoices();
+            },
+            notPaid: function(invoice){
+                this.currentInvoice = invoice;
+                this.showSuccess = false;
+                this.currentInvoice.state='not paid';
+                axios.put('api/invoices/'+this.currentInvoice.id, {'state':this.currentInvoice.state})
+                    .then(response=>{
+                        Object.assign(this.currentInvoice, response.data.data);
+                        this.currentInvoice = null;
+                        this.showFailure = true;
+                        this.failMessage = 'Invoice Not Paid';
+                    });
+                this.class="table-success"
+                this.getInvoices();
+            },
+            invoiceDetail: function(invoice){
+                this.currentInvoice = user;
+                this.editingInvoice = true;
+                this.showSuccess = false;
+            },
         },
         mounted() {
             this.getInvoices();

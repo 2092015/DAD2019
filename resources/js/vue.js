@@ -26,14 +26,42 @@ const routes = [
         beforeEnter:(to, from, next) => {
             if (store.state.user.type == 'manager') {
                 next();
+            }else {
+                next(false);
+            }
+        }},
+    {path: '/orders', component: order,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'cook' || store.state.user.type == 'manager') {
+                next();
             }else{
                 next(false);
             }
         }},
-    {path: '/orders', component: order},
-    {path: '/meals', component: meal},
-    {path: '/tables', component: restaurantTable},
-    {path: '/invoices', component: invoice},
+    {path: '/meals', component: meal,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'waiter' || store.state.user.type == 'manager') {
+                next();
+            }else{
+                next(false);
+            }
+        }},
+    {path: '/tables', component: restaurantTable,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'manager') {
+                next();
+            }else{
+                next(false);
+            }
+        }},
+    {path: '/invoices', component: invoice,
+        beforeEnter:(to, from, next) => {
+            if (store.state.user.type == 'cashier' || store.state.user.type == 'manager') {
+                next();
+            }else{
+                next(false);
+            }
+        }},
     {path: '/profile', component: profile, name: 'profile'},
     {path: '/login', component: login, name: 'login'},
     {path: '/addMeal2', component: addMeal2, name: 'addMeal2'}
@@ -50,6 +78,7 @@ router.beforeEach((to, from, next) => {
             store.commit('loadTokenAndUserFromSession');
         }
         if (!store.state.user) {
+
             next('/');
         }else{
             next();
@@ -65,5 +94,7 @@ const app = new Vue({
     router,
     created() {
         this.$store.commit('loadTokenAndUserFromSession');
+
+        console.log('Load '+this.$store.state.user);
     }
 }).$mount('#app');

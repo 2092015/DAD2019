@@ -14,15 +14,26 @@ use Hash;
 
 class OrderControllerAPI extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
-        if ($request->has('page')) {
-            return OrderResource::collection(order::paginate(5));
-        } else {
-            return OrderResource::collection(order::all());
-        }
+        if (!$id){
+
+            if ($request->has('page')) {
+                return OrderResource::collection(order::paginate(5));
+            } else {
+                return OrderResource::collection(order::all());
+            }}
+        else{
+            if ($request->has('page')) {
+                return OrderResource::collection(order::where('responsible_cook_id',$id)->whereIn('state', ['confirmed','in preparation','prepared'])->orderBy('start','desc')->paginate(5));
+            } else {
+                return OrderResource::collection(order::where('responsible_cook_id',$id)->whereIn('state', ['confirmed','in preparation','prepared'])->orderBy('start','desc')->get());
+
+            }}
 
     }
+
+
     public function pending(Request $request)
     {
         if ($request->has('page')) {

@@ -20,6 +20,7 @@
         data: function(){
             return {
                 title: 'List Orders',
+                user: this.$store.state.user,
                 editingOrder: false,
                 showSuccess: false,
                 showFailure: false,
@@ -35,6 +36,17 @@
             'order-list': orderList
         },
         methods: {
+            getOrders: function(){
+                axios.get('api/pending/orders')
+                    .then(response=>{this.orders = response.data.data;});
+
+            },
+            getOrdersByCook: function(){
+                console.log(this.user.id);
+                axios.get('api/orders/'+this.user.id)
+                    .then(response=>{this.orders = response.data.data;});
+
+            },
             preparedOrder: function(order){
                 this.currentOrder = order;
                 this.showSuccess = false;
@@ -47,6 +59,7 @@
                         this.successMessage = 'Order Updated';
                     });
                 this.class="table-success"
+                this.getOrdersByCook();
             },
 
             inPreparationOrder: function(order){
@@ -60,16 +73,15 @@
                         this.successMessage = 'Order Updated';
                         this.currentOrder = null;
                     });
+                this.class="table-success"
+                this.getOrdersByCook();
 
             },
-            getOrders: function(){
-                axios.get('api/orders')
-                    .then(response=>{console.log(response);this.orders = response.data.data;});
 
-            }
         },
         mounted() {
-            this.getOrders();
+            /*this.getOrders();*/
+            this.getOrdersByCook();
 
         }
     }
