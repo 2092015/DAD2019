@@ -10,7 +10,9 @@
                         <!--<p v-model="permissionState"></p>-->
                         <p v-model="mediaSupported"></p>
                         <p v-model="navigator"></p>
-                        <p v-for="device in devices" v-model="device"></p>
+                        <div v-for="device in devices">
+                            <p v-model="device"></p>
+                        </div>
                         <p v-model="credentials"></p>
                         <p v-model="performance"></p>
                         <p v-model="position"></p>
