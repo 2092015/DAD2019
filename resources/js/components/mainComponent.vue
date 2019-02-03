@@ -67,32 +67,7 @@
                 // `this` points to the vm instance
                 return this.$store.state.user;
             },
-            /*typeUser:function () {
-                if(!this.$store.state.user) {
-                    // If not authenticated, add a path where to redirect after login.
-                    console.log("sem user");
-                    console.log(this.$store.state.user);
-                    this.$router.push({ name: 'login', query: { redirect: '/items' } });
-                }else if(this.$store.state.user.type=='cook'){
-                    console.log("logado cook");
-                    this.$router.push({ name: 'order', query: { redirect: '/orders' } });
 
-                }else if(this.$store.state.user.type=='cashier'){
-                    console.log("logado cashier");
-                    this.$router.push({ name: 'invoice', query: { redirect: '/invoice' } });
-
-                }else if(this.$store.state.user.type=='waiter'){
-                    console.log("logado waiter");
-                    console.log(this.$store.state.user);
-                    this.$router.push({ name: 'meal', query: { redirect: '/meals' } });
-
-                }else if(this.$store.state.user.type=='manager'){
-                    console.log("logado manager");
-                    console.log(this.$store.state.user);
-                    this.$router.push({ name: 'user', query: { redirect: '/users' } });
-
-                }
-            }*/
         }
 
 }
