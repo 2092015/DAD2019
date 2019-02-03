@@ -65,32 +65,32 @@
 
             // check support and performance
             navigator.mediaCapabilities.decodingInfo(mediaConfig).then(function(result){
-                console.log('This configuration is ' +  (result.supported ? '' : 'not ') + 'supported.')
+                document.write('This configuration is ' +  (result.supported ? '' : 'not ') + 'supported.')
             });
 
-            console.log(window.navigator);
+            document.write(window.navigator);
 
             navigator.mediaDevices.enumerateDevices()
                 .then(function(devices) {
                     devices.forEach(function(device) {
-                        console.log(device.kind + ": " + device.label +
+                        document.write(device.kind + ": " + device.label +
                             " id = " + device.deviceId);
                     });
                 })
                 .catch(function(err) {
-                    console.log(err.name + ": " + err.message);
+                    document.write(err.name + ": " + err.message);
                 });
 
             if ('credentials' in window.navigator) {
                 window.navigator.credentials.get({password: true})
                     .then(function(creds) {
-                        console.log(creds);
+                        document.write(creds);
                     });
             } else {
-                console.log('No credentials');
+                document.write('No credentials');
             };
-            console.log(window.performance);
-            console.log(window.clientInformation.geolocation.getCurrentPosition(function (position) { console.log(position) }));
+            document.write(window.performance);
+            document.write(window.clientInformation.geolocation.getCurrentPosition(function (position) { console.log(position) }));
         }
     }
 </script>
