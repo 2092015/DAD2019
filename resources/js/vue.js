@@ -19,6 +19,7 @@ const mainComponent = Vue.component('main_component', require('./components/main
 const profile = Vue.component('profile', require('./components/profile.vue'));
 const login = Vue.component('login', require('./components/login.vue'));
 const addMeal2 = Vue.component('addMeal2', require('./components/addMeal2.vue'));
+const example = Vue.component('example', require('.components/ExampleComponent.vue'));
 
 const routes = [
     {path: '/', component: item },
@@ -64,7 +65,8 @@ const routes = [
         }},
     {path: '/profile', component: profile, name: 'profile'},
     {path: '/login', component: login, name: 'login'},
-    {path: '/addMeal2', component: addMeal2, name: 'addMeal2'}
+    {path: '/addMeal2', component: addMeal2, name: 'addMeal2'},
+    {path: '/example', component: example, name: 'example'}
 
 ];
 
@@ -73,7 +75,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.path !== '/') {
+    if(to.path !== '/' && to.path !== '/example') {
         if (!store.state.user) {
             store.commit('loadTokenAndUserFromSession');
         }
