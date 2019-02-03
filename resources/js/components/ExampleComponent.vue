@@ -7,8 +7,8 @@
 
                     <div class="card-body">
                         I'm an example component.
-                        <!--<p v-model="permission.state"></p>-->
-                        <p v-model="media.supported"></p>
+                        <!--<p v-model="permissionState"></p>-->
+                        <p v-model="mediaSupported"></p>
                         <p v-model="navigator"></p>
                         <p v-for="device in devices" v-model="device"></p>
                         <p v-model="credentials"></p>
@@ -27,12 +27,8 @@
     export default {
         data: function(){
             return {
-                permission: {
-                    state: '',
-                },
-                media: {
-                    supported: '',
-                },
+                permissionState: '',
+                mediaSupported: '',
                 navigator: '',
                 devices: [],
                 credentials: '',
