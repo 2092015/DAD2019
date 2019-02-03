@@ -11,7 +11,7 @@
                         <p {{mediaSupported}}></p>
                         <p {{navigator}}></p>
                         <div v-for="device in devices">
-                            <p {{device}}></p>
+                            <p>{{device}}</p>
                         </div>
                         <p {{credentials}}></p>
                         <p {{performance}}></p>

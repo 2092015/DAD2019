@@ -10,6 +10,11 @@
         </div>
 
         <button type="button" class="btn btn-sm btn-primary" v-on:click.prevent="registerUser">Create</button>
+        <select v-model="filterOption" v-on:change="filter()">
+            <option value="all">All</option>
+            <option value="leaders">Leaders</option>
+            <option value="others">Non Leaders</option>
+        </select>
         <register v-bind:current-user = 'currentUser' v-if="registeringUser" @user-added="addUser" @user-canceled="cancelRegister"></register>
         <user-list v-bind:users = 'users' @edit-click="editUser" @delete-click="deleteUser"></user-list>
         <user-edit v-bind:current-user = 'currentUser' v-if="editingUser" @user-saved="saveUser" @user-canceled="cancelEdit"></user-edit>
@@ -32,8 +37,9 @@
                 showFailure: false,
                 successMessage: '',
                 failMessage: '',
-                currentUser: {name:'', email:'', username:'', type:''},
+                currentUser: {name:'', email:'', username:'', type:'', leader:0},
                 users: [],
+                filterOption:'all',
                 usersTypes: [{ userType: "Cook"},{ userType: "Manager"},{ userType: "Waiter"},{ userType: "Cashier"}]
             }
         },
@@ -66,11 +72,12 @@
             saveUser: function(file, password) {
                 this.editingUser = false;
                 var formData = new FormData();
-
+                console.log(this.currentUser.leader);
                 formData.append('name', this.currentUser.name);
                 formData.append('email', this.currentUser.email);
                 formData.append('type', this.currentUser.type);
                 formData.append('username', this.currentUser.username);
+                formData.append('leader', this.currentUser.leader);
                 formData.append('password', password);
                 if(file!=null){
                     formData.append('file', file, file.name);
@@ -93,6 +100,7 @@
                 formData.append('email', this.currentUser.email);
                 formData.append('type', this.currentUser.type);
                 formData.append('username', this.currentUser.username);
+                formData.append('leader', this.currentUser.leader);
                 if(file!=null){
                     formData.append('file', file, file.name);
                 }
@@ -130,15 +138,25 @@
             },
             getUsers: function(){
                 axios.get('api/users')
-                    .then(response=>{this.users = response.data.data;})
+                    .then(response=>{
+                        this.users = response.data.data;
+                    })
                     .catch(error => {
                         console.log("ERROR");
                     })
             },
+            filter(){
+                axios.get('api/users/filter/' + this.filterOption)
+                    .then(response=>{
+                        this.users = response.data.data;
+                    })
+                    .catch(error => {
+                        console.log("ERROR");
+                    })
+            }
         },
         mounted() {
             this.getUsers();
-
         }
     }
 </script>

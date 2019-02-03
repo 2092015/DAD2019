@@ -22,7 +22,8 @@ class User extends Resource
             'last_shift_start' => $this->last_shift_start,
             'last_shift_end' => $this->last_shift_end,
             'shift_active' => $this->shift_active,
-            'email_verified_at' => $this->email_verified_at
+            'email_verified_at' => $this->email_verified_at,
+            'leader' => $this->leader
         ];
     }
 

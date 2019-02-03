@@ -47,6 +47,7 @@ class UserControllerAPI extends Controller
         ]);
         $user = new User();
         $user->fill($request->all());
+        $user->leader = ($request['leader'] ? 1 : 0);
         $user->password = Hash::make($user->password);
         $user->username=$request->email;
         if($request->file('file')!=null) {
@@ -165,6 +166,33 @@ class UserControllerAPI extends Controller
 
         $user->save();
         return new UserResource($user);
+    }
+
+    public function toggleLeader($id){
+        $user = User::findOrFail($id);
+
+        $user->leader = ($user->leader ? 0 : 1);
+
+        $user->save();
+
+        return new UserResource($user);
+    }
+
+    public function filter($option){
+        $users = [];
+        switch ($option){
+            case 'all':
+                $users = User::all();
+            break;
+            case 'leaders':
+                $users = User::where('leader', 1)->get();
+            break;
+            case 'others':
+                $users = User::where('leader', 0)->get();
+            break;
+        }
+
+        return UserResource::collection($users);
     }
 
 }

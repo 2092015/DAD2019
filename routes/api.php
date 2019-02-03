@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->group(function () {
     Route::post('logout','LoginControllerAPI@logout');
 
+    Route::post('users/toggleLeader/{id}', 'UserControllerAPI@toggleLeader');
+    Route::get('users/filter/{option}', 'UserControllerAPI@filter');
     Route::get('users/me', 'UserControllerAPI@myProfile');
     Route::get('users/startShift', 'UserControllerAPI@startShift');
     Route::get('users/endShift', 'UserControllerAPI@endShift');

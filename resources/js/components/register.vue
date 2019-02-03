@@ -33,6 +33,11 @@
                 </select>
             </div>
 
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="teamLeader" v-model="currentUser.leader">
+                <label class="form-check-label" for="teamLeader">Team Leader</label>
+            </div>
+
             <div class="form-group">
                 <label for="inputEmail">Image</label>
                 <input type="file" class="form-control" v-on:change="handleFile" name="image" id="inputImage" />

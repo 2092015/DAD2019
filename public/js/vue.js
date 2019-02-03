@@ -51707,7 +51707,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -51775,6 +51775,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -51791,8 +51796,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showFailure: false,
             successMessage: '',
             failMessage: '',
-            currentUser: { name: '', email: '', username: '', type: '' },
+            currentUser: { name: '', email: '', username: '', type: '', leader: 0 },
             users: [],
+            filterOption: 'all',
             usersTypes: [{ userType: "Cook" }, { userType: "Manager" }, { userType: "Waiter" }, { userType: "Cashier" }]
         };
     },
@@ -51828,11 +51834,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.editingUser = false;
             var formData = new FormData();
-
+            console.log(this.currentUser.leader);
             formData.append('name', this.currentUser.name);
             formData.append('email', this.currentUser.email);
             formData.append('type', this.currentUser.type);
             formData.append('username', this.currentUser.username);
+            formData.append('leader', this.currentUser.leader);
             formData.append('password', password);
             if (file != null) {
                 formData.append('file', file, file.name);
@@ -51856,6 +51863,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             formData.append('email', this.currentUser.email);
             formData.append('type', this.currentUser.type);
             formData.append('username', this.currentUser.username);
+            formData.append('leader', this.currentUser.leader);
             if (file != null) {
                 formData.append('file', file, file.name);
             }
@@ -51895,6 +51903,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('api/users').then(function (response) {
                 _this5.users = response.data.data;
+            }).catch(function (error) {
+                console.log("ERROR");
+            });
+        },
+        filter: function filter() {
+            var _this6 = this;
+
+            axios.get('api/users/filter/' + this.filterOption).then(function (response) {
+                _this6.users = response.data.data;
             }).catch(function (error) {
                 console.log("ERROR");
             });
@@ -52030,6 +52047,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "userList",
@@ -52037,7 +52056,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             editingUser: null
-
         };
     },
     methods: {
@@ -52047,6 +52065,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         deleteUser: function deleteUser(user) {
             this.$emit('delete-click', user);
+        },
+        togleLeader: function togleLeader(user) {
+            axios.post('api/users/toggleLeader/' + user.id).then(function (response) {
+                Object.assign(user, response.data.data);
+            }).catch(function (error) {
+                console.log("ERROR");
+            });
         }
     }
 });
@@ -52069,6 +52094,18 @@ var render = function() {
           "tr",
           { key: user.id, class: { active: _vm.editingUser === user } },
           [
+            _c(
+              "td",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.togleLeader(user)
+                  }
+                }
+              },
+              [_vm._v(_vm._s(user.leader ? "Yes" : "No"))]
+            ),
+            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(user.name))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(user.email))]),
@@ -52119,6 +52156,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("Leader")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
@@ -52600,7 +52639,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52611,6 +52650,11 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52837,6 +52881,56 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "form-check" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.currentUser.leader,
+              expression: "currentUser.leader"
+            }
+          ],
+          staticClass: "form-check-input",
+          attrs: { type: "checkbox", id: "teamLeader" },
+          domProps: {
+            checked: Array.isArray(_vm.currentUser.leader)
+              ? _vm._i(_vm.currentUser.leader, null) > -1
+              : _vm.currentUser.leader
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.currentUser.leader,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 &&
+                    _vm.$set(_vm.currentUser, "leader", $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    _vm.$set(
+                      _vm.currentUser,
+                      "leader",
+                      $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                    )
+                }
+              } else {
+                _vm.$set(_vm.currentUser, "leader", $$c)
+              }
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          { staticClass: "form-check-label", attrs: { for: "teamLeader" } },
+          [_vm._v("Team Leader")]
+        )
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Image")]),
         _vm._v(" "),
@@ -52937,6 +53031,47 @@ var render = function() {
           }
         },
         [_vm._v("Create")]
+      ),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.filterOption,
+              expression: "filterOption"
+            }
+          ],
+          on: {
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.filterOption = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              function($event) {
+                _vm.filter()
+              }
+            ]
+          }
+        },
+        [
+          _c("option", { attrs: { value: "all" } }, [_vm._v("All")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "leaders" } }, [_vm._v("Leaders")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "others" } }, [_vm._v("Non Leaders")])
+        ]
       ),
       _vm._v(" "),
       _vm.registeringUser

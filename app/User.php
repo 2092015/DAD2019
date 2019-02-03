@@ -22,7 +22,8 @@ class User extends Authenticatable
         'blocked',
         'last_shift_start',
         'last_shift_end',
-        'shift_active'
+        'shift_active',
+        'leader'
     ];
 
     protected $hidden = [

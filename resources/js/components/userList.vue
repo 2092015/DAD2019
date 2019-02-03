@@ -2,6 +2,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Leader</th>
             <th>Name</th>
             <th>Email</th>
             <th>Type</th>
@@ -11,6 +12,7 @@
         </thead>
         <tbody>
         <tr v-for="user in users"  :key="user.id" :class="{active: editingUser === user}">
+            <td v-on:click="togleLeader(user)">{{ user.leader ? 'Yes' : 'No' }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.type }}</td>
@@ -32,9 +34,7 @@
         props: ['users','usersTypes'],
         data: function(){
             return{
-                editingUser: null,
-
-
+                editingUser: null
             }
         },
         methods: {
@@ -44,7 +44,16 @@
             },
             deleteUser: function (user) {
                 this.$emit('delete-click', user);
-            }
+            },
+            togleLeader(user){
+                axios.post('api/users/toggleLeader/' + user.id)
+                    .then(response=>{
+                        Object.assign(user, response.data.data);
+                    })
+                    .catch(error => {
+                        console.log("ERROR");
+                    })
+            },
         }
     }
 </script>
