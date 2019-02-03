@@ -8,14 +8,14 @@
                     <div class="card-body">
                         I'm an example component.
                         <!--<p v-model="permissionState"></p>-->
-                        <p v-model="mediaSupported"></p>
-                        <p v-model="navigator"></p>
+                        <p {{mediaSupported}}></p>
+                        <p {{navigator}}></p>
                         <div v-for="device in devices">
-                            <p v-model="device"></p>
+                            <p {{device}}></p>
                         </div>
-                        <p v-model="credentials"></p>
-                        <p v-model="performance"></p>
-                        <p v-model="position"></p>
+                        <p {{credentials}}></p>
+                        <p {{performance}}></p>
+                        <p {{position}}></p>
                     </div>
                     <input  id="Button1"  type="button"  value="Button"
                             name="Button1"  language=javascript  @click="permissions()">
