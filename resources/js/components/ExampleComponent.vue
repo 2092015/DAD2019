@@ -42,13 +42,13 @@
                 acceptAllDevices: true,
             }
 
-            navigator.bluetooth.requestDevice(options).then(function(device) {
+            /*navigator.bluetooth.requestDevice(options).then(function(device) {
                 console.log('Name: ' + device.name);
-                // Do something with the device.
+
             })
                 .catch(function(error) {
                     console.log("Something went wrong. " + error);
-                });
+                });*/
             //console.log(window.navigator.clipboard.readAsText());
 
             //Create media configuration to be tested
