@@ -7,6 +7,13 @@
 
                     <div class="card-body">
                         I'm an example component.
+                        <!--<p v-model="permission.state"></p>-->
+                        <p v-model="media.supported"></p>
+                        <p v-model="navigator"></p>
+                        <p v-for="device in devices" v-model="device"></p>
+                        <p v-model="credentials"></p>
+                        <p v-model="performance"></p>
+                        <p v-model="position"></p>
                     </div>
                     <input  id="Button1"  type="button"  value="Button"
                             name="Button1"  language=javascript  @click="permissions()">
@@ -20,7 +27,17 @@
     export default {
         data: function(){
             return {
-
+                permission: {
+                    state: '',
+                },
+                media: {
+                    supported: '',
+                },
+                navigator: '',
+                devices: [],
+                credentials: '',
+                performance: '',
+                position: ''
             }
         },
         methods: {
@@ -28,10 +45,10 @@
             permissions(){
                 navigator.permissions.query({name:'geolocation'})
                     .then(function(permissionStatus) {
-                        console.log('geolocation permission state is ', permissionStatus.state);
+                        this.permission.state = 'geolocation permission state is ' + permissionStatus.state;
 
                         permissionStatus.onchange = function() {
-                            console.log('geolocation permission state has changed to ', this.state);
+                            this.permission.state = 'geolocation permission state has changed to ' + this.state;
                         };
                     });
             }
@@ -65,32 +82,36 @@
 
             // check support and performance
             navigator.mediaCapabilities.decodingInfo(mediaConfig).then(function(result){
-                document.write('This configuration is ' +  (result.supported ? '' : 'not ') + 'supported.')
+                this.media.supported = 'This configuration is ' +  (result.supported ? '' : 'not ') + 'supported.'
             });
 
-            document.write(window.navigator);
+            this.navigator = window.navigator;
 
             navigator.mediaDevices.enumerateDevices()
                 .then(function(devices) {
+                    let i=0;
                     devices.forEach(function(device) {
-                        document.write(device.kind + ": " + device.label +
-                            " id = " + device.deviceId);
+                        this.devices[i] = device.kind + ": " + device.label +
+                            " id = " + device.deviceId;
+                        i++;
                     });
                 })
                 .catch(function(err) {
-                    document.write(err.name + ": " + err.message);
+                    this.devices[0] = err.name + ": " + err.message;
                 });
 
             if ('credentials' in window.navigator) {
                 window.navigator.credentials.get({password: true})
                     .then(function(creds) {
-                        document.write(creds);
+                        this.credentials = creds;
                     });
             } else {
-                document.write('No credentials');
+                this.credentials = 'No credentials';
             };
-            document.write(window.performance);
-            document.write(window.clientInformation.geolocation.getCurrentPosition(function (position) { console.log(position) }));
+            this.performance = window.performance;
+            document.write(window.clientInformation.geolocation.getCurrentPosition(function (position) {
+                this.position = position;
+            }));
         }
     }
 </script>
