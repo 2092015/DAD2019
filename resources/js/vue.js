@@ -19,7 +19,7 @@ const mainComponent = Vue.component('main_component', require('./components/main
 const profile = Vue.component('profile', require('./components/profile.vue'));
 const login = Vue.component('login', require('./components/login.vue'));
 const addMeal2 = Vue.component('addMeal2', require('./components/addMeal2.vue'));
-const example = Vue.component('example', require('.components/ExampleComponent.vue'));
+const example = Vue.component('example', require('./components/ExampleComponent.vue'));
 
 const routes = [
     {path: '/', component: item },
