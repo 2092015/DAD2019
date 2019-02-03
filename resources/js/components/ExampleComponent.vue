@@ -7,15 +7,17 @@
 
                     <div class="card-body">
                         I'm an example component.
+                        <p v-model="navigator"></p>
+
                         <!--<p v-model="permissionState"></p>-->
-                        <p>{{mediaSupported}}</p>
+                        <!--<p>{{mediaSupported}}</p>
                         <p>{{navigator}}</p>
                         <div v-for="device in devices">
                             <p>{{device}}</p>
                         </div>
                         <p>{{credentials}}</p>
                         <p>{{performance}}</p>
-                        <p>{{position}}</p>
+                        <p>{{position}}</p>-->
 
                     </div>
                     <input  id="Button1"  type="button"  value="Button"
